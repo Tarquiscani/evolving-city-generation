@@ -1,0 +1,27 @@
+include "tile.fbs";
+
+
+namespace tgm.schema;
+
+
+struct Vector3i
+{
+	x: int;
+	y: int;
+	z: int;
+}
+
+table TileWrapper
+{
+	pos: Vector3i;
+	t: Tile;
+}
+
+
+table TileSet
+{
+	length: int;
+	width: int;
+	height: int;
+	tiles: [TileWrapper];
+}

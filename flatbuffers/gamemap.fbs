@@ -1,0 +1,13 @@
+include "tileset.fbs";
+
+
+namespace tgm.schema;
+
+
+table GameMap
+{
+	tileset: TileSet;
+}
+
+
+root_type GameMap;

@@ -1,0 +1,48 @@
+namespace tgm.schema;
+
+
+enum TileType : short 
+{ 	
+	none,
+	underground,
+	ground,
+	sky,
+	wooden,
+	grout,
+}
+
+enum BorderStyle : short
+{
+	none,
+	brickWall,
+}
+
+struct TileBuildingInfo
+{
+	bid: ulong;
+	aid: ulong;
+}
+
+struct RoofInfo
+{
+	bid: ulong;
+	roof_id: ulong;
+}
+
+table Tile
+{
+	inner_area: bool;
+	block: ulong;
+	door: bool;
+	door_open: bool;
+
+	border_count: byte;
+	building_infos: [TileBuildingInfo];
+	type: TileType;
+	border_style: BorderStyle;
+
+	roof_infos: [RoofInfo];
+
+	furniture_id: ulong;
+	hosted_mobiles: short;
+}
