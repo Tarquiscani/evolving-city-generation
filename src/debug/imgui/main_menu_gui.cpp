@@ -34,14 +34,15 @@ void MainMenuGui::generate_layout(Vector2i const framebuffer_size)
 		ImGui::SetCursorPosY(70.f * GSet::imgui_scale());
 		ImGui::NewLine(); ImGui::SameLine(offset); ; 
             
-        if (ImGui::Button("Save", button_dim)) { ImGui::OpenPopup("SaveModal"); }
-        generate_saveModal_layout();
+		// TODO: Complete the implementation of Load and Save functions
+		//if (ImGui::Button("Save", button_dim)) { ImGui::OpenPopup("SaveModal"); }
+		//generate_saveModal_layout();
 
-		ImGui::NewLine(); 
-		ImGui::NewLine(); ImGui::SameLine(offset); 
-			
-		if (ImGui::Button("Load", button_dim)) { ImGui::OpenPopup("LoadModal"); }
-		generate_loadModal_layout();
+		//ImGui::NewLine(); 
+		//ImGui::NewLine(); ImGui::SameLine(offset); 
+		//	
+		//if (ImGui::Button("Load", button_dim)) { ImGui::OpenPopup("LoadModal"); }
+		//generate_loadModal_layout();
 			
 		ImGui::NewLine(); 
 		ImGui::NewLine(); ImGui::SameLine(offset); 
