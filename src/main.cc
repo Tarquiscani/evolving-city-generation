@@ -5,8 +5,6 @@
 
 #include <imgui.h>
 #include "window/glfw_wrapper.hh"			//must be included before imgui_impl_*.h
-#include <imgui_impl/imgui_impl_glfw.h>
-#include <imgui_impl/imgui_impl_opengl3.h>
 
 #include "settings/simulation/simulation_settings.hh"
 #include "system/clock.hh"
@@ -21,6 +19,8 @@
 #include "mediators/queues/gui_ev.hh"
 #include "mediators/tile_graphics_mediator.hh"
 #include "map/gamemap.h"
+#include "imgui_impl_custom/imgui_impl_glfw.h"
+#include "imgui_impl_custom/imgui_impl_opengl3.h"
 #include "input/main_window_objects.hh"
 #include "input/main_window_input.hh"
 #include "game_state/data_writer.hh"

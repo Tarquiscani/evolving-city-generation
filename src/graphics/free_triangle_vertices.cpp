@@ -1,7 +1,7 @@
 #include "free_triangle_vertices.hh"
 
 #include <array>
-#include "earcut/earcut.hpp"
+#include "mapbox/earcut.hpp"
 
 
 namespace tgm

@@ -2,8 +2,9 @@
 
 #include <sstream>
 
-#include "stb_image/stb_image.h"
-#include "stb_image/stb_image_write.h" //for debug only
+#include "stb/stb_image.h"				// The implementation is already defined in another file
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb/stb_image_write.h" //for debug only
 
 
 namespace tgm
