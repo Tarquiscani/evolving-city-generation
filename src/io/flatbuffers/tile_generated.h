@@ -6,6 +6,13 @@
 
 #include "flatbuffers/flatbuffers.h"
 
+// Ensure the included flatbuffers.h is the same version as when this file was
+// generated, otherwise it may not be compatible.
+static_assert(FLATBUFFERS_VERSION_MAJOR == 22 &&
+              FLATBUFFERS_VERSION_MINOR == 11 &&
+              FLATBUFFERS_VERSION_REVISION == 22,
+             "Non-compatible flatbuffers version included");
+
 namespace tgm {
 namespace schema {
 
@@ -16,7 +23,7 @@ struct RoofInfo;
 struct Tile;
 struct TileBuilder;
 
-enum TileType {
+enum TileType : int16_t {
   TileType_none = 0,
   TileType_underground = 1,
   TileType_ground = 2,
@@ -58,7 +65,7 @@ inline const char *EnumNameTileType(TileType e) {
   return EnumNamesTileType()[index];
 }
 
-enum BorderStyle {
+enum BorderStyle : int16_t {
   BorderStyle_none = 0,
   BorderStyle_brickWall = 1,
   BorderStyle_MIN = BorderStyle_none,
@@ -94,8 +101,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(8) TileBuildingInfo FLATBUFFERS_FINAL_CLASS 
   uint64_t aid_;
 
  public:
-  TileBuildingInfo() {
-    memset(static_cast<void *>(this), 0, sizeof(TileBuildingInfo));
+  TileBuildingInfo()
+      : bid_(0),
+        aid_(0) {
   }
   TileBuildingInfo(uint64_t _bid, uint64_t _aid)
       : bid_(flatbuffers::EndianScalar(_bid)),
@@ -116,8 +124,9 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(8) RoofInfo FLATBUFFERS_FINAL_CLASS {
   uint64_t roof_id_;
 
  public:
-  RoofInfo() {
-    memset(static_cast<void *>(this), 0, sizeof(RoofInfo));
+  RoofInfo()
+      : bid_(0),
+        roof_id_(0) {
   }
   RoofInfo(uint64_t _bid, uint64_t _roof_id)
       : bid_(flatbuffers::EndianScalar(_bid)),
@@ -182,19 +191,19 @@ struct Tile FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint8_t>(verifier, VT_INNER_AREA) &&
-           VerifyField<uint64_t>(verifier, VT_BLOCK) &&
-           VerifyField<uint8_t>(verifier, VT_DOOR) &&
-           VerifyField<uint8_t>(verifier, VT_DOOR_OPEN) &&
-           VerifyField<int8_t>(verifier, VT_BORDER_COUNT) &&
+           VerifyField<uint8_t>(verifier, VT_INNER_AREA, 1) &&
+           VerifyField<uint64_t>(verifier, VT_BLOCK, 8) &&
+           VerifyField<uint8_t>(verifier, VT_DOOR, 1) &&
+           VerifyField<uint8_t>(verifier, VT_DOOR_OPEN, 1) &&
+           VerifyField<int8_t>(verifier, VT_BORDER_COUNT, 1) &&
            VerifyOffset(verifier, VT_BUILDING_INFOS) &&
            verifier.VerifyVector(building_infos()) &&
-           VerifyField<int16_t>(verifier, VT_TYPE) &&
-           VerifyField<int16_t>(verifier, VT_BORDER_STYLE) &&
+           VerifyField<int16_t>(verifier, VT_TYPE, 2) &&
+           VerifyField<int16_t>(verifier, VT_BORDER_STYLE, 2) &&
            VerifyOffset(verifier, VT_ROOF_INFOS) &&
            verifier.VerifyVector(roof_infos()) &&
-           VerifyField<uint64_t>(verifier, VT_FURNITURE_ID) &&
-           VerifyField<int16_t>(verifier, VT_HOSTED_MOBILES) &&
+           VerifyField<uint64_t>(verifier, VT_FURNITURE_ID, 8) &&
+           VerifyField<int16_t>(verifier, VT_HOSTED_MOBILES, 2) &&
            verifier.EndTable();
   }
 };

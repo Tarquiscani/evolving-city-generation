@@ -6,6 +6,13 @@
 
 #include "flatbuffers/flatbuffers.h"
 
+// Ensure the included flatbuffers.h is the same version as when this file was
+// generated, otherwise it may not be compatible.
+static_assert(FLATBUFFERS_VERSION_MAJOR == 22 &&
+              FLATBUFFERS_VERSION_MINOR == 11 &&
+              FLATBUFFERS_VERSION_REVISION == 22,
+             "Non-compatible flatbuffers version included");
+
 #include "tile_generated.h"
 
 namespace tgm {
@@ -26,8 +33,10 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(4) Vector3i FLATBUFFERS_FINAL_CLASS {
   int32_t z_;
 
  public:
-  Vector3i() {
-    memset(static_cast<void *>(this), 0, sizeof(Vector3i));
+  Vector3i()
+      : x_(0),
+        y_(0),
+        z_(0) {
   }
   Vector3i(int32_t _x, int32_t _y, int32_t _z)
       : x_(flatbuffers::EndianScalar(_x)),
@@ -60,7 +69,7 @@ struct TileWrapper FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<tgm::schema::Vector3i>(verifier, VT_POS) &&
+           VerifyField<tgm::schema::Vector3i>(verifier, VT_POS, 4) &&
            VerifyOffset(verifier, VT_T) &&
            verifier.VerifyTable(t()) &&
            verifier.EndTable();
@@ -90,7 +99,7 @@ struct TileWrapperBuilder {
 
 inline flatbuffers::Offset<TileWrapper> CreateTileWrapper(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const tgm::schema::Vector3i *pos = 0,
+    const tgm::schema::Vector3i *pos = nullptr,
     flatbuffers::Offset<tgm::schema::Tile> t = 0) {
   TileWrapperBuilder builder_(_fbb);
   builder_.add_t(t);
@@ -120,9 +129,9 @@ struct TileSet FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<int32_t>(verifier, VT_LENGTH) &&
-           VerifyField<int32_t>(verifier, VT_WIDTH) &&
-           VerifyField<int32_t>(verifier, VT_HEIGHT) &&
+           VerifyField<int32_t>(verifier, VT_LENGTH, 4) &&
+           VerifyField<int32_t>(verifier, VT_WIDTH, 4) &&
+           VerifyField<int32_t>(verifier, VT_HEIGHT, 4) &&
            VerifyOffset(verifier, VT_TILES) &&
            verifier.VerifyVector(tiles()) &&
            verifier.VerifyVectorOfTables(tiles()) &&
