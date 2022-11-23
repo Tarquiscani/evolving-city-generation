@@ -3,9 +3,8 @@
 
 #include <type_traits>
 
-#include <imgui_impl/imgui_impl_glfw.h>
-#include <imgui_impl/imgui_impl_opengl3.h>
-
+#include "imgui_impl_custom/imgui_impl_glfw.h"
+#include "imgui_impl_custom/imgui_impl_opengl3.h"
 #include "settings/graphics_settings.hh"
 
 namespace tgm
