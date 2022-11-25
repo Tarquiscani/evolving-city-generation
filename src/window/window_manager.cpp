@@ -351,7 +351,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 	m_activeWindow_id = wid;
 
 	//TODO: NOW: Rimetti normale dopo i test
-	glfwSwapInterval(/*opt.vsync*/0); //enables vsync
+	glfwSwapInterval(opt.vsync/*0*/); //enables vsync
 
 
 	// Clear held keys of all other windows (otherwise they would never receive the released_key event)
