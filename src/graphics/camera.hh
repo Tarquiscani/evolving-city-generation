@@ -34,6 +34,10 @@ struct NoRoofInfos
 class Camera
 {
 	public:
+		static auto constexpr phi_min = -100000.f;		// We set reasonably big min and max limits to user input just to avoid underflows and overflows
+		static auto constexpr phi_max = 100000.f;		
+		static auto constexpr theta_min = 1.f;
+		static auto constexpr theta_max = 89.f;
 		// Maximum number of noRoofRects
 		static auto constexpr max_noRoofRects = 4u;
 		static auto constexpr max_noRoofIntersections = 2u;
@@ -95,18 +99,21 @@ class Camera
 			m_zoom_speed = (m_zoom_speed == 1.f) ? 10.f : 1.f;
 		}
 		
-		void decrease_phi() noexcept { m_phi -= 5.f; }
-		void increase_phi() noexcept { m_phi += 5.f; }
-		void decrease_theta() noexcept
-		{
-			m_theta -= 5.f;
-			if (m_theta < 0.001f) {	m_theta = 0.001f; }
-		}
-		void increase_theta() noexcept
-		{
-			m_theta += 5.f;
-			if (m_theta >= 90.f) { m_theta = 90.f; }
-		}
+		void set_phi(float const new_phi) noexcept { m_phi = new_phi; }
+		void set_theta(float const new_theta) noexcept { m_theta = new_theta; }
+
+		//void decrease_phi() noexcept { m_phi -= 5.f; }
+		//void increase_phi() noexcept { m_phi += 5.f; }
+		//void decrease_theta() noexcept
+		//{
+		//	m_theta -= 5.f;
+		//	if (m_theta < 0.001f) {	m_theta = 0.001f; }
+		//}
+		//void increase_theta() noexcept
+		//{
+		//	m_theta += 5.f;
+		//	if (m_theta >= 90.f) { m_theta = 90.f; }
+		//}
 
 		void switch_projection() noexcept 
 		{ 

@@ -21,6 +21,7 @@
 #include "map/gamemap.h"
 #include "imgui_impl_custom/imgui_impl_glfw.h"
 #include "imgui_impl_custom/imgui_impl_opengl3.h"
+#include "input/camera_controller.hh"
 #include "input/main_window_objects.hh"
 #include "input/main_window_input.hh"
 #include "game_state/data_writer.hh"
@@ -85,7 +86,9 @@ int main()
 	GuiManager gui_mgr{ main_window, gui_events };
 
 
-	auto mwo = MainWindowObjects{ roof_vertices, camera, graphics_manager, tgraphics_mediator, map, gui_mgr, created_buildings };
+	auto camera_controller = CameraController{};
+
+	auto mwo = MainWindowObjects{ roof_vertices, camera, camera_controller, graphics_manager, tgraphics_mediator, map, gui_mgr, created_buildings };
 	main_window.set_userPointer(&mwo);
 
 
@@ -95,6 +98,8 @@ int main()
 	
 	auto ups_counter = TimedCounter{};
 	auto mainLoop_data = MainLoopData{};
+
+	auto input_clock = Clock{};
 
 	while (!main_window.should_close())
 	{
@@ -256,6 +261,8 @@ int main()
 
 																																			mainLoop_data.input_begin();
 		main_window.poll_events();
+		camera_controller.update_camera(input_clock.getElapsedTime().asSeconds(), camera);
+		input_clock.restart();
 																																			mainLoop_data.input_end();
 
 		

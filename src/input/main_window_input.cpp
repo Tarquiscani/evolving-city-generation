@@ -287,7 +287,7 @@ namespace MainWindow
 	void heldKey_callback(Window & window, int const key)
 	{
 		auto u_ptr = std::any_cast<MainWindowObjects *>(window.user_pointer());
-		auto & camera = u_ptr->camera;
+		auto & camera_controller = u_ptr->camera_controller;
 		auto & map = u_ptr->map;
 		auto & created_buildings = u_ptr->created_buildings;
 
@@ -302,20 +302,20 @@ namespace MainWindow
 			switch (key)
 			{
 				case GLFW_KEY_LEFT:
-					camera.decrease_phi();
+					camera_controller.add_phi_input(-1.f);
 					break;
 
 				case GLFW_KEY_RIGHT:
-					camera.increase_phi();
+					camera_controller.add_phi_input(1.f);
 					++inputCounter;
 					break;
 
 				case GLFW_KEY_UP:
-					camera.decrease_theta();
+					camera_controller.add_theta_input(-1.f);
 					break;
 
 				case GLFW_KEY_DOWN:
-					camera.increase_theta();
+					camera_controller.add_theta_input(1.f);
 					break;
 
 				//case GLFW_KEY_E:
