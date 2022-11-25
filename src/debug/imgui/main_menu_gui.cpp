@@ -19,7 +19,7 @@ void MainMenuGui::generate_layout(Vector2i const framebuffer_size)
 	if (m_open)
 	{
 		auto const width = 300.f * GSet::imgui_scale();
-		auto const height = 300.f * GSet::imgui_scale();
+		auto const height = 250.f * GSet::imgui_scale();
 			
 		ImGui::SetNextWindowPos(ImVec2{ (framebuffer_size.x - width) / 2.f, (framebuffer_size.y - height) / 2.f });
 		ImGui::SetNextWindowSize({ width, height });
@@ -28,7 +28,7 @@ void MainMenuGui::generate_layout(Vector2i const framebuffer_size)
 		ImGui::Begin("Main Menu", &m_open, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
 		ImGui::SetWindowFontScale(GSet::imgui_scale());
 			
-		auto const button_dim = ImVec2{ 50.f * GSet::imgui_scale(), 30.f * GSet::imgui_scale() };
+		auto const button_dim = ImVec2{ 70.f * GSet::imgui_scale(), 30.f * GSet::imgui_scale() };
 		auto const offset = (width - button_dim.x) / 2.f;
 			
 		ImGui::SetCursorPosY(70.f * GSet::imgui_scale());
@@ -43,6 +43,13 @@ void MainMenuGui::generate_layout(Vector2i const framebuffer_size)
 		//	
 		//if (ImGui::Button("Load", button_dim)) { ImGui::OpenPopup("LoadModal"); }
 		//generate_loadModal_layout();
+
+		if (ImGui::Button("Controls", button_dim)) 
+		{
+			m_gui_events.push<ControlPanelEv>();
+			ImGui::CloseCurrentPopup(); 
+			switch_state();
+		}
 			
 		ImGui::NewLine(); 
 		ImGui::NewLine(); ImGui::SameLine(offset); 
@@ -189,13 +196,6 @@ void MainMenuGui::generate_optionModal_layout()
 		if (ImGui::Button("Movement Analyzer")) 
 		{
 			m_gui_events.push<MovementAnalyzerEv>();
-			ImGui::CloseCurrentPopup(); 
-			switch_state();
-		}
-
-		if (ImGui::Button("Controls")) 
-		{
-			m_gui_events.push<ControlPanelEv>();
 			ImGui::CloseCurrentPopup(); 
 			switch_state();
 		}

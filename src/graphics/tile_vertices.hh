@@ -231,7 +231,8 @@ class TileVertices
 		
 
 		static inline std::map<TileType, TileSubimages> flat_sprites = {
-				{ TileType::ground,		 { { 5,  4}, 10 }  },
+				//{ TileType::ground,		 { { 5,  4}, 10 }  },
+				{ TileType::ground,		 { { 0,  4}, 10 }  },
 				{ TileType::underground, { {25,  8}, 10 }  },
 				{ TileType::sky,		 { {22, 24}, 10 }  },
 				{ TileType::wooden,      { { 0,  6}, 10 }  },

@@ -1877,7 +1877,7 @@ namespace HipRoofAlgorithm
 				v_rPos.x += GSet::upt * GSet::roof_wyOffset();
 
 
-				free_polygon.push_vertex({ v_rPos.x, v_rPos.y, v_rZ , adj_tex.x, adj_tex.y });
+				free_polygon.push_vertex({ v_rPos.x, v_rPos.y, v_rZ , adj_tex.x * 4, adj_tex.y * 4 });
 			}
 		}
 			
