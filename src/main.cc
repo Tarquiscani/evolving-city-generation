@@ -277,8 +277,8 @@ int main()
 	glfwTerminate();
 
 	}//THIS SCOPING IS FOR DEBUG PURPOSE (to read potential error messages)
-	auto stop = 0;
-	std::cin >> stop;
+	//auto stop = 0;
+	//std::cin >> stop;
 
 	return 0;
 }

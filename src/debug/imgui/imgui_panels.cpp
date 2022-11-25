@@ -287,15 +287,15 @@ void ControlGui::generate_layout(Vector2i const framebuffer_size)
 		ImGui::Text("P:");						ImGui::SameLine(offset); ImGui::Text("Change projection mode");
 		ImGui::Text("Arrow Keys:");				ImGui::SameLine(offset); ImGui::Text("Rotate camera in the perspective projection mode");
 		ImGui::NewLine();
-		ImGui::Text("J:");						ImGui::SameLine(offset); ImGui::Text("Toggle between the depths of the Visual Debug algorithm inspector");
+		ImGui::Text("Y:");						ImGui::SameLine(offset); ImGui::Text("Toggle between the depths of the Visual Debug algorithm inspector");
 		ImGui::Text("1 (not numeric keypad):");	ImGui::SameLine(offset); ImGui::Text("Toggle the opening of the Visual Debug for the city expansion algorithm");
 		ImGui::Text("3 (not numeric keypad):");	ImGui::SameLine(offset); ImGui::Text("Toggle the opening of the Visual Debug for the roof generation algorithm");
 		ImGui::NewLine();
 		ImGui::Text("IN THE VISUAL DEBUG WINDOW");
 		ImGui::Text("B:");			ImGui::SameLine(offset); ImGui::Text("Go to the previous step of the algorithm");
 		ImGui::Text("N:");			ImGui::SameLine(offset); ImGui::Text("Go to the next step of the algorithm");
-		ImGui::Text("Y:");			ImGui::SameLine(offset); ImGui::Text("Navigate quickly through the previous steps of the algorithm");
-		ImGui::Text("K:");			ImGui::SameLine(offset); ImGui::Text("Navigate quickly through the next steps of the algorithm");
+		ImGui::Text("H:");			ImGui::SameLine(offset); ImGui::Text("Navigate quickly through the previous steps of the algorithm");
+		ImGui::Text("J:");			ImGui::SameLine(offset); ImGui::Text("Navigate quickly through the next steps of the algorithm");
 		ImGui::Text("N:");			ImGui::SameLine(offset); ImGui::Text("Navigate to the previous time in which the algorithm was used");
 		ImGui::Text("M:");			ImGui::SameLine(offset); ImGui::Text("Navigate to the next time in which the algorithm was used");
 		ImGui::Text("ESCAPE:");		ImGui::SameLine(offset); ImGui::Text("Close the Visual Debug window and deactivate the debug mode");

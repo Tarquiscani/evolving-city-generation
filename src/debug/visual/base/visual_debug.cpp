@@ -381,8 +381,11 @@ auto VisualDebug::compute_bestTileDimension() -> int
 			  << Logger::nltb << "tileMaxDim_in_screenHeight: " << tileMaxDim_in_screenHeight;
 	#endif
 
-
-	return std::min(tileMaxDim_in_screenWidth, tileMaxDim_in_screenHeight);
+	auto ret = std::min(tileMaxDim_in_screenWidth, tileMaxDim_in_screenHeight);
+		
+	// In case we have a m_frame that is larger than the screen, then we might get '0' as tile dimension. But we can't render a visual debug window
+	// with a "ppt" equal to zero. The minimum is '1'.
+	return std::max(ret, 1); 
 }
 
 
@@ -882,7 +885,7 @@ void VisualDebug::push_cursor(DebugVertices & vertices) const
 void VisualDebug::generate_UI()
 {
 	static Clock fps_timer;
-	std::ostringstream fps_oss; fps_oss << std::setprecision(0) << std::round(1 / fps_timer.getElapsedTime().asSeconds());
+	std::ostringstream fps_oss; fps_oss << std::setprecision(0) << std::fixed << std::round(1 / fps_timer.getElapsedTime().asSeconds());
 	fps_timer.restart();
 
 	std::ostringstream pos_oss; pos_oss << m_cursor_pos;
