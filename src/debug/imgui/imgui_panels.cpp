@@ -24,6 +24,7 @@ GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events)
 	if (!window.is_open()) { throw std::runtime_error("The Window is closed."); }
 
 	if (!control_gui.is_open()) { control_gui.switch_state(); }
+	if (!tutorial_panel.is_open()) { tutorial_panel.switch_state(); }
 }
 
 
@@ -38,6 +39,7 @@ void GuiManager::generate_layout(GameMap const& map, Camera const& camera, Timed
 		mainMenu_gui.generate_layout(m_fbo_size);
 		mainLoopAnalyzer_gui.generate_layout(fps_counter, ups_counter, mainLoop_data);
 		control_gui.generate_layout(m_fbo_size);
+		tutorial_panel.generate_layout(m_fbo_size);
 	}
 }
 

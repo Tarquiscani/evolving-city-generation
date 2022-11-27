@@ -20,6 +20,7 @@
 #include "debug/imgui/main_menu_gui.hh"
 #include "debug/imgui/main_loop_analyzer_gui.hh"
 #include "debug/imgui/movement_gui.hh"
+#include "debug/imgui/tutorial_panel.hh"
 
 
 namespace tgm
@@ -84,6 +85,7 @@ class GuiManager
 		MainMenuGui mainMenu_gui;
 		MainLoopAnalyzerGui mainLoopAnalyzer_gui{};
 		ControlGui control_gui{};
+		TutorialPanel tutorial_panel{};
 
 
 		void switch_visibility() { m_hide = !m_hide; }
