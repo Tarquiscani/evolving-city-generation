@@ -16,7 +16,7 @@ namespace tgm
 struct TutorialStep
 {
 	std::string id;
-	int image;
+	std::string image_name;
 	std::string message;
 };
 

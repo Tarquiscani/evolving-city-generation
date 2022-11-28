@@ -38,7 +38,7 @@ Texture2D::Texture2D(char const* lowDef_path, char const* highDef_path, char con
 	// load image, create texture
 	int nrChannels;
 
-	// Flip loaded texture on the y-axis. Necessary because images usually have the origin in top-left corner,
+	// By default we flip loaded texture on the y-axis. This is needed because images usually have the origin in top-left corner,
 	// while OpenGL expects the origin to be in bottom-left corner. 
 	stbi_set_flip_vertically_on_load(true);
 

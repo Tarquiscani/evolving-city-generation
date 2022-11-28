@@ -18,6 +18,7 @@ class Texture2D
 		Texture2D(char const* lowDef_path, char const* highDef_path, char const* ultraHD_path);
 		Texture2D(Texture2D const&) = delete;
 		Texture2D & operator=(Texture2D const&) = delete;
+		// TODO: Add a destructor that frees the texture automatically
 
 		
 		auto data() const -> unsigned char *

@@ -21,7 +21,7 @@ void MainMenuGui::generate_layout(Vector2i const framebuffer_size)
 		auto const width = 300.f * GSet::imgui_scale();
 		auto const height = 250.f * GSet::imgui_scale();
 			
-		ImGui::SetNextWindowPos(ImVec2{ (framebuffer_size.x - width) / 2.f, (framebuffer_size.y - height) / 2.f });
+		ImGui::SetNextWindowPos({ framebuffer_size.x / 2.f, framebuffer_size.y / 2.f }, ImGuiCond_Always, {0.5f, 0.5f});
 		ImGui::SetNextWindowSize({ width, height });
 
 

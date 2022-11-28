@@ -60,7 +60,7 @@ void BasicGui::generate_layout(Vector2i const framebuffer_size, PlayerManager co
 	std::ostringstream pd_oss; pd_oss << camera.pixel_dim();
 
 
-	ImGui::SetNextWindowPos(ImVec2{ framebuffer_size.x - 145.f * GSet::imgui_scale(), 5.f * GSet::imgui_scale() });
+	ImGui::SetNextWindowPos({ framebuffer_size.x - 5.f * GSet::imgui_scale(), 5.f * GSet::imgui_scale() }, ImGuiCond_Always, {1.f, 0.f});
 
 	ImGui::Begin("Basic Gui", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 	ImGui::SetWindowFontScale(GSet::imgui_scale());
