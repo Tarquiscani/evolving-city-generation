@@ -18,8 +18,10 @@ namespace tgm
 	
 
 
-GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events)
-	: tile_gui{ gui_events }, cityBlock_gui{ gui_events }, mainMenu_gui{ gui_events }, m_fbo_size{ window.fbo_size() }
+GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTutorial & demo_tutorial)
+	: tile_gui{ gui_events }, cityBlock_gui{ gui_events }, mainMenu_gui{ gui_events }, tutorial_panel{ demo_tutorial }, m_fbo_size {
+	window.fbo_size()
+}
 {
 	if (!window.is_open()) { throw std::runtime_error("The Window is closed."); }
 

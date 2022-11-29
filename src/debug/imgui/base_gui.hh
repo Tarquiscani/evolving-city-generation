@@ -2,6 +2,7 @@
 #define GM_BASE_GUI_HH
 
 
+#include <string>
 #include <unordered_map>
 
 #include <imgui.h>

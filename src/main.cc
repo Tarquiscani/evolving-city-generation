@@ -26,6 +26,7 @@
 #include "input/main_window_input.hh"
 #include "game_state/data_writer.hh"
 #include "game_state/data_reader.hh"
+#include "systems/tutorial/demo_tutorial.hh"
 #include "utilities/timed_counter.hh"
 #include "utilities/main_loop_data.hh"
 
@@ -83,7 +84,11 @@ int main()
 	std::vector<BuildingId> created_buildings;
 	Clock expansion_time;
 
-	GuiManager gui_mgr{ main_window, gui_events };
+
+	auto demo_tutorial = DemoTutorial{};
+
+
+	GuiManager gui_mgr{ main_window, gui_events, demo_tutorial };
 
 
 	auto camera_controller = CameraController{};
@@ -264,7 +269,7 @@ int main()
 		camera_controller.update_camera(input_clock.getElapsedTime().asSeconds(), camera);
 		input_clock.restart();
 																																			mainLoop_data.input_end();
-
+		demo_tutorial.update();
 		
 																																			mainLoop_data.tick_end();
 	}

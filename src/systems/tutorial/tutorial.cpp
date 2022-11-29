@@ -25,8 +25,9 @@ void Tutorial::update()
 {
 	std::scoped_lock(m_mutex);
 
-	auto & tt_queue = m_events.get<TutorialTriggerEv>();
+	auto & tutorial_queues = events[m_name];
 
+	auto & tt_queue = tutorial_queues.get<TutorialTriggerEv>();
 	if (!tt_queue.empty())
 	{
 		// Ignore all trigger events other than the first one
@@ -37,9 +38,54 @@ void Tutorial::update()
 
 		auto & e = tt_queue.front();
 
-		handle_trigger(e.tutorial_entry_id);
+		handle_trigger(e.tutorial_step_id);
 
 		tt_queue.pop();
+	}
+
+	auto & gb_queue = tutorial_queues.get<TutorialGoBackEv>();
+	if (!gb_queue.empty())
+	{
+		// Ignore all trigger events other than the first one
+		while (gb_queue.size() > 1)
+		{
+			gb_queue.pop();
+		}
+
+		go_back();
+
+		gb_queue.pop();
+	}
+
+
+	auto & ga_queue = tutorial_queues.get<TutorialGoAheadEv>();
+	if (!ga_queue.empty())
+	{
+		// Ignore all trigger events other than the first one
+		while (ga_queue.size() > 1)
+		{
+			ga_queue.pop();
+		}
+
+		go_ahead();
+
+		ga_queue.pop();
+	}
+}
+
+void Tutorial::go_back() noexcept
+{
+	if (m_current_step_idx > 0)
+	{
+		--m_current_step_idx;
+	}
+}
+
+void Tutorial::go_ahead() noexcept
+{
+	if (!is_over())
+	{
+		++m_current_step_idx;
 	}
 }
 

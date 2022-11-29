@@ -13,17 +13,19 @@ namespace tgm
 
 
 
-class TutorialTriggerEv : public BaseEvent
+struct TutorialTriggerEv : public BaseEvent
 {
-	public:
-		TutorialTriggerEv(std::string const& a_tutorial_entry_id) :
-			tutorial_entry_id(a_tutorial_entry_id) {}
-
-		std::string const tutorial_entry_id;
+		TutorialTriggerEv(std::string const& a_tutorial_step_id)
+			: tutorial_step_id{ a_tutorial_step_id } {}
+		
+		std::string const tutorial_step_id;
 };
 
+struct TutorialGoBackEv : public BaseEvent {};
+struct TutorialGoAheadEv : public BaseEvent {};
 
-using TutorialEventQueues = EventQueuesImpl< TutorialTriggerEv >;
+
+using TutorialEventQueues = EventQueuesImpl< TutorialTriggerEv, TutorialGoBackEv, TutorialGoAheadEv >;
 
 
 

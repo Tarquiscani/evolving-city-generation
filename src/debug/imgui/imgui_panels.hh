@@ -14,6 +14,7 @@
 #include "map/tiles/tile.hh"
 #include "map/city_block.hh"
 #include "systems/player_manager.h"
+#include "systems/tutorial/demo_tutorial.hh"
 #include "utilities/timed_counter.hh"
 #include "utilities/main_loop_data.hh"
 
@@ -75,7 +76,7 @@ class ControlGui : public BaseGui
 class GuiManager
 {
 	public:
-		GuiManager(Window const& window, GuiEventQueues & gui_events);
+		GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTutorial & demo_tutorial);
 
 
 		BasicGui basic_gui{};
@@ -85,7 +86,7 @@ class GuiManager
 		MainMenuGui mainMenu_gui;
 		MainLoopAnalyzerGui mainLoopAnalyzer_gui{};
 		ControlGui control_gui{};
-		TutorialPanel tutorial_panel{};
+		TutorialPanel tutorial_panel;
 
 
 		void switch_visibility() { m_hide = !m_hide; }
