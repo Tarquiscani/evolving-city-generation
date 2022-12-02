@@ -66,6 +66,16 @@ namespace MainWindow
 		{
 			case GLFW_KEY_P:
 				camera.switch_projection();
+
+				if (camera.projection() == Projection::Perspective)
+				{
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode");
+				}
+				else
+				{
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode-disable");
+				}
+
 				break;
 
 			case GLFW_KEY_I:
@@ -114,6 +124,12 @@ namespace MainWindow
 						visualDebug_runtime_maxRecordableDepth = 0;
 
 					std::cout << "VisualDebug max recordable depth: " << visualDebug_runtime_maxRecordableDepth << std::endl;
+
+					if (visualDebug_runtime_maxRecordableDepth == 3)
+					{
+						Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "roof-algorithm-visual-debug-depth-level");
+					}
+
 				#endif
 
 				break;
@@ -144,6 +160,11 @@ namespace MainWindow
 				#if HIPROOFMATRIX_VISUALDEBUG
 					visualDebug_runtime_openWindowForHipRoofMatrix = (visualDebug_runtime_openWindowForHipRoofMatrix ? false : true);
 					std::cout << "HipRoofMatrixVisualDebug: " << (visualDebug_runtime_openWindowForHipRoofMatrix ? "activated" : "deactivated") << std::endl;
+
+					if (visualDebug_runtime_openWindowForHipRoofMatrix)
+					{
+						Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "roof-algorithm-visual-debug-activate-window");
+					}
 				#endif
 
 				break;
@@ -200,13 +221,13 @@ namespace MainWindow
 				//auto prefab = BuildingSpecialCases::replaceable_in_innerYard(map.debug_getPlayerPosition_inTiles());
 				//auto prefab = BuildingSpecialCases::full_replacement(map.debug_getPlayerPosition_inTiles());
 				//auto prefab = BuildingSpecialCases::disconnecting_replacement(map.debug_getPlayerPosition_inTiles());
-				auto prefab = BuildingSpecialCases::disconnecting_replacement2(map.debug_getPlayerPosition_inTiles());
+				//auto prefab = BuildingSpecialCases::disconnecting_replacement2(map.debug_getPlayerPosition_inTiles());
 				//auto prefab = BuildingSpecialCases::nondisconnecting_replacement(map.debug_getPlayerPosition_inTiles());
 				//auto prefab = BuildingSpecialCases::firstArea_replacement(map.debug_getPlayerPosition_inTiles());
 				//auto prefab = BuildingSpecialCases::thinInnerYard_replacement(map.debug_getPlayerPosition_inTiles());
 
-				//auto prefab = PrefabBuilding{ "farm" };
-				//prefab.append_area(AreaType::field, map.debug_getPlayerPosition_inTiles() + Vector3i( 2, 2, 0), { 10, 10 });
+				auto prefab = PrefabBuilding{ "farm" };
+				prefab.append_area(AreaType::field, map.debug_getPlayerPosition_inTiles() + Vector3i( 2, 2, 0), { 10, 10 });
 
 
 				auto const& [bid, building] = map.debug_build_prefabBuilding(prefab);
@@ -214,6 +235,8 @@ namespace MainWindow
 				{
 					created_buildings.push_back(bid);
 				}
+
+				Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "first-building");
 
 				break;
 			}
@@ -229,14 +252,16 @@ namespace MainWindow
 					if (std::find(created_buildings.cbegin(), created_buildings.cend(), bid) == created_buildings.cend()) { std::cout << "Cannot remove an automatically built building" << std::endl; }
 					map.debug_remove_building(bid);
 					created_buildings.erase(std::find(created_buildings.begin(), created_buildings.end(), bid));
+					
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "remove-building");
 				}
 
 				break;
 			}
-
-			// No key assigned
-				//sim_settings.map.generate_roofs = !sim_settings.map.generate_roofs;
-				//break;
+			
+			case GLFW_KEY_9:
+				sim_settings.map.generate_roofs = !sim_settings.map.generate_roofs;
+				break;
 
 			//case GLFW_KEY_F:
 			//{
@@ -303,19 +328,23 @@ namespace MainWindow
 			{
 				case GLFW_KEY_LEFT:
 					camera_controller.add_phi_input(-1.f);
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode-rotation");
 					break;
 
 				case GLFW_KEY_RIGHT:
 					camera_controller.add_phi_input(1.f);
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode-rotation");
 					++inputCounter;
 					break;
 
 				case GLFW_KEY_UP:
 					camera_controller.add_theta_input(-1.f);
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode-rotation");
 					break;
 
 				case GLFW_KEY_DOWN:
 					camera_controller.add_theta_input(1.f);
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "perspective-mode-rotation");
 					break;
 
 				//case GLFW_KEY_E:
@@ -331,6 +360,12 @@ namespace MainWindow
 				case GLFW_KEY_G:
 				{
 					debug_expand_city(map, created_buildings);
+
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "city-generation");
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "refill");
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "roof-algorithm-visual-debug-record");
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "roof-algorithm-visual-debug-record-more");
+
 					break;
 				}
 			}
@@ -414,6 +449,16 @@ namespace MainWindow
 		auto & camera = u_ptr->camera;
 
 		camera.shift_zoom( - y_offset / 10.f);
+
+		Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "zoom");
+		if (camera.is_zoom_speed_fast())
+		{
+			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "superzoom");
+		}		
+		if (camera.zoom_level() >= 10.f)
+		{
+			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "zoom-out-before-generation");
+		}
 	}
 
 

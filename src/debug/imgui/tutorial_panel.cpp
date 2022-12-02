@@ -44,7 +44,7 @@ void TutorialPanel::generate_layout(Vector2i const framebuffer_size)
 			auto const width_min = 400.f * GSet::imgui_scale();
 			auto const height_min = 350.f * GSet::imgui_scale();
 
-			ImGui::SetNextWindowPos({ framebuffer_size.x * 0.5f, framebuffer_size.y * 0.5f }, ImGuiCond_Once, { 0.5f,0.5f });
+            ImGui::SetNextWindowPos({ 10.f * GSet::imgui_scale(), 10.f * GSet::imgui_scale() });
 			ImGui::SetNextWindowSizeConstraints({ width_min, height_min }, { framebuffer_size.x * 1.f, framebuffer_size.y * 1.f });
 
 			ImGui::Begin("Tutorial Panel", &m_open, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize);
@@ -80,23 +80,20 @@ void TutorialPanel::generate_layout(Vector2i const framebuffer_size)
             {
                 Tutorial::add_event<TutorialGoAheadEv>(m_demo_tutorial.name());
             }
+
             
             auto const& img_name = curr_tutorial_step->image_name;
             if (!img_name.empty())
             {
                 auto const img = load_image(img_name);
+                ImGui::SetCursorPosX((ImGui::GetWindowSize().x - img.width) * 0.5f);    // Center the image
                 ImGui::Image((void*)(intptr_t)img.id, ImVec2(img.width, img.height), ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
             }
-
-            auto const min_text_height = 100.f * GSet::imgui_scale();
-            ImGui::BeginChild("scrolling", ImVec2(0, min_text_height), false, ImGuiWindowFlags_HorizontalScrollbar);
-
+            
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
             ImGui::NewLine();
             centered_text(curr_tutorial_step->message);
             ImGui::PopStyleVar();
-
-            ImGui::EndChild();
 
 
 			ImGui::End();

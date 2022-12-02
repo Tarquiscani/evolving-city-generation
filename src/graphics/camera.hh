@@ -38,6 +38,8 @@ class Camera
 		static auto constexpr phi_max = 100000.f;		
 		static auto constexpr theta_min = 1.f;
 		static auto constexpr theta_max = 89.f;
+		static auto constexpr zoom_speed_default = 1.f;
+		static auto constexpr zoom_speed_fast = 10.f;
 		// Maximum number of noRoofRects
 		static auto constexpr max_noRoofRects = 4u;
 		static auto constexpr max_noRoofIntersections = 2u;
@@ -55,6 +57,9 @@ class Camera
 		auto zoom() const noexcept -> float { return m_zoom; }
 		auto phi() const noexcept -> float { return m_phi; }
 		auto theta() const noexcept -> float { return m_theta; }
+		
+		auto zoom_level() const noexcept { return m_zoom; }
+		bool is_zoom_speed_fast() const noexcept { return m_zoom_speed == zoom_speed_fast; }
 
 		////
 		//	@return: Distance from the target (in pixels -- world space reference system).
@@ -91,12 +96,13 @@ class Camera
 
 		void shift_zoom(float shift) noexcept
 		{
-			m_zoom += shift * m_zoom_speed;
+			auto const new_zoom = m_zoom + shift * m_zoom_speed;
+			m_zoom = std::roundf(new_zoom * 10.f) * 0.1f;	// Round the zoom to the first decimal digit
 			if (m_zoom < 0.1f) { m_zoom = 0.1f; }
 		}
 		void change_zoomSpeed() noexcept
 		{
-			m_zoom_speed = (m_zoom_speed == 1.f) ? 10.f : 1.f;
+			m_zoom_speed = (m_zoom_speed == zoom_speed_default) ? zoom_speed_fast : zoom_speed_default;
 		}
 		
 		void set_phi(float const new_phi) noexcept { m_phi = new_phi; }

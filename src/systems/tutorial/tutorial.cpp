@@ -30,12 +30,6 @@ void Tutorial::update()
 	auto & tt_queue = tutorial_queues.get<TutorialTriggerEv>();
 	if (!tt_queue.empty())
 	{
-		// Ignore all trigger events other than the first one
-		while (tt_queue.size() > 1)
-		{
-			tt_queue.pop();
-		}
-
 		auto & e = tt_queue.front();
 
 		handle_trigger(e.tutorial_step_id);
@@ -46,12 +40,6 @@ void Tutorial::update()
 	auto & gb_queue = tutorial_queues.get<TutorialGoBackEv>();
 	if (!gb_queue.empty())
 	{
-		// Ignore all trigger events other than the first one
-		while (gb_queue.size() > 1)
-		{
-			gb_queue.pop();
-		}
-
 		go_back();
 
 		gb_queue.pop();
@@ -61,12 +49,6 @@ void Tutorial::update()
 	auto & ga_queue = tutorial_queues.get<TutorialGoAheadEv>();
 	if (!ga_queue.empty())
 	{
-		// Ignore all trigger events other than the first one
-		while (ga_queue.size() > 1)
-		{
-			ga_queue.pop();
-		}
-
 		go_ahead();
 
 		ga_queue.pop();

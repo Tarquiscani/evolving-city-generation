@@ -7,6 +7,7 @@
 #include "mediators/queues/mobile_ev.hh"
 #include "map/map_forward_decl.hh"
 #include "characters/mobile.h"
+#include "tutorial/tutorial.hh"
 
 #include "settings/debug/debug_settings.hh"
 
@@ -31,6 +32,7 @@ class PlayerManager
 				else
 				{
 					m_player_body.add_move_direction(e.direction);
+					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "movement");
 				}
 
 				pm_queue.pop();

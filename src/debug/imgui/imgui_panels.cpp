@@ -25,7 +25,6 @@ GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTu
 {
 	if (!window.is_open()) { throw std::runtime_error("The Window is closed."); }
 
-	if (!control_gui.is_open()) { control_gui.switch_state(); }
 	if (!tutorial_panel.is_open()) { tutorial_panel.switch_state(); }
 }
 
@@ -286,6 +285,7 @@ void ControlGui::generate_layout(Vector2i const framebuffer_size)
 		ImGui::NewLine();
 		ImGui::Text("I:");						ImGui::SameLine(offset); ImGui::Text("Hide HUD");
 		ImGui::Text("O:");						ImGui::SameLine(offset); ImGui::Text("Toggle all doors");
+		ImGui::Text("9 (not numeric keypad):");	ImGui::SameLine(offset); ImGui::Text("Disable roof generation");
 		ImGui::Text("Mouse Middle Button:");	ImGui::SameLine(offset); ImGui::Text("Open information panel about that tile");
 		ImGui::NewLine();
 		ImGui::Text("P:");						ImGui::SameLine(offset); ImGui::Text("Change projection mode");
