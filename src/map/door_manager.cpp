@@ -1,6 +1,9 @@
 #include "door_manager.hh"
 
 
+#include <chrono>
+
+
 namespace tgm
 {
 
@@ -82,6 +85,17 @@ void DoorManager::open_door(Door & d)
 	auto const vert = d.vertical();
 	
 	m_dynamic_manager.modify(d.sprite_id(), compute_volume(pos, vert, true), vert ? verticalOpen_subimage : horizontalOpen_subimage);
+
+	// Reproduce a random sound
+	auto const p1 = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	if (p1 % 100 > 80)
+	{
+		m_audio_manager.reproduce_sound("media/audio/open_door.wav");
+	}
+	else
+	{
+		m_audio_manager.reproduce_sound("media/audio/open_door_2.wav");
+	}
 
 	m_tiles->open_door(pos);
 

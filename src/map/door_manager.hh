@@ -1,14 +1,16 @@
 #ifndef GM_DOOR_MANAGER_HH
 #define GM_DOOR_MANAGER_HH
 
-#include "system/parallelepiped.hh"
+
+#include "audio/audio_manager.hh"
 #include "data_strctures/data_array.hh"
-#include "mediators/queues/door_ev.hh"
 #include "graphics/dynamic_subimage.hh"
 #include "graphics/dynamic_manager.hh"
 #include "map/map_forward_decl.hh"
 #include "map/tiles/tile_set.hh"
+#include "mediators/queues/door_ev.hh"
 #include "objects/door.hh"
+#include "system/parallelepiped.hh"
 
 #include "debug/visual/player_movement_stream.hh"
 
@@ -21,8 +23,8 @@ namespace tgm
 class DoorManager
 {
 	public:
-		DoorManager(DoorEventQueues & door_events, DataArray<Door> & doors, TileSet & tiles, DynamicManager & dynamic_manager) :
-			m_door_events(&door_events), m_doors(doors), m_tiles(&tiles), m_dynamic_manager(dynamic_manager) {}
+		DoorManager(DoorEventQueues & door_events, DataArray<Door> & doors, TileSet & tiles, DynamicManager & dynamic_manager, AudioManager & audio_manager) :
+			m_door_events(&door_events), m_doors(doors), m_tiles(&tiles), m_dynamic_manager(dynamic_manager), m_audio_manager(audio_manager) {}
 
 		void update();
 		auto create_door(Vector3i const& pos, bool const vertical) -> DoorId;
@@ -36,6 +38,7 @@ class DoorManager
 		DataArray<Door> & m_doors;
 		TileSet * m_tiles; 
 		DynamicManager & m_dynamic_manager;
+		AudioManager & m_audio_manager;
 		
 
 		void open_door(Door & d);

@@ -454,10 +454,14 @@ namespace MainWindow
 		if (camera.is_zoom_speed_fast())
 		{
 			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "superzoom");
-		}		
+		}
 		if (camera.zoom_level() >= 10.f)
 		{
 			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "zoom-out-before-generation");
+		}
+		if (camera.zoom_level() >= 0.95f && camera.zoom_level() <= 1.05f)
+		{
+			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "explore-the-city-zoom-in");
 		}
 	}
 

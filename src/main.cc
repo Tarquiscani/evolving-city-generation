@@ -6,6 +6,7 @@
 #include <imgui.h>
 #include "window/glfw_wrapper.hh"			//must be included before imgui_impl_*.h
 
+#include "audio/audio_manager.hh"
 #include "settings/simulation/simulation_settings.hh"
 #include "system/clock.hh"
 #include "window/window_manager.hh"
@@ -43,6 +44,9 @@ int main()
 
 	////allocatedMemory_forecast();
 
+	auto audio_manager = AudioManager{};
+	audio_manager.reproduce_sound_loop("media/audio/alexander_nakarada_adventure.mp3");
+
 	init_glfw();
 
 
@@ -70,7 +74,7 @@ int main()
 	auto rgraphics_mediator = RoofGraphicsMediator{};
 	auto gui_events = GuiEventQueues{};
 	//TODO: NOW: Vorrei che la constness delle varie dipendenze rifletta il fatto che vengano modificate o meno dal dipendente (usa tecnica puntatori vista su Stackoverflow)
-	auto map = GameMap{ sim_settings.test_seed, dynamic_manager, camera, tgraphics_mediator, rgraphics_mediator, gui_events };
+	auto map = GameMap{ sim_settings.test_seed, dynamic_manager, camera, tgraphics_mediator, rgraphics_mediator, audio_manager, gui_events };
 
 	auto tileGraphics_mgr = TileGraphicsManager{ tgraphics_mediator, tile_vertices };
 	auto roofGraphics_mgr = RoofGraphicsManager{ rgraphics_mediator, roof_vertices };
@@ -85,7 +89,7 @@ int main()
 	Clock expansion_time;
 
 
-	auto demo_tutorial = DemoTutorial{};
+	auto demo_tutorial = DemoTutorial{ audio_manager };
 
 
 	GuiManager gui_mgr{ main_window, gui_events, demo_tutorial };

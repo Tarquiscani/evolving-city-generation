@@ -46,7 +46,7 @@ class GameMap
 		//	Create an unitialized Map.
 		////
 		GameMap(unsigned seed, DynamicManager & dynamic_manager, Camera & camera, 
-				TileGraphicsMediator & tgraphics_mediator, RoofGraphicsMediator & rg_mediator, GuiEventQueues & gui_events);
+				TileGraphicsMediator & tgraphics_mediator, RoofGraphicsMediator & rg_mediator, AudioManager & audio_manager, GuiEventQueues & gui_events);
 		~GameMap();
 	
 		GameMap(const GameMap&) = delete;

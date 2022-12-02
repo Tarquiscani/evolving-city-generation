@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "audio/audio_manager.hh"
 #include "mediators/queues/tutorial_ev.hh"
 
 
@@ -36,7 +37,7 @@ class Tutorial
 		static inline std::unordered_set<std::string> registered_tutorials;
 
 	public:
-		Tutorial(std::string const& name) : m_name{ name } 
+		Tutorial(std::string const& name, AudioManager & audio_manager) : m_name{ name }, m_audio_manager(audio_manager)
 		{
 			// Check that no other tutorial with the same name exists
 			assert(registered_tutorials.find("name") == registered_tutorials.cend());
@@ -65,10 +66,14 @@ class Tutorial
 
 		std::mutex m_mutex;
 
+		AudioManager & m_audio_manager;
+
 		void handle_trigger(std::string const& trigger_step_id);
 
 		void go_back() noexcept;
 		void go_ahead() noexcept;
+		
+		void internal_go_ahead();
 };
 
 

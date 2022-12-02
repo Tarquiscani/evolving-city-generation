@@ -67,7 +67,7 @@ void Tutorial::go_ahead() noexcept
 {
 	if (!is_over())
 	{
-		++m_current_step_idx;
+		internal_go_ahead();
 	}
 }
 
@@ -77,7 +77,7 @@ void Tutorial::handle_trigger(std::string const& trigger_step_id)
 	{
 		if (trigger_step_id == m_steps[m_current_step_idx].id)
 		{
-			++m_current_step_idx;
+			internal_go_ahead();
 		}
 	}
 	else
@@ -86,6 +86,13 @@ void Tutorial::handle_trigger(std::string const& trigger_step_id)
 	}
 }
 
+void Tutorial::internal_go_ahead()
+{
+	assert(!is_over());
+
+	++m_current_step_idx;
+	m_audio_manager.reproduce_sound("media/audio/success.wav");
+}
 
 
 } // namespace tgm

@@ -6,8 +6,8 @@ namespace tgm
 
 
 
-DemoTutorial::DemoTutorial() 
-	: Tutorial("demo-tutorial")
+DemoTutorial::DemoTutorial(AudioManager & audio_manager) 
+	: Tutorial("demo-tutorial", audio_manager)
 {
 	add_step({ "welcome", "WELCOME", 
 			   "Welcome to the Evolving City Generation demo.\n"
@@ -42,8 +42,12 @@ DemoTutorial::DemoTutorial()
 	add_step({ "city-generation", "CITY GENERATION", 
 			   "Now you're ready for your first city generation. Hold the key 'G'.", 
 			   "", false});
+	add_step({ "explore-the-city-zoom-in", "CITY EXPLORATION", 
+			   "Now you can explore the city.\nZoom again up to 'Zoom: 1'.\n"
+			   "(Hold SHIFT while rolling the mouse wheel)", 
+			   "", false});
 	add_step({ "explore-the-city", "CITY EXPLORATION", 
-			   "Now you can explore the city.\nRemember to zoom in (up to 'Zoom: 1').\n"
+			   "Now you can explore the city.\n"
 			   "With the key 'B' you can increase the character speed.\nAnd with the key 'V' you can decrease the speed.", 
 			   "", true});
 
@@ -68,7 +72,7 @@ DemoTutorial::DemoTutorial()
 			   "When all existing blocks have reached the maximum size, then a new building is created in a new block.", 
 			   "tutorial_algorithm_new_block", true});
 	add_step({ "remove-building", "REMOVE A BUILDING", 
-			   "With BACKSPACE you can remove a building. The removed building is the one on the bottom-right tile with respect to the character.", 
+			   "With BACKSPACE you can remove a building. The removed building is the one on the bottom-right tile with respect to the character.\n""Position yourself next to a building and remove it.", 
 			   "tutorial_remove", false});
 	add_step({ "refill", "REFILL", 
 			   "Now if you press 'G' you see that the algorithm quickly refill the empty area that was previously occupied by the building you just removed.", 
@@ -84,7 +88,7 @@ DemoTutorial::DemoTutorial()
 			   "", false});
 	add_step({ "perspective-mode-rotation", "ROTATING CAMERA IN PERSPECTIVE MODE", 
 			   "What a headache! You have now discovered the hard truth. The zoom still works in this mode, moreover you can rotate the camera using the arrow keys."
-			   "Try it yourself if you don't believe it.",
+			   " Try it yourself if you don't believe it.",
 			   "", false});
 	add_step({ "perspective-mode-disable", "DISABLING PERSPECTIVE MODE", 
 			   "Go back to the orthogonal projection mode by pressing 'P'.",
@@ -128,7 +132,7 @@ DemoTutorial::DemoTutorial()
 			   "* B: Go to the previous step of the VisualDebug\n"
 			   "* N: Go to the next step of the VisualDebug\n"
 			   "* H: Navigate quickly through the previous steps of the algorithm\n"
-			   "* J: Navigate quickly through the next steps of the algorithm\n"
+			   "* J: Navigate quickly through the next steps of the algorithm\n\n"
 			   "When you are done, press 'G' to generate another roof and open the Visual Debug.\n",
 			   "", false});
 	
