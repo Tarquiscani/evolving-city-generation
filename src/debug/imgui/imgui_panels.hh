@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <chrono>
-#include <imgui.h>
+
+#include <imgui_impl_custom/imgui_wrapper.h>
 
 #include "system/vector3.hh"
 #include "system/clock.hh"
@@ -13,7 +14,7 @@
 #include "map/gamemap.h"
 #include "map/tiles/tile.hh"
 #include "map/city_block.hh"
-#include "systems/player_manager.h"
+#include "systems/player_manager.hh"
 #include "systems/tutorial/demo_tutorial.hh"
 #include "utilities/timed_counter.hh"
 #include "utilities/main_loop_data.hh"
@@ -73,6 +74,12 @@ class ControlGui : public BaseGui
 		void generate_layout(Vector2i const framebuffer_size);
 };
 
+class OnScreenMessagePanel : public BaseGui
+{
+	public:
+		void generate_layout(Vector2i const framebuffer_size, ImFont * custom_font);
+};
+
 class GuiManager
 {
 	public:
@@ -87,6 +94,7 @@ class GuiManager
 		MainLoopAnalyzerGui mainLoopAnalyzer_gui{};
 		ControlGui control_gui{};
 		TutorialPanel tutorial_panel;
+		OnScreenMessagePanel on_screen_message_panel{};
 
 
 		void switch_visibility() { m_hide = !m_hide; }
@@ -100,6 +108,8 @@ class GuiManager
 	private:
 		bool m_hide = false;
 		Vector2i m_fbo_size;
+
+		ImFont* m_custom_font;
 };
 
 

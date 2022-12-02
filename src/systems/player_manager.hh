@@ -1,15 +1,20 @@
-#ifndef GM_PLAYER_MANAGER_H
-#define GM_PLAYER_MANAGER_H
+#ifndef GM_PLAYER_MANAGER_HH
+#define GM_PLAYER_MANAGER_HH
 
 
-#include "system/vector2.hh"
+#include "characters/mobile.h"
+#include "map/map_forward_decl.hh"
 #include "mediators/queues/player_ev.hh"
 #include "mediators/queues/mobile_ev.hh"
-#include "map/map_forward_decl.hh"
-#include "characters/mobile.h"
-#include "tutorial/tutorial.hh"
+#include "system/vector2.hh"
 
 #include "settings/debug/debug_settings.hh"
+
+
+namespace tgm
+{
+
+
 
 class PlayerManager
 {
@@ -18,52 +23,7 @@ class PlayerManager
 			m_player_events(player_events), m_player_body(player_body) {}
 		
 
-		void update()
-		{
-			auto & pm_queue = m_player_events.get<PlayerMovementEv>();
-			while (!pm_queue.empty())
-			{
-				auto & e = pm_queue.front();
-
-				if (e.direction == Direction::none)
-				{
-					m_player_body.set_moveDirection(Direction::none);
-				}
-				else
-				{
-					m_player_body.add_move_direction(e.direction);
-					Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "movement");
-				}
-
-				pm_queue.pop();
-			}
-
-			
-			auto & ddpv_queue = m_player_events.get<DebugDecreasePlayerVelocityEv>();
-			while (!ddpv_queue.empty())
-			{
-				auto const new_vel = m_player_body.velocity() / 1.71f;
-				if (new_vel > 0.f)
-				{
-					m_player_body.set_velocity(new_vel);
-				}
-
-				ddpv_queue.pop();
-			}
-			
-
-			auto & dipv_queue = m_player_events.get<DebugIncreasePlayerVelocityEv>();
-			while (!dipv_queue.empty())
-			{
-				auto const new_vel = m_player_body.velocity() * 2.f;
-				if (new_vel < 20.f)
-				{
-					m_player_body.set_velocity(new_vel);
-				}
-
-				dipv_queue.pop();
-			}
-		}
+		void update();
 
 		////
 		//	@return: Tile occupied by the center of the player body volume (in tiles - map reference system).
@@ -114,4 +74,9 @@ class PlayerManager
 		MobileBody & m_player_body;
 };
 
-#endif //GM_PLAYER_MANAGER_H
+
+} // namespace tgm
+
+
+
+#endif //GM_PLAYER_MANAGER_HH

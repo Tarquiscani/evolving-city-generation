@@ -1,15 +1,17 @@
 #include "main_window_input.hh"
 
 
-#include "settings/simulation/simulation_settings.hh"
+#include "graphics/algorithms/hip_roof/tests/hip_roof_tests.hh"
 #include "map/buildings/building_recipe.hh"
 #include "map/buildings/tests/building_tests.hh"
-#include "graphics/algorithms/hip_roof/tests/hip_roof_tests.hh"
+#include "settings/simulation/simulation_settings.hh"
+#include "ui/on_screen_messages.hh"
 
+#include "debug/visual/building_expansion/building_expansion_visual_debug.hh"
 #include "settings/debug/buildingexpansion_visualdebug.hh"
 #include "settings/debug/playermovement_visualdebug.hh"
 #include "settings/debug/hiproofmatrix_visualdebug_settings.hh"
-#include "debug/visual/building_expansion/building_expansion_visual_debug.hh"
+
 
 namespace tgm
 {
@@ -123,7 +125,9 @@ namespace MainWindow
 					if (visualDebug_runtime_maxRecordableDepth > visualDebug_maxStepDepth)
 						visualDebug_runtime_maxRecordableDepth = 0;
 
-					std::cout << "VisualDebug max recordable depth: " << visualDebug_runtime_maxRecordableDepth << std::endl;
+					auto oss = std::ostringstream{}; oss << "VisualDebug Depth Level: " << visualDebug_runtime_maxRecordableDepth;
+					std::cout << oss.str() << std::endl;
+					g_on_screen_messages.push_new_message(oss.str());
 
 					if (visualDebug_runtime_maxRecordableDepth == 3)
 					{
@@ -139,7 +143,10 @@ namespace MainWindow
 			{
 				#if BUILDEXP_VISUALDEBUG
 					visualDebug_runtime_openWindowForBuildingExpansion = (visualDebug_runtime_openWindowForBuildingExpansion ? false : true);
-					std::cout << "BuildingExpansionVisualDebug: " << (visualDebug_runtime_openWindowForBuildingExpansion ? "activated" : "deactivated") << std::endl;
+
+					auto oss = std::ostringstream{}; oss << "BuildingExpansionVisualDebug window: " << (visualDebug_runtime_openWindowForBuildingExpansion ? "activated" : "hidden");
+					std::cout << oss.str() << std::endl;
+					g_on_screen_messages.push_new_message(oss.str());
 				#endif
 
 				break;
@@ -149,7 +156,10 @@ namespace MainWindow
 			{
 				#if PLAYERMOVEMENT_VISUALDEBUG
 					visualDebug_runtime_openWindowForPlayerMovement = (visualDebug_runtime_openWindowForPlayerMovement ? false : true);
-					std::cout << "PlayerMovementVisualDebug: " << (visualDebug_runtime_openWindowForPlayerMovement ? "activated" : "deactivated") << std::endl;
+
+					auto oss = std::ostringstream{}; oss << "PlayerMovementVisualDebug window: " << (visualDebug_runtime_openWindowForPlayerMovement ? "activated" : "hidden");
+					std::cout << oss.str() << std::endl;
+					g_on_screen_messages.push_new_message(oss.str());
 				#endif
 
 				break;
@@ -159,7 +169,10 @@ namespace MainWindow
 			{
 				#if HIPROOFMATRIX_VISUALDEBUG
 					visualDebug_runtime_openWindowForHipRoofMatrix = (visualDebug_runtime_openWindowForHipRoofMatrix ? false : true);
-					std::cout << "HipRoofMatrixVisualDebug: " << (visualDebug_runtime_openWindowForHipRoofMatrix ? "activated" : "deactivated") << std::endl;
+
+					auto oss = std::ostringstream{}; oss << "HipRoofMatrixVisualDebug window: " << (visualDebug_runtime_openWindowForHipRoofMatrix ? "activated" : "hidden");
+					std::cout << oss.str() << std::endl;
+					g_on_screen_messages.push_new_message(oss.str());
 
 					if (visualDebug_runtime_openWindowForHipRoofMatrix)
 					{
@@ -173,7 +186,9 @@ namespace MainWindow
 			case GLFW_KEY_0:
 			{
 				#if VISUALDEBUG
-					std::cout << "highlightings_count: " << debug_highlightings_count + debug_unhighlightings_count << std::endl;
+					auto oss = std::ostringstream{}; oss << "highlightings_count: " << debug_highlightings_count + debug_unhighlightings_count;
+					std::cout << oss.str() << std::endl;
+					g_on_screen_messages.push_new_message(oss.str());
 				#endif
 
 				break;
@@ -260,8 +275,14 @@ namespace MainWindow
 			}
 			
 			case GLFW_KEY_9:
+			{
 				sim_settings.map.generate_roofs = !sim_settings.map.generate_roofs;
+
+				auto oss = std::ostringstream{}; oss << "Roof generation: " << (sim_settings.map.generate_roofs ? "enabled" : "disabled");
+				g_on_screen_messages.push_new_message(oss.str());
+
 				break;
+			}
 
 			//case GLFW_KEY_F:
 			//{
@@ -271,8 +292,11 @@ namespace MainWindow
 			//}
 
 			case GLFW_KEY_O:
+			{
 				map.debug_interactWithAllDoors();
+				g_on_screen_messages.push_new_message("Toggled all doors");
 				break;
+			}
 
 			//case GLFW_KEY_D:
 			//{

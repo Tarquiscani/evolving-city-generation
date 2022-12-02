@@ -27,7 +27,7 @@
 #include "map/buildings/building_manager.hh"
 #include "door_manager.hh"
 #include "map_graph.h"
-#include "systems/player_manager.h"
+#include "systems/player_manager.hh"
 #include "systems/mobile_manager.h"
 #include "objects/door.hh"
 #include "characters/mobile.h"

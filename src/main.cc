@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <cfenv>	//TODO: NOW: Rimuovi dopo i test.
 
-#include <imgui.h>
+#include <imgui_impl_custom/imgui_wrapper.h>
 #include "window/glfw_wrapper.hh"			//must be included before imgui_impl_*.h
 
 #include "audio/audio_manager.hh"
@@ -28,6 +28,7 @@
 #include "game_state/data_writer.hh"
 #include "game_state/data_reader.hh"
 #include "systems/tutorial/demo_tutorial.hh"
+#include "ui/on_screen_messages.hh"
 #include "utilities/timed_counter.hh"
 #include "utilities/main_loop_data.hh"
 
@@ -274,6 +275,7 @@ int main()
 		input_clock.restart();
 																																			mainLoop_data.input_end();
 		demo_tutorial.update();
+		g_on_screen_messages.update();
 		
 																																			mainLoop_data.tick_end();
 	}

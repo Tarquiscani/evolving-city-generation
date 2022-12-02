@@ -9,7 +9,7 @@
 #include <optional>
 #include <any>
 
-#include <imgui.h>
+#include <imgui_impl_custom/imgui_wrapper.h>
 
 #include "system/vector2.hh"
 #include "system/clock.hh"

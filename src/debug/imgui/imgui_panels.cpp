@@ -8,6 +8,7 @@
 
 #include "imgui_impl_custom/imgui_impl_opengl3.h"
 #include "imgui_impl_custom/imgui_impl_glfw.h"
+#include "ui/on_screen_messages.hh"
 #include "utilities.hh"
 
 #include "debug/logger/debug_printers.h"
@@ -26,6 +27,10 @@ GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTu
 	if (!window.is_open()) { throw std::runtime_error("The Window is closed."); }
 
 	if (!tutorial_panel.is_open()) { tutorial_panel.switch_state(); }
+
+    auto & io = ImGui::GetIO();
+	io.Fonts->AddFontDefault();
+    m_custom_font = io.Fonts->AddFontFromFileTTF("media/fonts/Roboto-Bold.ttf", 30 * GSet::imgui_scale());
 }
 
 
@@ -41,6 +46,7 @@ void GuiManager::generate_layout(GameMap const& map, Camera const& camera, Timed
 		mainLoopAnalyzer_gui.generate_layout(fps_counter, ups_counter, mainLoop_data);
 		control_gui.generate_layout(m_fbo_size);
 		tutorial_panel.generate_layout(m_fbo_size);
+		on_screen_message_panel.generate_layout(m_fbo_size, m_custom_font);
 	}
 }
 
@@ -308,6 +314,29 @@ void ControlGui::generate_layout(Vector2i const framebuffer_size)
 		ImGui::End();
 	}
 }
+
+
+void OnScreenMessagePanel::generate_layout(Vector2i const framebuffer_size, ImFont * custom_font)
+{
+	if (g_on_screen_messages.is_visible())
+	{
+		ImGui::SetNextWindowPos({ framebuffer_size.x / 2.f, framebuffer_size.y / 2.f }, ImGuiCond_Always, {0.5f, 0.5f});
+		ImGui::Begin("Main Menu", &m_open, 
+					 ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBackground 
+					 | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoNav);
+		ImGui::SetWindowFontScale(GSet::imgui_scale());
+
+		auto const opacity = (1.333333f * g_on_screen_messages.remaining_life()) / (0.3333333f + g_on_screen_messages.remaining_life());
+		std::cout << std::setprecision(2) << g_on_screen_messages.remaining_life() << "--" << opacity << std::endl;
+
+        ImGui::PushFont(custom_font);
+		ImGui::TextColored(ImVec4{ 1.f, 1.f, 1.f, opacity }, g_on_screen_messages.message().c_str() );
+        ImGui::PopFont();
+
+		ImGui::End();
+	}
+}
+
 
 
 } //namespace tgm

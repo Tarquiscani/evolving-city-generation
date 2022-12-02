@@ -3,7 +3,7 @@
 
 
 #include "graphics/camera.hh"
-#include "systems/player_manager.h"
+#include "systems/player_manager.hh"
 #include "debug/imgui/base_gui.hh"
 
 
