@@ -1,7 +1,7 @@
 include "tile.fbs";
 
 
-namespace tgm.schema;
+namespace tgmschema;
 
 
 struct Vector3i

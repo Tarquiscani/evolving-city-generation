@@ -24,7 +24,6 @@ auto operator<<(Logger & lgr, FreeVertex const fv) -> Logger &;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_FREE_VERTEX_HH

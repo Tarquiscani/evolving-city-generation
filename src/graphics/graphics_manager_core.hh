@@ -2,14 +2,15 @@
 #define GM_GRAPHICS_MANAGER_CORE_HH
 
 
-
 #include <string>
+
 #include <glad/glad.h>
 #define GLM_FORCE_SILENT_WARNINGS
 #include <glm/glm.hpp>
 
-#include <system/vector2.hh>
-#include <system/vector3.hh>
+#include "system/vector2.hh"
+#include "system/vector3.hh"
+
 
 namespace tgm
 {
@@ -70,8 +71,6 @@ void debug_printDrawArraysIndirectCommandBuffer(GLuint const cmd_id);
 
 
 } //namespace tgm
-using namespace tgm;
-
 
 
 #endif //GM_GRAPHICS_MANAGER_CORE_HH

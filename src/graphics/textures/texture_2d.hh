@@ -2,10 +2,11 @@
 #define GM_TEXTURE_2D_HH
 
 
-#include <iostream>
 #include <exception>
+#include <iostream>
 
 #include "settings/graphics_settings.hh"
+
 
 namespace tgm
 {
@@ -82,7 +83,6 @@ inline Texture2D roof_texture{ "media/textures/roof_texture_ld.png", "media/text
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_TEXTURE_2D_HH

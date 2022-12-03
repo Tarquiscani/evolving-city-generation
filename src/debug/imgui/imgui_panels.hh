@@ -1,23 +1,24 @@
 #ifndef GM_IMGUI_PRINTERS_HH
 #define GM_IMGUI_PRINTERS_HH
 
-#include <vector>
+
 #include <chrono>
+#include <vector>
 
 #include <imgui_impl_custom/imgui_wrapper.h>
 
-#include "system/vector3.hh"
-#include "system/clock.hh"
-#include "window/window_manager.hh"
 #include "graphics/camera.hh"
 #include "mediators/queues/gui_ev.hh"
+#include "map/city_block.hh"
 #include "map/gamemap.h"
 #include "map/tiles/tile.hh"
-#include "map/city_block.hh"
+#include "system/clock.hh"
+#include "system/vector3.hh"
 #include "systems/player_manager.hh"
 #include "systems/tutorial/demo_tutorial.hh"
-#include "utilities/timed_counter.hh"
 #include "utilities/main_loop_data.hh"
+#include "utilities/timed_counter.hh"
+#include "window/window_manager.hh"
 
 #include "debug/imgui/main_menu_gui.hh"
 #include "debug/imgui/main_loop_analyzer_gui.hh"
@@ -119,7 +120,6 @@ class GuiManager
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_IMGUI_PRINTERS_HH

@@ -5,9 +5,9 @@
 #include "data_strctures/data_array.hh"
 #include "hip_roof_microtile.hh"
 #include "graphics/roof_vertices.hh"
+#include "map/buildings/building.hh"
 #include "map/map_forward_decl.hh"
 #include "map/tiles/tile_set.hh"
-#include "map/buildings/building.hh"
 
 
 namespace tgm
@@ -141,7 +141,6 @@ namespace HipRoofAlgorithm
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_HIP_ROOF_ALGORITHM_HH

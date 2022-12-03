@@ -1,18 +1,19 @@
 #ifndef GM_TILE_SET_HH
 #define GM_TILE_SET_HH
 
-#include <sstream>
+
 #include <memory>
+#include <sstream>
 
 #include <flatbuffers/flatbuffers.h>
 
+#include "graphics/tile_vertices.hh"
+#include "io/flatbuffers/tileset_generated.h"
 #include "mediators/queues/door_ev.hh"
 #include "mediators/tile_graphics_mediator.hh"
-#include "graphics/tile_vertices.hh"
 #include "map/tiles/border_type.hh"
 #include "map/tiles/tile.hh"
 #include "map/tiles/tile_set.hh"
-#include "io/flatbuffers/tileset_generated.h"
 
 #include "settings/debug/debug_settings.hh"
 
@@ -171,8 +172,8 @@ class TileSet
 		void add_mobile(Vector3i const pos) { get_existentMutable(pos.x, pos.y, pos.z).add_mobile(); }
 		void remove_mobile(Vector3i const pos) { get_existentMutable(pos.x, pos.y, pos.z).remove_mobile(); }
 
-		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::TileSet>;
-		void read(schema::TileSet const*const ts);
+		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::TileSet>;
+		void read(tgmschema::TileSet const*const ts);
 
 	private:
 		int m_length = 0;
@@ -223,7 +224,6 @@ class TileSet
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_TILE_SET_HH

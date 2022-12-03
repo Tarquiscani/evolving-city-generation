@@ -6,16 +6,21 @@
 #if VISUALDEBUG
 
 
-
 #include <vector>
 
+#include "debug_vertices.hh"
+#include "graphics/color.hh"
 #include "settings/graphics_settings.hh"
 #include "system/parallelepiped.hh"
-#include "graphics/color.hh"
-#include "debug_vertices.hh"
 
-#include "debug/logger/logger.h"
 #include "debug/logger/debug_printers.h"
+#include "debug/logger/logger.h"
+
+
+namespace tgm
+{
+
+
 
 using HighlightingId = int;
 
@@ -71,8 +76,10 @@ auto operator<<(Logger & lgr, VisualDebugHighlighting const& th) -> Logger &;
 
 
 
-#endif //VISUALDEBUG
+} // namespace tgm
 
+
+#endif //VISUALDEBUG
 
 
 #endif //GM_VISUAL_DEBUG_HIGHLIGHTING_HH

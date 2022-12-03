@@ -1,6 +1,7 @@
 #ifndef GM_VECTOR2_HH
 #define GM_VECTOR2_HH
 
+
 #include <cmath>
 
 
@@ -163,7 +164,6 @@ inline auto distance(Vector2f const lhs, Vector2f const rhs) -> float
 
 
 } // namespace tgm
-using namespace tgm;
 
 
 #endif // GM_VECTOR2_HH

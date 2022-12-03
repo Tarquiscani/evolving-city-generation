@@ -1,10 +1,15 @@
 #include "graphics_manager.hh"
 
 
-#include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "graphics_manager_core.hh"
 #include "utilities/asserts.hh"
+
+
+namespace tgm
+{
+
 
 
 //TODO: Find a better location for this functions
@@ -1764,3 +1769,7 @@ void GraphicsManager::debug_printTilesetVertexDataBuffer(GLuint const buffer, GL
 
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
+
+
+
+} // namespace tgm

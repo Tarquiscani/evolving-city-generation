@@ -4,6 +4,11 @@
 #include "settings/gameplay_settings.hh"
 
 
+namespace tgm
+{
+
+
+
 MobileManager::MobileManager(MobileEventQueues & mobile_events, MobileBody & player_body, DataArray<MobileBody> & npc_bodies, Camera & camera,
 							 DynamicManager & dynamic_manager, TileSet & tiles, DataArray<Building> & buildings, DoorEventQueues & door_events) :
 	m_mobile_events(mobile_events), m_player_body(player_body), m_npc_bodies(npc_bodies), m_camera(camera),
@@ -253,3 +258,7 @@ auto MobileManager::pick_subimageSet(MobileStyle const style) -> MobileSubimageS
 			break;
 	}
 }
+
+
+
+} // namespace tgm

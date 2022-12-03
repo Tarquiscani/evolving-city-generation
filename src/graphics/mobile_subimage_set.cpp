@@ -1,8 +1,14 @@
 #include "mobile_subimage_set.hh"
 
 
-#include "debug/logger/logger.h"
 #include "debug/logger/debug_printers.h"
+#include "debug/logger/logger.h"
+
+
+namespace tgm
+{
+
+
 
 MobileSubimageSet::MobileSubimageSet(GIMPSquare const gimp, Texture2D const& texture) :
 	m_width(gimp.width), m_height(gimp.height),
@@ -46,3 +52,7 @@ auto MobileSubimageSet::pick_subimage(Direction const drc) const -> DynamicSubim
 			break;
 	}
 }
+
+
+
+} // namespace tgm

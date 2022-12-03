@@ -2,20 +2,21 @@
 #define GM_WINDOWS_MANAGER_HH
 
 
-#include <iostream>
+#include <any>
 #include <deque>
+#include <iostream>
+#include <optional>
 #include <unordered_set>
 #include <unordered_map>
-#include <optional>
-#include <any>
 
 #include <imgui_impl_custom/imgui_wrapper.h>
 
-#include "system/vector2.hh"
-#include "system/clock.hh"
 #include "data_strctures/data_array.hh"
-#include "window/glfw_wrapper.hh"
+#include "system/clock.hh"
+#include "system/vector2.hh"
 #include "utilities/main_loop_data.hh"
+#include "window/glfw_wrapper.hh"
+
 
 namespace tgm
 {
@@ -312,7 +313,6 @@ auto windows_manager() -> WindowManager &;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_WINDOWS_MANAGER_HH

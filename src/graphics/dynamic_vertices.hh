@@ -1,20 +1,21 @@
 #ifndef GM_DYNAMIC_VERTICES_HH
 #define GM_DYNAMIC_VERTICES_HH
 
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <cstdint>
 
-#include "settings/graphics_settings.hh"
-#include "system/parallelepiped.hh"
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <vector>
+
 #include "data_strctures/slot_manager.hh"
 #include "graphics/world_parallelepiped.hh"
 #include "graphics/dynamic_subimage.hh"
 #include "map/direction.h"
+#include "settings/graphics_settings.hh"
+#include "system/parallelepiped.hh"
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/logger.h"
+#include "settings/debug/debug_settings.hh"
 
 
 namespace tgm
@@ -84,7 +85,6 @@ class DynamicVertices
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_DYNAMIC_VERTICES_HH

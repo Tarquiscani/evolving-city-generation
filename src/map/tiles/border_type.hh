@@ -46,7 +46,6 @@ auto operator<<(std::ostream & os, BorderType type) -> std::ostream &;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_BORDER_TYPE_HH

@@ -1,7 +1,8 @@
 #include "building_manager.hh"
 
-#include "settings/simulation/simulation_settings.hh"
+
 #include "map/buildings/roof_algorithm.hh"
+#include "settings/simulation/simulation_settings.hh"
 #include "utilities.hh"
 
 #include "debug/visual/building_expansion_stream.hh"
@@ -153,7 +154,7 @@ auto BuildingManager::build_building_inCity(BuildingRecipe const& recipe, CityId
 		auto & [cbid, cb] = m_blocks.create();
 		city.add_block(cbid);
 
-		new_bid = build_firstBuilding_inCity(cid, cbid, Utilities::v2f_to_v3i(recipe.proposed_position()), recipe, replaceable_areas, cb);
+		new_bid = build_firstBuilding_inCity(cid, cbid, tgm::Utilities::v2f_to_v3i(recipe.proposed_position()), recipe, replaceable_areas, cb);
 	}
 	// Otherwise, expand an existent block or create a new one
 	else
@@ -349,7 +350,7 @@ auto BuildingManager::debug_build_prefabBuilding(PrefabBuilding const& prefab) -
 
 	auto const bldg_center = prefab.compute_volume().center();
 
-	auto const cid = get_nearestCity(Utilities::v3i_to_v2f(bldg_center));
+	auto const cid = get_nearestCity(tgm::Utilities::v3i_to_v2f(bldg_center));
 	auto & city = m_cities.get_or_throw(cid);
 
 	auto & [cbid, cblock] = m_blocks.create(); // Create a block to contain the building
@@ -1241,7 +1242,7 @@ bool BuildingManager::is_building_connected(BuildingId const bid, Building const
 			}
 		#endif
 
-		auto const nodes_number = Utilities::uint32_to_int32(bld.areas_by_ref().count());
+		auto const nodes_number = tgm::Utilities::uint32_to_int32(bld.areas_by_ref().count());
 
 		auto examined_nodes = std::set<BuildingAreaId>{};
 
@@ -3128,6 +3129,7 @@ void BuildingManager::visualDebug_doorablePositionsStep(std::string const& title
 		
 	#pragma warning(default: 4100)
 }
+
 
 
 } //namespace tgm

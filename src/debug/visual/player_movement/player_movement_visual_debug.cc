@@ -2,7 +2,13 @@
 
 #if PLAYERMOVEMENT_VISUALDEBUG
 
+
 #include "map/gamemap.h"
+
+
+namespace tgm
+{
+
 
 
 auto operator<<(Logger& lgr, const PlayerMovementVisualDebugChange& pmc) -> Logger&
@@ -183,4 +189,9 @@ void PlayerMovementVisualDebug::custom_pushVertices(DebugVertices & vertices) co
 	}
 }
 
-#endif
+
+
+} // namespace tgm
+
+
+#endif //PLAYERMOVEMENT_VISUALDEBUG

@@ -2,16 +2,19 @@
 #define GM_FRAMEBUFFER_VIEWER_HH
 
 
-
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "glad/glad.h"
 
-#include "window/window_manager.hh"
 #include "graphics/shader.hh"
+#include "window/window_manager.hh"
 
-using namespace tgm;
+
+namespace tgm
+{
+
+
 
 ////
 //
@@ -57,6 +60,9 @@ class FramebufferViewer
 		void assert_open() const;
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_FRAMEBUFFER_VIEWER_HH

@@ -45,22 +45,22 @@ auto operator<<(std::ofstream & ofs, TileType const& tt) -> std::ofstream &
 {
 	switch (tt)
 	{
-		case tgm::TileType::none:
+		case TileType::none:
 			ofs << "none";
 			break;
-		case tgm::TileType::underground:
+		case TileType::underground:
 			ofs << "underground";
 			break;
-		case tgm::TileType::ground:
+		case TileType::ground:
 			ofs << "ground";
 			break;
-		case tgm::TileType::sky:
+		case TileType::sky:
 			ofs << "sky";
 			break;
-		case tgm::TileType::wooden:
+		case TileType::wooden:
 			ofs << "wooden";
 			break;
-		case tgm::TileType::grout:
+		case TileType::grout:
 			ofs << "grout";
 			break;
 		default:
@@ -76,10 +76,10 @@ auto operator<<(std::ofstream & ofs, BorderStyle const& bs) -> std::ofstream &
 {
 	switch (bs)
 	{
-		case tgm::BorderStyle::none:
+		case BorderStyle::none:
 			ofs << "none";
 			break;
-		case tgm::BorderStyle::brickWall:
+		case BorderStyle::brickWall:
 			ofs << "brickWall";
 			break;
 		default:

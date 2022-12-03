@@ -1,14 +1,13 @@
 #ifndef GM_DEBUG_SETTINGS_HH
 #define GM_DEBUG_SETTINGS_HH
 
+
 ////
 //  Activate dynamic asserts and safer constructs (e.g. dynamic_cast instead of static_cast).
 ////
 #define DEBUG_MODE true
 
 #define DYNAMIC_ASSERTS (DEBUG_MODE && true)
-
-
 
 
 #define DEBUGLOG false
@@ -18,10 +17,7 @@
 #define VISUALDEBUG_DEBUGLOG	(DEBUGLOG && false)
 
 
-
 #define VISUALDEBUG true
-
-
 
 ////
 //	Sub-options
@@ -29,8 +25,6 @@
 #define BUILDEXP_DEBUGLOG_SUITABLEPOSS_EVALUATION (BUILDEXP_DEBUGLOG && false)
 
 #define VISUALDEBUG_DEBUGLOG_FRAMEINFOS true
-
-
 
 
 ////
@@ -45,6 +39,11 @@
 
 
 #if VISUALDEBUG
+
+
+namespace tgm
+{
+
 	inline bool visualDebug_runtime_openWindow = true;			// Enable the opening of the window at each step.
 	inline int visualDebug_runtime_maxRecordableDepth = 0;		// Indicate what type of steps have to be recorded.
 	inline int constexpr visualDebug_maxStepDepth = 5;			// Indicate the maximum possible depth for a step.
@@ -55,7 +54,11 @@
 
 	inline long long debug_highlightings_count = 0;
 	inline long long debug_unhighlightings_count = 0;
-#endif
+
+} // namespace tgm
+
+
+#endif //VISUALDEBUG
 	
 
 #endif //GM_DEBUG_SETTINGS_HH

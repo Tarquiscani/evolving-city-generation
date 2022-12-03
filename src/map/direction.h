@@ -1,10 +1,17 @@
 #ifndef GM_DIRECTION_H
 #define GM_DIRECTION_H
 
+
+#include "system/rect.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
-#include "system/rect.hh"
 #include "window/glfw_wrapper.hh"
+
+
+namespace tgm
+{
+
+
 
 enum class Direction : unsigned char
 {
@@ -326,5 +333,7 @@ namespace DirectionUtil
 
 
 
+} // namespace tgm
 
-#endif
+
+#endif //GM_DIRECTION_H

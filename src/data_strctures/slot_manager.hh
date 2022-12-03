@@ -2,13 +2,17 @@
 #define GM_SLOT_MANAGER_HH
 
 
-#include <iomanip>
-#include <vector>
 #include <cstdint>
+#include <iomanip>
 #include <optional>
+#include <vector>
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/logger.h"
+#include "settings/debug/debug_settings.hh"
+
+
+namespace tgm
+{
 
 
 
@@ -86,6 +90,9 @@ class SlotManager
 		friend auto operator<<(Logger & lgr, SlotManager const& sm) -> Logger &;
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_SLOT_MANAGER_HH

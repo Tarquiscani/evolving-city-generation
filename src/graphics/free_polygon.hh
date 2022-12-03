@@ -3,10 +3,11 @@
 
 
 #include <vector>
+
 #include <glad/glad.h>
 
-#include "system/vector3.hh"
 #include "free_vertex.hh"
+#include "system/vector3.hh"
 
 #include "debug/logger/logger.h"
 
@@ -44,7 +45,6 @@ class FreePolygon
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_FREE_POLYGON_HH

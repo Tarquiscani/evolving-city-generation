@@ -2,9 +2,10 @@
 #define GM_DYNAMIC_MANAGER_HH
 
 
-#include "graphics/dynamic_vertices.hh"
 #include "graphics/camera.hh"
+#include "graphics/dynamic_vertices.hh"
 #include "utilities/asserts.hh"
+
 
 namespace tgm
 {
@@ -46,8 +47,7 @@ class DynamicManager
 
 
 
-}
-using namespace tgm;
+} // namespace tgm
 
 
 #endif //GM_DYNAMIC_MANAGER_HH

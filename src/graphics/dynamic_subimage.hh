@@ -1,9 +1,15 @@
 #ifndef GM_DYNAMIC_SUBIMAGE_HH
 #define GM_DYNAMIC_SUBIMAGE_HH
 
+
 #include "graphics/gimp_square.hh"
-#include "texture_subimage.hh"
 #include "settings/graphics_settings.hh"
+#include "texture_subimage.hh"
+
+
+namespace tgm
+{
+
 
 
 enum class GraphicLayer
@@ -61,6 +67,9 @@ struct DynamicSubimage
 	}
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_DYNAMIC_SUBIMAGE_HH

@@ -6,6 +6,11 @@
 #include "debug/visual/player_movement_stream.hh"
 
 
+namespace tgm
+{
+
+
+
 //TODO: 14: Rifattorizza in modo da sostituire Direction con Versor2i
 //TODO: 14: Aggiungi namespace tgm
 
@@ -676,4 +681,8 @@ namespace TrailSystem
 
 		return ret;
 	}
-}
+} // namespace TrailSystem
+
+
+
+} // namespace tgm

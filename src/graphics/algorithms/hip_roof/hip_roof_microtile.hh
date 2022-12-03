@@ -2,9 +2,9 @@
 #define GM_HIP_ROOF_MICROTILE_HH
 
 
-
 #include <bitset>
 #include <stdexcept>
+
 #include "settings/debug/debug_settings.hh"
 
 
@@ -255,7 +255,6 @@ namespace HipRoofAlgorithm
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_HIP_ROOF_MICROTILE_HH

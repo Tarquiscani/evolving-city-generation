@@ -156,9 +156,7 @@ namespace Versor3i
 
 
 
-
 } // namespace tgm
-using namespace tgm;
 
 
 #endif // GM_VECTOR3_HH

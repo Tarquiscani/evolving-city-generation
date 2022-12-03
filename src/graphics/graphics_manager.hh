@@ -1,21 +1,28 @@
 #ifndef GM_GRAPHICS_MANAGER_HH
 #define GM_GRAPHICS_MANAGER_HH
 
+
 #include <glad/glad.h>
 #define GLM_FORCE_SILENT_WARNINGS
 #include <glm/glm.hpp>
 
+#include "camera.hh"
+#include "dynamic_vertices.hh"
 #include "graphics/opengl/draw_arrays_indirect_command.hh"
 #include "graphics/textures/texture_2d.hh"
 #include "graphics/textures/texture_2d_array.hh"
-#include "shader.hh"
-#include "camera.hh"
-#include "world_parallelepiped.hh"
-#include "tile_vertices.hh"
-#include "dynamic_vertices.hh"
 #include "roof_vertices.hh"
+#include "shader.hh"
+#include "tile_vertices.hh"
+#include "world_parallelepiped.hh"
 
 #include "debug/framebuffer_viewer/framebuffer_viewer.hh"
+
+
+namespace tgm
+{
+
+
 
 //TODO: NOW: Forse andrebbe rinominato GPU manager
 class GraphicsManager
@@ -329,5 +336,10 @@ class GraphicsManager
 		void debug_inspectTilesetVertexDataBuffer(GLuint const buffer, GLsizeiptr const vertex_count);
 		void debug_printTilesetVertexDataBuffer(GLuint const buffer, GLintptr const offset, GLsizeiptr const length);
 };
+
+
+
+} // namespace tgm
+
 
 #endif //GM_GRAPHICS_MANAGER_HH

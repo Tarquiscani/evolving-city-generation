@@ -6,22 +6,28 @@
 #if PLAYERMOVEMENT_VISUALDEBUG
 
 
+#include <unordered_set>
 
 #include "std_extensions/hash_functions.hh"
-#include <unordered_set>
 
 #include "debug/visual/base/visual_debug.hh"
 
+
+namespace tgm
+{
+
+
+
 class PlayerMovementVisualDebugState
 {
-public:
-	PlayerMovementVisualDebugState() = default;
+	public:
+		PlayerMovementVisualDebugState() = default;
 
-	PlayerMovementVisualDebugState(const std::unordered_set<Vector3i>& impassable_tiles_) :
-		impassable_tiles(impassable_tiles_) {	}
+		PlayerMovementVisualDebugState(const std::unordered_set<Vector3i>& impassable_tiles_) :
+			impassable_tiles(impassable_tiles_) {	}
 
-private:
-	std::unordered_set<Vector3i> impassable_tiles;
+	private:
+		std::unordered_set<Vector3i> impassable_tiles;
 };
 
 class PlayerMovementVisualDebugChange
@@ -123,6 +129,12 @@ class PlayerMovementVisualDebug final : public VisualDebug
 		virtual void custom_pushVertices(DebugVertices & vertices) const override;
 };
 
+
+
+} // namespace tgm
+
+
 #endif //PLAYERMOVEMENT_VISUALDEBUG
+
 
 #endif //GM_PLAYER_MOVEMENT_VISUAL_DEBUG_H

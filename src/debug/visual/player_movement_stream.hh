@@ -6,7 +6,6 @@
 #if PLAYERMOVEMENT_VISUALDEBUG
 
 
-
 #include "player_movement/player_movement_visual_debug.h"
 
 namespace tgm
@@ -15,12 +14,9 @@ namespace tgm
 inline PlayerMovementVisualDebug PMdeb;
 
 }
-using namespace tgm;
-
 
 
 #endif //PLAYERMOVEMENT_VISUALDEBUG
-
 
 
 #endif //GM_PLAYER_MOVEMENT_STREAM_HH

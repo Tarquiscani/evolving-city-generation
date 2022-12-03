@@ -1,7 +1,7 @@
 include "tileset.fbs";
 
 
-namespace tgm.schema;
+namespace tgmschema;
 
 
 table GameMap

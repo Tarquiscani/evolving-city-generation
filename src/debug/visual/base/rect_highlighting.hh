@@ -6,9 +6,12 @@
 #if VISUALDEBUG
 
 
-
 #include "system/rect.hh"
 #include "visual_debug_highlighting.hh"
+
+
+namespace tgm
+{
 
 
 
@@ -44,6 +47,11 @@ class RectHighlighting final : public VisualDebugHighlighting
 };
 
 
+
+} // namespace tgm
+
+
 #endif //VISUALDEBUG
+
 
 #endif //GM_RECT_HIGHLIGHTING_HH

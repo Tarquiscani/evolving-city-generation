@@ -33,7 +33,6 @@ namespace VDUtil = VisualDebugUtilities;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_VISUAL_DEBUG_UTILITIES_HH

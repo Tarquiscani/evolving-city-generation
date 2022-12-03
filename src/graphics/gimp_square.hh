@@ -1,7 +1,13 @@
-#pragma once
+#ifndef GM_GIMP_SQUARE_HH
+#define GM_GIMP_SQUARE_HH
 
 
 #include <iostream>
+
+
+namespace tgm
+{
+
 
 
 //////
@@ -24,3 +30,9 @@ struct GIMPSquare
 	friend auto operator<<(std::ostream & os, GIMPSquare const& gs) -> std::ostream &;
 };
 
+
+
+} // namespace tgm
+
+
+#endif //GM_GIMP_SQUARE_HH

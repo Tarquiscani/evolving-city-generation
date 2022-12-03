@@ -1,12 +1,18 @@
 #ifndef GM_DOOR_HH
 #define GM_DOOR_HH
 
+
+#include "map/map_forward_decl.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
-#include "map/map_forward_decl.hh"
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/logger.h"
+#include "settings/debug/debug_settings.hh"
+
+
+namespace tgm
+{
+
 
 
 class Door
@@ -68,5 +74,10 @@ inline auto operator<<(Logger & lgr, Door const&) -> Logger &
 
 	return lgr;
 }
+
+
+
+} // namespace tgm
+
 
 #endif //GM_DOOR_HH

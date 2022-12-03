@@ -2,27 +2,27 @@
 #define GM_TILE_HH
 
 
-#include <iostream>
-#include <fstream>
 #include <array>
-#include <stdexcept>
-#include <vector>
-#include <map>
-#include <unordered_map>
 #include <bitset>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <stdexcept>
 #include <tuple>
+#include <unordered_map>
+#include <vector>
 
 #include <flatbuffers/flatbuffers.h>
 
+#include "io/flatbuffers/tile_generated.h"
+#include "map/map_forward_decl.hh"
+#include "map/direction.h"
 #include "settings/graphics_settings.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
-#include "map/map_forward_decl.hh"
-#include "map/direction.h"
-#include "io/flatbuffers/tile_generated.h"
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/logger.h"
+#include "settings/debug/debug_settings.hh"
 
 
 namespace tgm
@@ -281,8 +281,8 @@ class Tile
 			door_open = false;
 		}
 
-		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::Tile>;
-		void read(schema::Tile const*const t);
+		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::Tile>;
+		void read(tgmschema::Tile const*const t);
 
 
 	private:
@@ -323,7 +323,6 @@ class Tile
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_TILE_HH

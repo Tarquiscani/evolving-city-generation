@@ -1,4 +1,4 @@
-namespace tgm.schema;
+namespace tgmschema;
 
 
 enum TileType : short 

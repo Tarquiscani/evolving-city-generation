@@ -2,6 +2,10 @@
 #if HIPROOFMATRIX_VISUALDEBUG
 
 
+namespace tgm
+{
+
+
 
 void HipRoofMatrixVisualDebug::start(int const map_length, int const map_width)
 {
@@ -104,5 +108,7 @@ void HipRoofMatrixVisualDebug::print_matrix(HipRoofAlgorithm::Matrix const& matr
 
 
 
+} // namespace tgm
 
-#endif
+
+#endif //HIPROOFMATRIX_VISUALDEBUG

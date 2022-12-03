@@ -79,7 +79,6 @@ class Tutorial
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_TUTORIAL_HH

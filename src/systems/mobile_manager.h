@@ -1,22 +1,28 @@
 #ifndef GM_MOBILE_MANAGER_H
 #define GM_MOBILE_MANAGER_H
 
-#include "settings/graphics_settings.hh"
-#include "system/parallelepiped.hh"
+
+#include "characters/mobile.h"
 #include "data_strctures/data_array.hh"
 #include "mediators/queues/mobile_ev.hh"
 #include "graphics/camera.hh"
 #include "graphics/dynamic_manager.hh"
 #include "graphics/mobile_subimage_set.hh"
-#include "map/map_forward_decl.hh"
 #include "map/buildings/building.hh"
+#include "map/map_forward_decl.hh"
 #include "map/tiles/tile_set.hh"
+#include "settings/graphics_settings.hh"
+#include "system/parallelepiped.hh"
 #include "systems/trail_system.hh"
-#include "characters/mobile.h"
 #include "utilities.hh"
 
-#include "debug/visual/player_movement_stream.hh"
 #include "debug/test_logger/streams.h"
+#include "debug/visual/player_movement_stream.hh"
+
+namespace tgm
+{
+
+
 
 class MobileManager
 {
@@ -59,5 +65,10 @@ class MobileManager
 
 		static auto pick_subimageSet(MobileStyle const style) -> MobileSubimageSet const&;
 };
+
+
+
+} // namespace tgm
+
 
 #endif //GM_MOBILE_MANAGER_H

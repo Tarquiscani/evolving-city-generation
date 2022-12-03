@@ -9,10 +9,10 @@
 
 #include <vector>
 
-#include "system/vector3.hh"
+#include "graphics/color.hh"
 #include "settings/graphics_settings.hh"
 #include "system/parallelepiped.hh"
-#include "graphics/color.hh"
+#include "system/vector3.hh"
 #include "visual_debug_utilities.hh"
 
 #include "debug/logger/debug_printers.h"
@@ -115,7 +115,6 @@ class DebugVertices
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //VISUALDEBUG

@@ -1,17 +1,16 @@
 #include "gamemap.h"
 
-#include <algorithm>
 
-#include <iostream>
+#include <algorithm>
 #include <ctime>
+#include <iostream>
 
 #include "audio/audio_manager.hh"
 #include "settings/simulation/simulation_settings.hh"
 
 #include "debug/logger/streams.h"
-#include "debug/visual/player_movement_stream.hh"
 #include "debug/test_logger/streams.h"
-
+#include "debug/visual/player_movement_stream.hh"
 
 
 namespace tgm
@@ -132,14 +131,14 @@ void GameMap::debug_compareMoveAlgorithms() const
 
 
 
-auto GameMap::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::GameMap>
+auto GameMap::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::GameMap>
 {
 	auto const tileset_offset = m_tiles.write(fbb);
 
-	return schema::CreateGameMap(fbb, tileset_offset);
+	return tgmschema::CreateGameMap(fbb, tileset_offset);
 }
 
-void GameMap::read(schema::GameMap const*const ms)
+void GameMap::read(tgmschema::GameMap const*const ms)
 {
 	m_tiles.read(ms->tileset());
 	m_tgraphics_mediator.record_reset();

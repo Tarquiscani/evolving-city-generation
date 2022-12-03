@@ -6,9 +6,13 @@
 #if HIPROOFMATRIX_VISUALDEBUG
 
 
-
 #include "debug/visual/base/visual_debug.hh"
 #include "graphics/algorithms/hip_roof/hip_roof_matrix.hh"
+
+
+namespace tgm
+{
+
 
 
 class HipRoofMatrixVisualDebug final : public VisualDebug
@@ -36,8 +40,10 @@ class HipRoofMatrixVisualDebug final : public VisualDebug
 
 
 
-#endif //HIPROOFMATRIX_VISUALDEBUG
+} // namespace tgm
 
+
+#endif //HIPROOFMATRIX_VISUALDEBUG
 
 
 #endif //GM_HIP_ROOF_MATRIX_VISUAL_DEBUG_HH

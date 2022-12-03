@@ -2,9 +2,8 @@
 #define GM_HIP_ROOF_TESTS_HH
 
 
-
-#include "map/gamemap.h"
 #include "graphics/roof_vertices.hh"
+#include "map/gamemap.h"
 
 
 namespace tgm
@@ -43,7 +42,6 @@ namespace HipRoofAlgorithm
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_HIP_ROOF_TESTS_HH

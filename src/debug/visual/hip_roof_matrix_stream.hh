@@ -6,8 +6,8 @@
 #if HIPROOFMATRIX_VISUALDEBUG
 
 
-
 #include "hip_roof_matrix/hip_roof_matrix_visual_debug.hh"
+
 
 namespace tgm
 {
@@ -15,12 +15,9 @@ namespace tgm
 inline HipRoofMatrixVisualDebug HRMdeb;
 
 }
-using namespace tgm;
-
 
 
 #endif //HIPROOFMATRIX_VISUALDEBUG
-
 
 
 #endif //GM_HIP_ROOF_MATRIX_STREAM_HH

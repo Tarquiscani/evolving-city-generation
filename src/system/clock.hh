@@ -98,7 +98,6 @@ class Clock
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_CLOCK_HH

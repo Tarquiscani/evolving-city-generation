@@ -6,7 +6,6 @@
 #if VISUALDEBUG
 
 
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,19 +17,19 @@
 #include <iterator>
 #include <optional>
 
-#include "settings/graphics_settings.hh"
-#include "system/parallelepiped.hh"
-#include "window/glfw_wrapper.hh"
-#include "window/window_manager.hh"
 #include "graphics/color.hh"
 #include "map/direction.h"
 #include "map/tiles/tile_set.hh"
+#include "polygon_highlighting.hh"
+#include "rect_highlighting.hh"
+#include "tiles_highlighting.h"
+#include "settings/graphics_settings.hh"
+#include "system/parallelepiped.hh"
 #include "visual_debug_graphics_manager.hh"
 #include "visual_debug_highlighting.hh"
 #include "visual_debug_utilities.hh"
-#include "tiles_highlighting.h"
-#include "rect_highlighting.hh"
-#include "polygon_highlighting.hh"
+#include "window/glfw_wrapper.hh"
+#include "window/window_manager.hh"
 
 
 namespace tgm
@@ -548,9 +547,9 @@ class VisualDebug
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //VISUALDEBUG
+
 
 #endif //GM_VISUAL_DEBUG_HH

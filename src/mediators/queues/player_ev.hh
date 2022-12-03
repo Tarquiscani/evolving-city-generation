@@ -7,6 +7,11 @@
 #include "map/direction.h"
 
 
+namespace tgm
+{
+
+
+
 class PlayerMovementEv : public BaseEvent
 {
 	public:
@@ -23,6 +28,10 @@ class DebugIncreasePlayerVelocityEv : public BaseEvent {};
 
 
 using PlayerEventQueues = EventQueuesImpl< PlayerMovementEv, DebugDecreasePlayerVelocityEv, DebugIncreasePlayerVelocityEv >;
+
+
+
+} // namespace tgm
 
 
 #endif //GM_PLAYER_EV_HH

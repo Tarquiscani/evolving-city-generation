@@ -2,14 +2,16 @@
 #define GM_TEXTURE_2D_ARRAY_HH
 
 
-#include <iostream>
 #include <exception>
+#include <iostream>
 #include <memory>
 
 #include "settings/graphics_settings.hh"
 
+
 namespace tgm
 {
+
 
 
 class Texture2DArray
@@ -72,9 +74,8 @@ class Texture2DArray
 #endif
 
 
-} //namespace tgm
-using namespace tgm;
 
+} //namespace tgm
 
 
 #endif //GM_TEXTURE_2D_ARRAY_HH

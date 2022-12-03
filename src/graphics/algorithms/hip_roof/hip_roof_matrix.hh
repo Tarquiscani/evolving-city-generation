@@ -2,13 +2,13 @@
 #define GM_HIP_ROOF_MATRIX_HH
 
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
+#include "hip_roof_microtile.hh"
 #include "settings/graphics_settings.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
-#include "hip_roof_microtile.hh"
 
 
 namespace tgm
@@ -164,8 +164,7 @@ namespace HipRoofAlgorithm
 
 
 
-}
-using namespace tgm;
+} // namespace tgm
 
 
 #endif //GM_HIP_ROOF_MATRIX_HH

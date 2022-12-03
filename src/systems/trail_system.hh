@@ -4,11 +4,17 @@
 
 #include <unordered_set>
 
-#include "system/parallelepiped.hh"
 #include "map/direction.h"
 #include "map/tiles/tile_set.hh"
+#include "system/parallelepiped.hh"
 
 #include "settings/debug/debug_settings.hh"
+
+
+namespace tgm
+{
+
+
 
 namespace TrailSystem
 {
@@ -50,6 +56,9 @@ namespace TrailSystem
 	auto compute_tilesFromVolume(FloatRect const volume_base, int const z_pos) -> std::vector<Vector3i>;
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_TRAIL_SYSTEM_HH

@@ -1,37 +1,38 @@
 #ifndef GM_GAMEMAP_H
 #define GM_GAMEMAP_H
 
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <queue>
-#include <unordered_set>
-#include <memory>
-#include <string>
-#include <fstream>
-#include <stdexcept>
 
-#include "settings/graphics_settings.hh"
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <queue>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <unordered_set>
+#include <vector>
+
+#include "characters/mobile.h"
 #include "data_strctures/data_array.hh"
-#include "mediators/queues/player_ev.hh"
-#include "mediators/queues/mobile_ev.hh"
-#include "mediators/queues/door_ev.hh"
-#include "mediators/queues/gui_ev.hh"
-#include "graphics/dynamic_manager.hh"
-#include "graphics/tile_vertices.hh"
-#include "graphics/free_triangle_vertices.hh"
 #include "direction.h"
-#include "map/tiles/tile.hh"
-#include "map/tiles/tile_set.hh"
+#include "door_manager.hh"
+#include "graphics/dynamic_manager.hh"
+#include "graphics/free_triangle_vertices.hh"
+#include "graphics/tile_vertices.hh"
+#include "io/flatbuffers/gamemap_generated.h"
+#include "map_graph.h"
 #include "map/buildings/building.hh"
 #include "map/buildings/building_manager.hh"
-#include "door_manager.hh"
-#include "map_graph.h"
-#include "systems/player_manager.hh"
-#include "systems/mobile_manager.h"
+#include "map/tiles/tile.hh"
+#include "map/tiles/tile_set.hh"
+#include "mediators/queues/door_ev.hh"
+#include "mediators/queues/gui_ev.hh"
+#include "mediators/queues/mobile_ev.hh"
+#include "mediators/queues/player_ev.hh"
 #include "objects/door.hh"
-#include "characters/mobile.h"
-#include "io/flatbuffers/gamemap_generated.h"
+#include "settings/graphics_settings.hh"
+#include "systems/mobile_manager.h"
+#include "systems/player_manager.hh"
 
 
 namespace tgm
@@ -122,8 +123,8 @@ class GameMap
 
 
 		
-		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::GameMap>;
-		void read(schema::GameMap const*const ts);
+		auto write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::GameMap>;
+		void read(tgmschema::GameMap const*const ts);
 
 
 	private:
@@ -173,7 +174,6 @@ class GameMap
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif // GM_GAMEMAP_H

@@ -6,15 +6,16 @@
 #if VISUALDEBUG
 
 
-
 #include <vector>
+
 #include <glad/glad.h>
 
-#include "system/parallelepiped.hh"
-#include "graphics/shader.hh"
 #include "debug_vertices.hh"
+#include "graphics/shader.hh"
+#include "system/parallelepiped.hh"
 
 #include "debug/logger/debug_printers.h"
+
 
 namespace tgm
 {
@@ -63,8 +64,6 @@ class VisualDebugGraphicsManager
 
 
 } //namespace tgm
-using namespace tgm;
-
 
 
 #endif //VISUALDEBUG

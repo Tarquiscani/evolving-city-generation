@@ -1,6 +1,10 @@
 #include "world_parallelepiped.hh"
 
 
+namespace tgm
+{
+
+
 
 auto operator<<(std::ostream & os, const WorldParallelepiped& wp) -> std::ostream &
 {
@@ -9,3 +13,7 @@ auto operator<<(std::ostream & os, const WorldParallelepiped& wp) -> std::ostrea
 
 	return os;
 }
+
+
+
+} // namespace tgm

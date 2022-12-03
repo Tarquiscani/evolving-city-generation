@@ -3,7 +3,13 @@
 
 #if VISUALDEBUG
 
+
 #include <iostream>
+
+
+namespace tgm
+{
+
 
 
 auto operator<<(Logger & lgr, VisualDebugHighlighting const& vdh) -> Logger &
@@ -15,6 +21,9 @@ auto operator<<(Logger & lgr, VisualDebugHighlighting const& vdh) -> Logger &
 	return lgr;
 }
 
+
+
+} // namespace tgm
 
 
 #endif //VISUALDEBUG

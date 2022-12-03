@@ -6,11 +6,14 @@
 #if VISUALDEBUG
 
 
-
 #include "settings/graphics_settings.hh"
 #include "system/rect.hh"
 #include "visual_debug_highlighting.hh"
 #include "utilities.hh"
+
+
+namespace tgm
+{
 
 
 
@@ -68,8 +71,10 @@ class PolygonHighlighting final : public VisualDebugHighlighting
 
 
 
-#endif //VISUALDEBUG
+} // namespace tgm
 
+
+#endif //VISUALDEBUG
 
 
 #endif //GM_POLYGON_HIGHLIGHTING_HH

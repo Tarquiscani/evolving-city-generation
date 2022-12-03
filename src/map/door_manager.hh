@@ -60,7 +60,6 @@ class DoorManager
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_DOOR_MANAGER_HH

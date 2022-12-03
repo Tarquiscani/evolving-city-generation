@@ -29,8 +29,6 @@ struct RoofVertices
 
 
 } //namespace tgm
-using namespace tgm;
-
 
 
 #endif //GM_ROOF_VERTICES_HH

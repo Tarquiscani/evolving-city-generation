@@ -4,10 +4,11 @@
 
 #include <tuple>
 
-#include "system/parallelepiped.hh"
-#include "map/direction.h"
-#include "world_parallelepiped.hh"
 #include "dynamic_subimage.hh"
+#include "map/direction.h"
+#include "system/parallelepiped.hh"
+#include "world_parallelepiped.hh"
+
 
 namespace tgm
 {
@@ -32,8 +33,6 @@ namespace GUtil = GraphicsUtilities;
 
 
 } //namespace tgm
-using namespace tgm;
-
 
 
 #endif //GM_GRAPHICS_UTILITIES_HH

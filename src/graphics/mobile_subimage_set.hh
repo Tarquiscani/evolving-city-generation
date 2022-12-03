@@ -2,12 +2,17 @@
 #define GM_MOBILE_SUBIMAGE_SET_HH
 
 
-
 #include <array>
 
-#include "gimp_square.hh"
 #include "dynamic_subimage.hh"
+#include "gimp_square.hh"
 #include "map/direction.h"
+
+
+namespace tgm 
+{
+
+
 
 class MobileSubimageSet
 {
@@ -25,6 +30,9 @@ class MobileSubimageSet
 		std::array<DynamicSubimage, 4> m_subimages;  //N, E, S, W
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_MOBILE_SUBIMAGE_SET_HH

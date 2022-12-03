@@ -6,6 +6,12 @@
 
 #include "debug/logger/logger.h"
 
+
+namespace tgm 
+{
+
+
+
 struct TextureSubimage
 {
 	////
@@ -43,5 +49,10 @@ inline auto operator<<(Logger & lgr, TextureSubimage const& ts) -> Logger &
 
 	return lgr;
 }
+
+
+
+} // namespace tgm
+
 
 #endif //GM_TEXTURE_SUBIMAGE_HH

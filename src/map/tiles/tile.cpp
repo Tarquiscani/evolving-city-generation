@@ -3,6 +3,7 @@
 
 #include "debug/logger/debug_printers.h"
 
+
 namespace tgm
 {
 
@@ -197,37 +198,37 @@ void Tile::assert_notRoofed_for(BuildingId const bid) const
 	if (is_roofed_for(bid))	{ throw std::runtime_error("Already roofed for 'bid'"); }
 }
 
-auto Tile::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::Tile>
+auto Tile::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::Tile>
 {
-	schema::TileBuildingInfo binfo_array[max_borders];
+	tgmschema::TileBuildingInfo binfo_array[max_borders];
 
 	auto binfoArray_size = std::size_t{ 0 };
 	if (is_built()) { binfoArray_size = is_innerArea() ? 1 : m_borders; }
 
 	for (auto i = std::size_t{ 0 }; i < binfoArray_size; ++i)
 	{
-		binfo_array[i] = schema::TileBuildingInfo{ m_building_infos[i].bid(), m_building_infos[i].aid() };
+		binfo_array[i] = tgmschema::TileBuildingInfo{ m_building_infos[i].bid(), m_building_infos[i].aid() };
 	}
 	auto bld_infos = fbb.CreateVectorOfStructs(binfo_array, binfoArray_size);
 
 
-	schema::RoofInfo rinfo_arr[max_roofs];
+	tgmschema::RoofInfo rinfo_arr[max_roofs];
 	for (auto i = decltype(m_roof_count){ 0 }; i < m_roof_count; ++i)
 	{
-		rinfo_arr[i] = schema::RoofInfo{ m_roof_infos[i].bid, m_roof_infos[i].roof_id };
+		rinfo_arr[i] = tgmschema::RoofInfo{ m_roof_infos[i].bid, m_roof_infos[i].roof_id };
 	}
 	auto rf_infos = fbb.CreateVectorOfStructs(rinfo_arr, m_roof_count);
 
 
-	return schema::CreateTile(fbb,
+	return tgmschema::CreateTile(fbb,
 							  inner_area, m_block, door, door_open,
 							  static_cast<std::int8_t>(m_borders), bld_infos,
-							  static_cast<schema::TileType>(type), static_cast<schema::BorderStyle>(m_border_style),
+							  static_cast<tgmschema::TileType>(type), static_cast<tgmschema::BorderStyle>(m_border_style),
 							  rf_infos,
 							  m_furniture_id, static_cast<std::int16_t>(hosted_mobiles)													);
 }
 
-void Tile::read(schema::Tile const*const t)
+void Tile::read(tgmschema::Tile const*const t)
 {
 	inner_area = t->inner_area();
 	m_block = t->block();

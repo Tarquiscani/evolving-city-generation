@@ -25,7 +25,6 @@ auto operator<<(Logger & lgr, TilesetVertexData const& tvd) -> Logger &;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_TILESET_VERTEX_DATA_HH

@@ -4,10 +4,10 @@
 
 #include <glad/glad.h>
 
+#include "graphics/free_vertex.hh"
+#include "graphics/textures/texture_2d.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
-#include "graphics/textures/texture_2d.hh"
-#include "graphics/free_vertex.hh"
 
 #include "debug/logger/logger.h"
 
@@ -67,7 +67,6 @@ class FreeTriangle
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_FREE_TRIANGLE_HH

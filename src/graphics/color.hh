@@ -131,7 +131,6 @@ auto operator*=(Color & left, Color const& right) -> Color &;
 
 
 } // namespace tgm
-using namespace tgm;
 
 
 #endif // GM_COLOR_HH

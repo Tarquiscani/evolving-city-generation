@@ -1,9 +1,10 @@
 #ifndef GM_MAP_FORWARD_DECL_HH
 #define GM_MAP_FORWARD_DECL_HH
 
+
 #include <cstdint>
-#include <vector>
 #include <memory>
+#include <vector>
 
 
 namespace tgm
@@ -61,7 +62,6 @@ using SpriteId = uint64_t;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_MAP_FORWARD_DECL_HH

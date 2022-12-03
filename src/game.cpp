@@ -114,7 +114,7 @@ void Game::tick_major_events()
 		auto fileData = std::vector<std::uint8_t>(fileSize);
 		ifstream.read((char*) fileData.data(), fileSize);
 
-		auto ts = schema::GetGameMap(fileData.data());
+		auto ts = tgmschema::GetGameMap(fileData.data());
 		m_map.read(ts);
 
 

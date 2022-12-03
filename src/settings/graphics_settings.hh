@@ -2,17 +2,14 @@
 #define GM_GRAPHICS_SETTINGS_HH
 
 
-
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 #include "system/vector3.hh"
 #include "window/glfw_wrapper.hh"
 
 
-
 #define POLYGON_MODE false
-
 
 
 #define EDGE_DETECTION_FILTER true
@@ -35,12 +32,10 @@
 #endif
 
 
-
 // It avoids that hidden entites are drawn each frame, computing their visibility in advance.
 #define OCCLUSION_CULLING false
 
 #define SHOW_VISIBLE_ENTITIES_FBO (OCCLUSION_CULLING && false)
-
 
 
 // Enable alpha-to-coverage sampling in order to apply anti-aliasing also inside the sprites.
@@ -52,20 +47,16 @@
 #endif
 
 
-
 // If true the tileset texture atlas is converted to a Texture2DArray. If false the texture atlas is used "as is".
 #define GSET_TILESET_TEXARRAY true
-
 
 
 // If true the mobile movement is rounded so that each frame they cover a distance that's a multiple of 1 pixel.
 #define GSET_ROUND_TO_NEAREST_PIXEL true
 
 
-
 // It changes the texture used to represent the scene switching to royalty free assets.
 #define FREE_ASSETS false
-
 
 
 namespace tgm
@@ -402,7 +393,6 @@ using GSet = GraphicsSettings;
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_GRAPHICS_SETTINGS_HH

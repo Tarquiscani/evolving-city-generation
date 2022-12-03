@@ -1,6 +1,7 @@
 #ifndef GM_CAMERA_CONTROLLER_HH
 #define GM_CAMERA_CONTROLLER_HH
 
+
 #include "graphics/camera.hh"
 
 
@@ -39,7 +40,6 @@ class CameraController
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_CAMERA_CONTROLLER_HH

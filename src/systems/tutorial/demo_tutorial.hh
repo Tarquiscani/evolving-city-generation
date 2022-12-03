@@ -19,7 +19,6 @@ class DemoTutorial : public Tutorial
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_DEMO_TUTORIAL_HH

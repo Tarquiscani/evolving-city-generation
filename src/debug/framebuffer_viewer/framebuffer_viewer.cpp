@@ -6,6 +6,11 @@
 #include "settings/graphics_settings.hh"
 
 
+namespace tgm
+{
+
+
+
 FramebufferViewer::FramebufferViewer() :
 	m_window{ windows_manager().create_window() }
 { }
@@ -172,3 +177,7 @@ void FramebufferViewer::assert_open() const
 {
 	if (!m_open) { throw std::runtime_error("Unexpected situation. This FramebufferViewer is closed."); }
 }
+
+
+
+} // namespace tgm

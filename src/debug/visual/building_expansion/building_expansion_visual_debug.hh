@@ -6,20 +6,19 @@
 #if BUILDEXP_VISUALDEBUG
 
 
-
 #include <iostream>
+#include <map>
+#include <memory>
+#include <utility>
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <map>
-#include <utility>
-#include <memory>
-#include <stdexcept>
 
 #include "debug/visual/base/visual_debug.hh"
+#include "map/buildings/building.hh"
+#include "map/buildings/prefab_building.hh"
 #include "map/direction.h"
 #include "map/tiles/tile_set.hh"
-#include "map/buildings/prefab_building.hh"
-#include "map/buildings/building.hh"
 
 
 namespace tgm
@@ -186,9 +185,9 @@ namespace BuildingExpansionVisualDebugTests
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //BUILDEXP_VISUALDEBUG
+
 
 #endif //GM_BUILDING_EXPANSION_VISUAL_DEBUG_HH

@@ -2,11 +2,15 @@
 #define GM_MOBILE_H
 
 
-
+#include "map/direction.h"
+#include "map/map_forward_decl.hh"
 #include "settings/graphics_settings.hh"
 #include "system/parallelepiped.hh"
-#include "map/map_forward_decl.hh"
-#include "map/direction.h"
+
+
+namespace tgm
+{
+
 
 
 enum class MobileStyle
@@ -87,4 +91,7 @@ class MobileBody
 
 
 
-#endif
+} // namespace tgm
+
+
+#endif //GM_MOBILE_H

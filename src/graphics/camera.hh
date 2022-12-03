@@ -3,11 +3,11 @@
 
 #include <array>
 
-#include "settings/graphics_settings.hh"
-#include "system/vector3.hh"
-#include "system/parallelepiped.hh"
-#include "map/direction.h"
 #include "dynamic_subimage.hh"
+#include "map/direction.h"
+#include "settings/graphics_settings.hh"
+#include "system/parallelepiped.hh"
+#include "system/vector3.hh"
 
 
 namespace tgm
@@ -149,7 +149,6 @@ class Camera
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_CAMERA_HH

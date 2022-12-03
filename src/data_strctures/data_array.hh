@@ -3,17 +3,18 @@
 
 
 #include <cstdint>
-#include <limits>
-#include <vector>
-#include <memory>
-#include <type_traits>
-#include <iterator>
-#include <iomanip>
 #include <fstream>
+#include <limits>
+#include <memory>
+#include <iomanip>
+#include <iterator>
 #include <sstream>
+#include <type_traits>
+#include <vector>
 
-#include "settings/debug/debug_settings.hh"
 #include "io/std/vector_io.hh"
+#include "settings/debug/debug_settings.hh"
+
 #include "debug/logger/logger.h"
 
 
@@ -91,8 +92,8 @@ namespace detail
 		public:
 			T value;
 
-		friend class tgm::DataArray<T, true>;
-		friend class tgm::DataArray<T, false>;
+		friend class DataArray<T, true>;
+		friend class DataArray<T, false>;
 		
 		template<typename T_>
 		friend auto operator<<(std::ofstream & ofs, DataArrayEl<T_> const& da_el) -> std::ofstream &;

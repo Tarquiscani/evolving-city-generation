@@ -2,25 +2,24 @@
 #define GM_FREE_TRIANGLE_VERTICES_HH
 
 
-
+#include <cstdint>
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include <cstdint>
 
 #include <glad/glad.h>
 
-#include "settings/graphics_settings.hh"
-#include "system/parallelepiped.hh"
 #include "data_strctures/slot_manager.hh"
 #include "data_strctures/data_array.hh"
-#include "graphics/textures/texture_2d.hh"
-#include "free_triangle.hh"
-#include "free_polygon.hh"
 #include "dynamic_subimage.hh"
+#include "free_polygon.hh"
+#include "free_triangle.hh"
+#include "graphics/textures/texture_2d.hh"
+#include "settings/graphics_settings.hh"
+#include "system/parallelepiped.hh"
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/logger.h"
+#include "settings/debug/debug_settings.hh"
 
 
 namespace tgm
@@ -142,7 +141,6 @@ class FreeTriangleVertices
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_FREE_TRIANGLE_VERTICES_HH

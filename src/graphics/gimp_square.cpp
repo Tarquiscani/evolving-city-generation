@@ -3,6 +3,12 @@
 
 #include "settings/graphics_settings.hh"
 
+
+namespace tgm
+{
+
+
+
 GIMPSquare::GIMPSquare(float const left_ld,  float const top_ld,
 					   float const left_hd,  float const top_hd) :
 	GIMPSquare(left_ld,  top_ld,  GSet::lowDefinition_pptxu,       GSet::lowDefinition_pptxu,
@@ -57,3 +63,7 @@ auto operator<<(std::ostream & os, GIMPSquare const& gs) -> std::ostream &
 
 	return os;
 }
+
+
+
+} // namespace tgm

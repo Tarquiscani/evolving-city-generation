@@ -2,21 +2,21 @@
 #define GM_TILE_VERTICES_HH
 
 
-#include <vector>
 #include <map>
+#include <vector>
 
 #include <glad/glad.h> //needed only for OpenGL types
 
-#include "settings/graphics_settings.hh"
+#include "gimp_square.hh"
 #include "graphics/data_structures/tileset_vertex_data.hh"
 #include "graphics/textures/texture_2d_array.hh"
-#include "gimp_square.hh"
-#include "texture_subimage.hh"
 #include "map/tiles/border_type.hh"
 #include "map/tiles/tile.hh"
+#include "settings/graphics_settings.hh"
+#include "texture_subimage.hh"
 
-#include "settings/debug/debug_settings.hh"
 #include "debug/logger/streams.h"
+#include "settings/debug/debug_settings.hh"
 
 
 namespace tgm
@@ -298,6 +298,6 @@ class TileVertices
 
 
 } //namespace tgm
-using namespace tgm;
+
 
 #endif //GM_TILE_VERTICES_HH

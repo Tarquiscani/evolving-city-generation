@@ -10,6 +10,8 @@
 namespace tgm
 {
 
+
+
 inline TimedCounter inputCounter; //TODO: NOW: Rimuovi dopo i test
 
 namespace MainWindow
@@ -32,7 +34,6 @@ namespace MainWindow
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif //GM_MAIN_WINDOW_INPUT_HH

@@ -1,7 +1,14 @@
 #include "slot_manager.hh"
 
 
+#include <exception>
 #include <sstream>
+
+
+namespace tgm
+{
+
+
 
 SlotManager::SlotManager(size_type const capacity)
 {
@@ -159,3 +166,7 @@ auto operator<<(Logger & lgr, SlotManager const& sm) -> Logger &
 
 	return lgr;
 }
+
+
+
+} // namespace tgm

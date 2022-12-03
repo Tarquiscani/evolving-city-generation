@@ -1,5 +1,11 @@
 #include "direction.h"
 
+
+namespace tgm
+{
+
+
+
 std::ostream& operator<<(std::ostream & os, Direction d) noexcept
 {
 	switch (d)
@@ -234,3 +240,7 @@ namespace DirectionUtil
 		}
 	}
 }
+
+
+
+} // namespace tgm

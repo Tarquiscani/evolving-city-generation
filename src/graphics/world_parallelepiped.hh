@@ -7,6 +7,12 @@
 
 #include "system/vector3.hh"
 
+
+namespace tgm
+{
+
+
+
 ////
 //
 //	Parallelepiped in OpenGL world space.
@@ -59,6 +65,9 @@ struct WorldParallelepiped
 	friend auto operator<<(std::ostream & os, const WorldParallelepiped& wp) -> std::ostream &;
 };
 
+
+
+} // namespace tgm
 
 
 #endif //GM_WORLD_PARALLELEPIPED_HH

@@ -4,9 +4,13 @@
 
 #include "base_event.hh"
 #include "event_queues_impl.hh"
-
-#include "system/vector3.hh"
 #include "map/map_forward_decl.hh"
+#include "system/vector3.hh"
+
+
+namespace tgm
+{
+
 
 
 class DebugPlayerTeleportationEv : public BaseEvent
@@ -26,5 +30,10 @@ class DebugEnlargePlayerFeetSquareEv : public BaseEvent {};
 
 
 using MobileEventQueues = EventQueuesImpl< DebugPlayerTeleportationEv, DebugShrinkPlayerFeetSquareEv, DebugEnlargePlayerFeetSquareEv >;
+
+
+
+} // namespace tgm
+
 
 #endif //GM_MOBILE_EV_HH

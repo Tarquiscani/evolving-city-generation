@@ -1,19 +1,20 @@
 #ifndef GM_BUILDING_HH
 #define GM_BUILDING_HH
 
-#include <iostream>
-#include <set>
-#include <unordered_map>
-#include <memory>
-#include <tuple>
-#include <random>
 
-#include "system/parallelepiped.hh"
+#include <iostream>
+#include <memory>
+#include <random>
+#include <set>
+#include <tuple>
+#include <unordered_map>
+
 #include "data_strctures/data_array.hh"
-#include "map/map_forward_decl.hh"
-#include "map/buildings/area_template.hh"
 #include "map/buildings/area_expansion_template.hh"
+#include "map/buildings/area_template.hh"
 #include "map/buildings/building_area.hh"
+#include "map/map_forward_decl.hh"
+#include "system/parallelepiped.hh"
 
 #include "debug/logger/streams.h"
 
@@ -147,7 +148,6 @@ inline auto Building::cbid() const -> CityBlockId
 
 
 } //namespace tgm
-using namespace tgm;
 
 
 #endif // GM_BUILDING_HH

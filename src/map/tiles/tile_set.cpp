@@ -17,16 +17,16 @@ auto operator<<(std::ostream & os, BorderDoorType const bdt) -> std::ostream &
 {
 	switch (bdt)
 	{
-		case tgm::BorderDoorType::None:
+		case BorderDoorType::None:
 			os << "None";
 			break;
-		case tgm::BorderDoorType::Internal:
+		case BorderDoorType::Internal:
 			os << "Internal";
 			break;
-		case tgm::BorderDoorType::BuildingsLinker:
+		case BorderDoorType::BuildingsLinker:
 			os << "BuildingsLinker";
 			break;
-		case tgm::BorderDoorType::External:
+		case BorderDoorType::External:
 			os << "External";
 			break;
 		default:
@@ -266,9 +266,9 @@ void TileSet::debug_generateDefaultLevel(int const z, TileType const ttype)
 }
 
 
-auto TileSet::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<schema::TileSet>
+auto TileSet::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::Offset<tgmschema::TileSet>
 {
-	auto tiles_offsetVec = std::vector<flatbuffers::Offset<schema::TileWrapper>>{};
+	auto tiles_offsetVec = std::vector<flatbuffers::Offset<tgmschema::TileWrapper>>{};
 
 	for (auto z = 0; z < height(); ++z)
 	{
@@ -276,19 +276,19 @@ auto TileSet::write(flatbuffers::FlatBufferBuilder & fbb) const -> flatbuffers::
 		{
 			for (auto x = 0; x < length(); ++x)
 			{
-				auto pos = schema::Vector3i{ x, y, z };
+				auto pos = tgmschema::Vector3i{ x, y, z };
 				auto tile_offset = get_existent(x, y, z).write(fbb);
 
-				tiles_offsetVec.push_back(schema::CreateTileWrapper(fbb, &pos, tile_offset));
+				tiles_offsetVec.push_back(tgmschema::CreateTileWrapper(fbb, &pos, tile_offset));
 			}
 		}
 	}
 
 	auto const tiles_offset = fbb.CreateVector(tiles_offsetVec);
-	return schema::CreateTileSet(fbb, length(), width(), height(), tiles_offset);
+	return tgmschema::CreateTileSet(fbb, length(), width(), height(), tiles_offset);
 }
 
-void TileSet::read(schema::TileSet const*const ts)
+void TileSet::read(tgmschema::TileSet const*const ts)
 {
 	//TODO: 12: Il reset del TileSet va anche ad impattare sui VisualDebug, resettare anche quello.
 	reset(ts->length(), ts->width(), ts->height());
