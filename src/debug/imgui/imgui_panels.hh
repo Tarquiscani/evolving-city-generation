@@ -100,6 +100,8 @@ class GuiManager
 		void switch_visibility() { m_hide = !m_hide; }
 		void resize(Vector2i const new_fbo_size) { m_fbo_size = new_fbo_size; }
 
+		void update();
+
 		////
 		//	Generate the panel layouts in ImGui metadata.
 		////
@@ -108,6 +110,8 @@ class GuiManager
 	private:
 		bool m_hide = false;
 		Vector2i m_fbo_size;
+
+		GuiEventQueues & m_gui_events;
 
 		ImFont* m_custom_font;
 };

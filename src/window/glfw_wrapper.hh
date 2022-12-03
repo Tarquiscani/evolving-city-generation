@@ -18,10 +18,27 @@ namespace tgm
 {
 
 
-////
-//	Initialize both GLFW and GLAD.
-////
-void init_glfw();
+
+class GLFW
+{
+	public:
+		////
+		//	Initialize both GLFW and GLAD.
+		////
+		GLFW();
+		GLFW(GLFW const&) = delete;
+		GLFW& operator=(GLFW const&) = delete;
+
+		~GLFW();
+
+		auto video_mode() -> GLFWvidmode const*;
+
+	private:
+		bool m_is_init = false;
+};
+
+
+inline GLFW g_glfw{};
 
 
 

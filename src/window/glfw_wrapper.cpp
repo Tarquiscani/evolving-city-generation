@@ -1,30 +1,49 @@
 #include "glfw_wrapper.hh"
 
+
+#include <cassert>
+
+
 namespace tgm
 {
 
 
 
-static void error_callback(int error, const char* description)
+static void glfw_error_callback(int error, char const* description)
 {
 	std::cout << "GLFW error #" << error << ": " << description;
 }
 
-void init_glfw()
+
+
+GLFW::GLFW()
 {
-	static bool initialized = false;
+	glfwSetErrorCallback(glfw_error_callback);
 
-	if (!initialized)
+	if (!glfwInit())
 	{
-		initialized = true;
-
-		glfwSetErrorCallback(error_callback);
-
-		if (!glfwInit())
-		{
-			throw std::runtime_error("Failed to initialize GLFW");
-		}
+		throw std::runtime_error("Failed to initialize GLFW");
 	}
+	else
+	{
+		m_is_init = true;
+	}
+}
+
+GLFW::~GLFW()
+{
+	if (m_is_init)
+	{
+		glfwTerminate();
+	}
+}
+
+
+auto GLFW::video_mode() -> GLFWvidmode const*
+{
+	assert(m_is_init);
+	
+	return glfwGetVideoMode(glfwGetPrimaryMonitor());
 }
 
 

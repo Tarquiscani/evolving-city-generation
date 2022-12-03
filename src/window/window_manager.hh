@@ -207,6 +207,7 @@ class WindowManager
 		static WindowId constexpr mainWindow_id = 0;
 
 		WindowManager();
+		~WindowManager();
 
 		////
 		//	Create a new closed window.

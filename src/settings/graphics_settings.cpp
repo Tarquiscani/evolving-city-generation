@@ -3,8 +3,6 @@
 
 #include <algorithm>
 
-#include "window/glfw_wrapper.hh"
-
 
 namespace tgm
 {
@@ -14,8 +12,7 @@ namespace tgm
 VideoMode::VideoMode(bool const fullscreen, int const width, int const height) :
 	m_fullscreen(fullscreen)
 {
-	init_glfw();
-	auto const current_mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	auto const current_mode = g_glfw.video_mode();
 	auto const original_width = current_mode->width;
 	auto const original_height = current_mode->height;
 

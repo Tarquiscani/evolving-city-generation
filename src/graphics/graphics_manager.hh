@@ -29,9 +29,9 @@ class GraphicsManager
 		GraphicsManager(Vector2i const defaultFbo_size, Vector2i const window_size,
 						TileVertices & tile_vertices, DynamicVertices const* dynamic_vertices, RoofVertices & roof_vertices, 
 						Camera & camera);
+		GraphicsManager::~GraphicsManager();
 		
 		void init();
-		void shutdown() { free_objects(); }
 
 		void resize_fbo(Vector2i const new_fbo_size);
 		void resize_window(Vector2i const new_window_size) noexcept;
@@ -40,6 +40,8 @@ class GraphicsManager
 		auto glfwWindowPixel_to_mapTile(Vector2f const glfw_cursorPos) const -> Vector3i;
 
 	private:
+		bool m_is_init = false;
+
 		Vector2i m_defaultFbo_size;
 		Vector2i m_window_size;
 

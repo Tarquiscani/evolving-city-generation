@@ -254,10 +254,6 @@ void Window::assert_active() const
 
 WindowManager::WindowManager()
 {
-	// Initialize glfw if it hasn't been initialized yet. Necessary because windows_manager() (and then this constructor) could be called 
-	// also from static functions, before the main is entered.
-	init_glfw(); 
-
 	// Create and open the main window
 
 	create_window();
@@ -279,7 +275,7 @@ WindowManager::WindowManager()
 	{
 		options.fullscreen = false;
 
-		auto const current_mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		auto const current_mode = g_glfw.video_mode();
 		options.width = current_mode->width / 10 * 7;
 		options.height = current_mode->height / 10 * 8;
 	}
@@ -289,6 +285,10 @@ WindowManager::WindowManager()
 	open_window(mainWindow_id, options);
 }
 
+WindowManager::~WindowManager()
+{
+	close_allWindows();
+}
 
 
 auto WindowManager::create_window() -> Window &

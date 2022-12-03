@@ -20,9 +20,8 @@ namespace tgm
 
 
 GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTutorial & demo_tutorial)
-	: tile_gui{ gui_events }, cityBlock_gui{ gui_events }, mainMenu_gui{ gui_events }, tutorial_panel{ demo_tutorial }, m_fbo_size {
-	window.fbo_size()
-}
+	: tile_gui{ gui_events }, cityBlock_gui{ gui_events }, mainMenu_gui{ gui_events }, tutorial_panel{ demo_tutorial }
+	, m_fbo_size { window.fbo_size() }, m_gui_events{ gui_events }
 {
 	if (!window.is_open()) { throw std::runtime_error("The Window is closed."); }
 
@@ -33,6 +32,32 @@ GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTu
     m_custom_font = io.Fonts->AddFontFromFileTTF("media/fonts/Roboto-Bold.ttf", 30 * GSet::imgui_scale());
 }
 
+void GuiManager::update()
+{
+	auto & mainloopAnalyzer_queue = m_gui_events.get<MainLoopAnalyzerEv>();
+	if (!mainloopAnalyzer_queue.empty()) 
+	{
+		mainLoopAnalyzer_gui.switch_state();
+
+		mainloopAnalyzer_queue.pop();
+	}
+
+	auto & movementAnalyzer_queue = m_gui_events.get<MovementAnalyzerEv>();
+	if (!movementAnalyzer_queue.empty()) 
+	{
+		movement_gui.switch_state();
+
+		movementAnalyzer_queue.pop();
+	}
+
+	auto & control_panel_queue = m_gui_events.get<ControlPanelEv>();
+	if (!control_panel_queue.empty()) 
+	{
+		control_gui.switch_state();
+
+		control_panel_queue.pop();
+	}
+}
 
 void GuiManager::generate_layout(GameMap const& map, Camera const& camera, TimedCounter const& fps_counter, TimedCounter const& ups_counter, MainLoopData const& mainLoop_data, TimedCounter const& input_counter)
 {

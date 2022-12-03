@@ -47,6 +47,15 @@ GraphicsManager::GraphicsManager(Vector2i const defaultFbo_size, Vector2i const 
 	std::cout << "Default FBO resolution: " << defaultFbo_size.x << "x" << defaultFbo_size.y << std::endl;
 }
 
+GraphicsManager::~GraphicsManager()
+{
+	if (m_is_init)
+	{
+		free_objects();
+	}
+}
+
+
 void GraphicsManager::init()
 {
 	GraphicsManagerCore::init("Main window");
@@ -105,7 +114,11 @@ void GraphicsManager::init()
 
 
 	generate_objects();
+
+
+	m_is_init = true;
 }
+
 
 void GraphicsManager::generate_objects()
 {

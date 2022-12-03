@@ -554,4 +554,30 @@ void TileVertices::cache_random0to9NumberSequence()
 
 
 
+////Useful to compare the actual memory usage with the predicted one.
+//void allocatedMemory_forecast()
+//{
+//    int tiles_count = Map::LENGTH * Map::WIDTH * Map::HEIGHT;
+//
+//    std::cout << "sizeof(char)"<< sizeof(char) << std::endl;
+//    std::cout << "sizeof(Tile)"<< sizeof(Tile) << std::endl;
+//    std::cout << "sizeof(Tile*)" << sizeof(Tile*) << std::endl;
+//    std::cout << "Allocated memory:" << (sizeof(Tile) + sizeof(Tile*)*27 )*tiles_count << std::endl;
+//
+//    std::allocator<Tile> alloc;
+//    Tile* tiles = alloc.allocate(tiles_count);
+//    for(auto p=tiles; p!=tiles+tiles_count; ++p)
+//        alloc.construct(p, Vector3i(0,0,0), TileType::ground);
+//    std::cout << "Tile neighbor capacity: " << tiles->neighbors.capacity();
+//
+//    int pause;
+//    std::cin>>pause;
+//
+//    for(auto p=tiles; p!=tiles+tiles_count; ++p)
+//        alloc.destroy(p);
+//    alloc.deallocate(tiles, tiles_count);
+//}
+
+
+
 } //namespace tgm
