@@ -11,7 +11,7 @@
 //glfw options macro
 //#define GLFW_DLL		// Definition required when using dll version of GLFW library
 #define GLFW_INCLUDE_NONE
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 
 namespace tgm

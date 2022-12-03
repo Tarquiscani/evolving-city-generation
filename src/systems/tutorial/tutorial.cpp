@@ -8,7 +8,7 @@ namespace tgm
 
 auto Tutorial::get_current_step() const -> std::optional<TutorialStep>
 {	
-	std::scoped_lock(m_mutex);
+	auto lock = std::scoped_lock(m_mutex);
 
 	// Return a copy in order to achieve thread-safety
 	return !is_over() ? std::optional<TutorialStep>{m_steps[m_current_step_idx]} : std::nullopt;
@@ -16,14 +16,14 @@ auto Tutorial::get_current_step() const -> std::optional<TutorialStep>
 	
 void Tutorial::add_step(TutorialStep const& tutorial_step) 
 { 
-	std::scoped_lock(m_mutex);
+	auto lock = std::scoped_lock(m_mutex);
 
 	m_steps.push_back(tutorial_step); 
 }
 
 void Tutorial::update()
 {
-	std::scoped_lock(m_mutex);
+	auto lock = std::scoped_lock(m_mutex);
 
 	auto & tutorial_queues = events[m_name];
 

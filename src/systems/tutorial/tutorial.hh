@@ -64,7 +64,7 @@ class Tutorial
 		int m_current_step_idx = 0;
 		std::vector<TutorialStep> m_steps;
 
-		std::mutex m_mutex;
+		std::mutex mutable m_mutex;
 
 		AudioManager & m_audio_manager;
 

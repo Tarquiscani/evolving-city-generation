@@ -36,7 +36,7 @@ class GraphicsManager
 		GraphicsManager(Vector2i const defaultFbo_size, Vector2i const window_size,
 						TileVertices & tile_vertices, DynamicVertices const* dynamic_vertices, RoofVertices & roof_vertices, 
 						Camera & camera);
-		GraphicsManager::~GraphicsManager();
+		~GraphicsManager();
 		
 		void init();
 

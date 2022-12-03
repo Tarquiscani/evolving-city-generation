@@ -30,7 +30,7 @@ void centered_text(std::string const& text)
 
     ImGui::SameLine(text_indentation);
     ImGui::PushTextWrapPos(win_width - text_indentation);
-    ImGui::TextWrapped(text.c_str());
+    ImGui::TextWrapped("%s", text.c_str());
     ImGui::PopTextWrapPos();
 }
 

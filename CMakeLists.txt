@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project (proc_city_gen)
+project (evolving_city_generation)
 
 
 # CMake print any generated command
@@ -37,6 +37,7 @@ include_directories(
     third_party/earcut.hpp/include
     third_party/flatbuffers/include
 	third_party/glad
+	third_party/glfw/include
 	third_party/glm
 	third_party/imgui)
 
@@ -74,33 +75,34 @@ message("------------------------------------------------")
 
 
 
-add_executable(proc_city_gen ${SOURCES})
+add_executable(evolving_city_generation ${SOURCES})
 
 
 # Copy the "media" directory into the binary folder after building
-add_custom_command(TARGET proc_city_gen POST_BUILD
+add_custom_command(TARGET evolving_city_generation POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/media"
-        "$<TARGET_FILE_DIR:proc_city_gen>/media")
+        "$<TARGET_FILE_DIR:evolving_city_generation>/media")
         
 # Copy the "shaders"" directory into the binary folder after building
-add_custom_command(TARGET proc_city_gen POST_BUILD
+add_custom_command(TARGET evolving_city_generation POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/shaders"
-        "$<TARGET_FILE_DIR:proc_city_gen>/shaders")
+        "$<TARGET_FILE_DIR:evolving_city_generation>/shaders")
 
 
 
 if (MSVC)
-	target_link_libraries(proc_city_gen glfw ${GLFW_LIBRARIES})
+	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
     
 
     # warning level 4 and all warnings as errors
-    #target_compile_options(proc_city_gen PRIVATE /W4 /WX)
-    target_compile_options(proc_city_gen PRIVATE /W4 )
+    #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
+    target_compile_options(evolving_city_generation PRIVATE /W4 )
 else()
-	target_link_libraries(proc_city_gen glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
+	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
+	#target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
     # lots of warnings and all warnings as errors
-    #[[target_compile_options(proc_city_gen PRIVATE -Wall -Wextra -pedantic -Werror)]]
+    #[[target_compile_options(evolving_city_generation PRIVATE -Wall -Wextra -pedantic -Werror)]]
 endif()
 

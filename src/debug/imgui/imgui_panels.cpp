@@ -355,7 +355,7 @@ void OnScreenMessagePanel::generate_layout(Vector2i const framebuffer_size, ImFo
 		std::cout << std::setprecision(2) << g_on_screen_messages.remaining_life() << "--" << opacity << std::endl;
 
         ImGui::PushFont(custom_font);
-		ImGui::TextColored(ImVec4{ 1.f, 1.f, 1.f, opacity }, g_on_screen_messages.message().c_str() );
+		ImGui::TextColored(ImVec4{ 1.f, 1.f, 1.f, opacity }, "%s", g_on_screen_messages.message().c_str());
         ImGui::PopFont();
 
 		ImGui::End();
