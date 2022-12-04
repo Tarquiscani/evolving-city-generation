@@ -21,7 +21,7 @@ namespace Utilities
                 return { std::round(v.x), std::round(v.y), std::round(v.z) };
 	}
 
-	auto interp(float const current, float const target, float const delta_time, float const interp_speed) -> float
+	auto interp(float const current, float const target, float const delta_time, float const interp_speed, float const rel_tolerance) -> float
 	{
 		if (interp_speed <= 0.f)
 		{
@@ -31,7 +31,7 @@ namespace Utilities
 		auto const total_delta = target - current;
 
 		// If the delta is very small, then don't interpolate
-		if (total_delta * total_delta < 0.0000001f)
+		if (total_delta * total_delta < rel_tolerance)
 		{
 			return target;
 		}

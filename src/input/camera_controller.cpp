@@ -25,7 +25,12 @@ void CameraController::update_camera(float const delta_time, Camera & camera)
 	auto const new_theta = apply_input_to_angle(delta_time, camera.theta(), m_theta_input, m_polar_velocity);
 	camera.set_theta(std::clamp(new_theta, camera.theta_min, camera.theta_max));
 
-	auto const new_zoom = Utilities::interp(camera.zoom_level(), m_zoom_target, delta_time, 1.f);
+	// The relative tolerances empirically found to minimize the flickering when zooming in/out are:
+	// * 0.001f    for m_zoom_target = 10.f
+	// * 0.000001f for m_zoom_target =  1.f
+	// Hence the following function that linearly interpolates the data.
+	auto const rel_tolerance = 0.000111f * m_zoom_target - 0.00011f;
+	auto const new_zoom = Utilities::interp(camera.zoom_level(), m_zoom_target, delta_time, 1.f, rel_tolerance);
 	camera.set_zoom_level(new_zoom);
 }
 

@@ -55,7 +55,7 @@ namespace Utilities
 
 	auto round(Vector3f const v) -> Vector3f;
 
-	auto interp(float const current, float const target, float const delta_time, float const interp_speed) -> float;
+	auto interp(float const current, float const target, float const delta_time, float const interp_speed, float const rel_tolerance) -> float;
 }
 
 namespace Util = Utilities;
