@@ -50,12 +50,13 @@ VideoMode::VideoMode(bool const fullscreen, int const width, int const height) :
 
 auto GraphicsSettings::init_videoMode() -> VideoMode
 {
-        return VideoMode{ false, 500, 500 };
+    return VideoMode{ false, 500, 500 };
 	//return VideoMode{ true, 800, 600 };
 	//return VideoMode{ true, 1600, 1200 };
-        //return VideoMode{ true, 1366, 768 };
+    //return VideoMode{ true, 1366, 768 };
 	//return VideoMode{ true, 1920, 1080 };
 	//return VideoMode{ true, 3840, 2160 };
+	//return VideoMode{ true };
 }
 
 static auto compute_imgui_scale(float const ppi_adjustment) -> float

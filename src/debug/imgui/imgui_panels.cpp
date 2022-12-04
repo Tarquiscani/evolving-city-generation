@@ -59,11 +59,12 @@ void GuiManager::update()
 	}
 }
 
-void GuiManager::generate_layout(GameMap const& map, Camera const& camera, TimedCounter const& fps_counter, TimedCounter const& ups_counter, MainLoopData const& mainLoop_data, TimedCounter const& input_counter)
+void GuiManager::generate_layout(GameMap const& map, Camera const& camera, CameraController const& camera_controller,
+								 TimedCounter const& fps_counter, TimedCounter const& ups_counter, MainLoopData const& mainLoop_data, TimedCounter const& input_counter)
 {
 	if (!m_hide)
 	{
-		basic_gui.generate_layout(m_fbo_size, map.debug_getPlayerManager(), camera, fps_counter, ups_counter, input_counter);
+		basic_gui.generate_layout(m_fbo_size, map.debug_getPlayerManager(), camera, camera_controller, fps_counter, ups_counter, input_counter);
 		movement_gui.generate_layout(map.debug_getPlayerManager(), camera);
 		tile_gui.generate_layout();
 		cityBlock_gui.generate_layout();
@@ -76,7 +77,8 @@ void GuiManager::generate_layout(GameMap const& map, Camera const& camera, Timed
 }
 
 //TODO: NOW: Rimuovi input_counter dopo i test
-void BasicGui::generate_layout(Vector2i const framebuffer_size, PlayerManager const& pmgr, Camera const& camera, TimedCounter const& fps_counter, TimedCounter const& ups_counter, TimedCounter const& input_counter)
+void BasicGui::generate_layout(Vector2i const framebuffer_size, PlayerManager const& pmgr, Camera const& camera, CameraController const& camera_controller, 
+							   TimedCounter const& fps_counter, TimedCounter const& ups_counter, TimedCounter const& input_counter)
 {
 	auto fps_oss = std::ostringstream{}; fps_oss << std::setprecision(0) << fps_counter.perSecond_average();
 	auto fc_oss = std::ostringstream{}; fc_oss << std::setfill(' ') << std::setw(5) << fps_counter();
@@ -88,7 +90,7 @@ void BasicGui::generate_layout(Vector2i const framebuffer_size, PlayerManager co
 	auto i_oss = std::ostringstream{}; i_oss << input_counter();
 
 	std::ostringstream tp_oss; tp_oss << std::setfill(' ') << std::setw(3) << pmgr.debug_getPlayerPosition_inTiles();
-	std::ostringstream zm_oss; zm_oss << camera.zoom();
+	std::ostringstream zm_oss; zm_oss << camera_controller.zoom_target();
 	std::ostringstream pd_oss; pd_oss << camera.pixel_dim();
 
 

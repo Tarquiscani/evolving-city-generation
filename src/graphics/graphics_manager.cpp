@@ -71,6 +71,7 @@ void GraphicsManager::init()
 	m_tile_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
 											 { "main_shader.fshader", "discard_utilities.fshader" }, 
 											 {
+												{"SHOW_LOD", "0 //false"},
 												{"EDGEABLE_IDS", "0 //false"},
 												{"TILE_SHADER", "1 //true"},
 	#if GSET_TILESET_TEXARRAY
@@ -83,6 +84,7 @@ void GraphicsManager::init()
 	m_dynamic_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
 												{ "main_shader.fshader", "discard_utilities.fshader" },
 												{
+													{"SHOW_LOD", "0 //false"},
 													{"EDGEABLE_IDS", "0 //false"},
 													{"TILE_SHADER", "0 //false"},
 												}											);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
@@ -90,6 +92,7 @@ void GraphicsManager::init()
 	m_edgeableIds_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
 													  { "main_shader.fshader", "discard_utilities.fshader" },
 													  {
+															{"SHOW_LOD", "0 //false"},
 															{"EDGEABLE_IDS", "1 //true"},
 															{"TILE_SHADER", "0 //false"},
 													  }										);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
@@ -237,8 +240,11 @@ void GraphicsManager::generate_objects()
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR /*GL_NEAREST*/);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR /*GL_NEAREST*/);
+		// The roof texture use mipmaps, however the LODs between 0.f and 4.3f are forced to be 0.f. So the mipmap comes into play only when the 
+		// distance from the camera is really long. This is because sampling the base texture produces a better visual output compared to the generated mipmap.
+		// The special LOD level behavior for the roof texture is determined in the fragment shader.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST /*GL_LINEAR*/ /*GL_NEAREST*/);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR /*GL_NEAREST*/);								
 	m_roof_texture.free();
 
 
@@ -1091,7 +1097,7 @@ void GraphicsManager::drawScene_without_filters()
 			m_edgeThickener_shader.bind();
 
 		
-			auto edge_thickness = static_cast<int>(std::max<float>(0.f, (m_camera.zoom() + GSet::edgeThickness_factor()) / m_camera.zoom())); //TODO: Find a better function to compute the edge thickness
+			auto edge_thickness = static_cast<int>(std::max<float>(0.f, (m_camera.zoom_level() + GSet::edgeThickness_factor()) / m_camera.zoom_level())); //TODO: Find a better function to compute the edge thickness
 			m_edgeThickener_shader.set_int("u_edge_thickness", edge_thickness);
 		
 			// Draw the color attachment on the screen
@@ -1433,7 +1439,7 @@ auto GraphicsManager::compute_projectionMatrix(WorldParallelepiped const& map_bo
 		window_size = { GSet::texels_to_units(window_size.x), GSet::texels_to_units(window_size.y) };
 
 
-		Vector2f zoomed_winSize = window_size * m_camera.zoom();
+		Vector2f zoomed_winSize = window_size * m_camera.zoom_level();
 
 
 		// glm::ortho requires as arguments the bounds of the visible rectangle around the origin (that in the view space coincide with the camera).
