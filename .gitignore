@@ -1,6 +1,7 @@
 .vs
 out
 linux_build
+windows_build
 *.tlog
 *.obj
 *.idb

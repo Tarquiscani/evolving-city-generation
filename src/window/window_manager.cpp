@@ -263,7 +263,7 @@ WindowManager::WindowManager()
 
 	WindowOptions options{};
 
-	options.title = "The Game";
+	options.title = "Evolving City Generation";
 
 	if (GSet::video_mode.fullscreen())
 	{

@@ -12,6 +12,7 @@
 #include "map/city_block.hh"
 #include "map/gamemap.h"
 #include "map/tiles/tile.hh"
+#include "input/camera_controller.hh"
 #include "system/clock.hh"
 #include "system/vector3.hh"
 #include "systems/player_manager.hh"
@@ -34,7 +35,7 @@ namespace tgm
 class BasicGui
 {
 	public:
-		void generate_layout(Vector2i const framebuffer_size, PlayerManager const& pmgr, Camera const& camera, 
+		void generate_layout(Vector2i const framebuffer_size, PlayerManager const& pmgr, Camera const& camera, CameraController const& camera_controller,
 							 TimedCounter const& fps_counter, TimedCounter const& ups_counter, TimedCounter const& input_counter);
 };
 
@@ -106,7 +107,8 @@ class GuiManager
 		////
 		//	Generate the panel layouts in ImGui metadata.
 		////
-		void generate_layout(GameMap const& map, Camera const& camera, TimedCounter const& fps_counter, TimedCounter const& ups_counter, MainLoopData const& mainLoop_data, TimedCounter const& input_counter);
+		void generate_layout(GameMap const& map, Camera const& camera, CameraController const& camera_controller,
+							 TimedCounter const& fps_counter, TimedCounter const& ups_counter, MainLoopData const& mainLoop_data, TimedCounter const& input_counter);
 
 	private:
 		bool m_hide = false;

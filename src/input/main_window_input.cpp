@@ -58,6 +58,7 @@ namespace MainWindow
 		auto u_ptr = std::any_cast<MainWindowObjects *>(window.user_pointer());
 		auto & roof_vertices = u_ptr->roof_vertices;
 		auto & camera = u_ptr->camera;
+		auto & camera_controller = u_ptr->camera_controller;
 		auto & map = u_ptr->map;
 		auto & gui_mgr = u_ptr->gui_mgr;
 		auto & created_buildings = u_ptr->created_buildings;
@@ -323,7 +324,7 @@ namespace MainWindow
 			//}
 
 			case GLFW_KEY_LEFT_SHIFT:		//pressure-release pair
-				camera.change_zoomSpeed();
+				camera_controller.toggle_zoom_speed();
 				break;
 
 			case GLFW_KEY_ESCAPE:
@@ -401,7 +402,7 @@ namespace MainWindow
 	{
 		auto u_ptr = std::any_cast<MainWindowObjects *>(window.user_pointer());
 		auto & map = u_ptr->map;
-		auto & camera = u_ptr->camera;
+		auto & camera_controller = u_ptr->camera_controller;
 
 
 		if (DirectionUtil::key_to_direction(key) != Direction::none) //if a direction-related key is released
@@ -413,7 +414,7 @@ namespace MainWindow
 			switch(key)
 			{
 				case GLFW_KEY_LEFT_SHIFT:		//pressure-release pair
-					camera.change_zoomSpeed();
+					camera_controller.toggle_zoom_speed();
 					break;
 			}
 		}
@@ -470,20 +471,20 @@ namespace MainWindow
 	void mouseScroll_callback(Window & window, float const, float const y_offset)
 	{
 		auto u_ptr = std::any_cast<MainWindowObjects *>(window.user_pointer());
-		auto & camera = u_ptr->camera;
+		auto & camera_controller = u_ptr->camera_controller;
 
-		camera.shift_zoom( - y_offset / 10.f);
+		camera_controller.add_zoom_input( - y_offset / 10.f);
 
 		Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "zoom");
-		if (camera.is_zoom_speed_fast())
+		if (camera_controller.is_zoom_speed_fast())
 		{
 			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "superzoom");
 		}
-		if (camera.zoom_level() >= 10.f)
+		if (camera_controller.zoom_target() >= 10.f)
 		{
 			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "zoom-out-before-generation");
 		}
-		if (camera.zoom_level() >= 0.95f && camera.zoom_level() <= 1.05f)
+		if (camera_controller.zoom_target() >= 0.95f && camera_controller.zoom_target() <= 1.05f)
 		{
 			Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "explore-the-city-zoom-in");
 		}

@@ -1,13 +1,22 @@
 #include "camera_controller.hh"
 
+
 #include <algorithm>
+
+#include "utilities.hh"
 
 
 namespace tgm
 {
 
 
-	
+void CameraController::add_zoom_input(float const input)
+{	
+	auto new_target = m_zoom_target + input * m_zoom_speed;
+	new_target = std::roundf(new_target * 10.f) * 0.1f;		// Round the zoom target to the first decimal digit
+	m_zoom_target = std::max(0.1f, new_target);
+}
+
 void CameraController::update_camera(float const delta_time, Camera & camera)
 {
 	auto const new_phi = apply_input_to_angle(delta_time, camera.phi(), m_phi_input, m_azimuthal_velocity);
@@ -15,6 +24,9 @@ void CameraController::update_camera(float const delta_time, Camera & camera)
 
 	auto const new_theta = apply_input_to_angle(delta_time, camera.theta(), m_theta_input, m_polar_velocity);
 	camera.set_theta(std::clamp(new_theta, camera.theta_min, camera.theta_max));
+
+	auto const new_zoom = Utilities::interp(camera.zoom_level(), m_zoom_target, delta_time, 1.f);
+	camera.set_zoom_level(new_zoom);
 }
 
 

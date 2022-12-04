@@ -155,7 +155,7 @@ void Game::tick_rendering()
 	m_graphics_manager.draw();
 
 	m_main_window.activate_imguiCanvas();
-	m_gui_manager.generate_layout(m_map, m_camera, m_fps_counter, m_ups_counter, m_main_loop_data, inputCounter);
+	m_gui_manager.generate_layout(m_map, m_camera, m_camera_controller, m_fps_counter, m_ups_counter, m_main_loop_data, inputCounter);
 
 	m_main_window.display(m_main_loop_data);
 	++m_fps_counter;

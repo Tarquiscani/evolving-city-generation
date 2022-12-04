@@ -54,6 +54,8 @@ namespace Utilities
 	inline auto units_to_tiles(Vector2f const v) -> Vector2i { return { GSet::units_to_tiles(v.x), GSet::units_to_tiles(v.y) }; }
 
 	auto round(Vector3f const v) -> Vector3f;
+
+	auto interp(float const current, float const target, float const delta_time, float const interp_speed) -> float;
 }
 
 namespace Util = Utilities;
