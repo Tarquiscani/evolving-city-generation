@@ -8,16 +8,6 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_CXX_STANDARD 17)
 
 
-#add_custom_command(
-#  	OUTPUT some_file.txt
-#	COMMAND export DISPLAY=:0
-#)
-# create a target that includes some_file, this gives us a name that we can use later
-#add_custom_target(
-#  some_target
-#  DEPENDS some_file.txt
-#)
-
 find_package(OpenGL REQUIRED)
 
 if (OPENGL_FOUND)
@@ -28,6 +18,7 @@ else (OPENGL_FOUND)
     message("opengl not found")
 endif()
 
+set(GLFW_USE_HYBRID_HPG ON CACHE BOOL "Force use of high-performance GPU on hybrid systems" FORCE)
 add_subdirectory(third_party/glfw)
 
 
@@ -95,7 +86,6 @@ add_custom_command(TARGET evolving_city_generation POST_BUILD
 if (MSVC)
 	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
     
-
     # warning level 4 and all warnings as errors
     #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
     target_compile_options(evolving_city_generation PRIVATE /W4 )
