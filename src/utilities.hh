@@ -56,6 +56,16 @@ namespace Utilities
 	auto round(Vector3f const v) -> Vector3f;
 
 	auto interp(float const current, float const target, float const delta_time, float const interp_speed, float const rel_tolerance) -> float;
+
+	////
+	//	Generate a random integer in the interval [0, max)
+	////
+	auto rand(int const max) -> int;
+	
+	////
+	//	Generate a random integers according to a normal distribution.
+	////
+	auto rand_normally_distributed_int(float const mean, float const standard_deviation) -> int;
 }
 
 namespace Util = Utilities;

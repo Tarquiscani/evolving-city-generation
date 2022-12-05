@@ -1,11 +1,14 @@
 #include "main_window_input.hh"
 
 
+#include <algorithm>
+
 #include "graphics/algorithms/hip_roof/tests/hip_roof_tests.hh"
 #include "map/buildings/building_recipe.hh"
 #include "map/buildings/tests/building_tests.hh"
 #include "settings/simulation/simulation_settings.hh"
 #include "ui/on_screen_messages.hh"
+#include "utilities.hh"
 
 #include "debug/visual/building_expansion/building_expansion_visual_debug.hh"
 #include "settings/debug/buildingexpansion_visualdebug.hh"
@@ -22,11 +25,7 @@ namespace MainWindow
 {
 	static void debug_expand_city(GameMap & map, std::vector<BuildingId> & created_buildings)
 	{
-		static std::mt19937 rnd{ 105u };	// TODO: Use time as a seed
-				
-		auto const random = rnd();
-		auto const should_expand = random % 100u > 40u;
-
+		auto const should_expand = Utilities::rand(100) > 40;
 		if (!created_buildings.empty() && should_expand)
 		{
 			map.debug_expand_random_building();
@@ -34,12 +33,11 @@ namespace MainWindow
 			std::cout << "Building expanded." << std::endl;
 		}
 		else
-		{					
-					
-			auto const more_dim = static_cast<int>(random % 4u);
-
-			auto const building_recipe = BuildingRecipe{ { 200.f, 200.f }, AreaType::cowshed, 
-														 { 10 + more_dim, 10 + more_dim }, "farm" };
+		{
+			auto const area_length = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
+			auto const area_width = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
+			auto const building_recipe = BuildingRecipe{ { 200.f, 200.f }, AreaType::very_tiny, 
+														 { area_length, area_width }, "farm" };
 	
 
 			auto const building_id = map.debug_buildBuilding_inNearestCity(building_recipe);

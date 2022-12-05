@@ -19,7 +19,7 @@ enum class AreaType
 {
 	none,
 	// Farm areas
-	field, cowshed, large_cowshed, xxl_cowshed, super_field, farmyard, test,
+	field, cowshed, large_cowshed, xxl_cowshed, super_field, farmyard, test, medium_horizontal, long_horizontal, medium_vertical, long_vertical, tiny, very_tiny
 };
 
 auto operator<<(std::ostream & os, AreaType const at) -> std::ostream &;
@@ -64,9 +64,15 @@ inline std::unordered_map<AreaType, AreaTemplate> const area_templates =
 			{ AreaType::field,			AreaTemplate{ Vector2i(10,10), false, TileType::wooden, BorderStyle::brickWall, Color::Yellow,		0  } },
 			{ AreaType::farmyard,		AreaTemplate{ Vector2i(10,10), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
 			{ AreaType::super_field,	AreaTemplate{ Vector2i(10,10), true,  TileType::wooden, BorderStyle::brickWall, Color(92, 46, 145),	2  } },
-			{ AreaType::cowshed,		AreaTemplate{ Vector2i(8,8),   true,  TileType::wooden, BorderStyle::brickWall, Color(204, 51, 0) ,	2  } },
+			{ AreaType::cowshed,		AreaTemplate{ Vector2i( 8, 8), true,  TileType::wooden, BorderStyle::brickWall, Color(204, 51, 0) ,	2  } },
 			{ AreaType::large_cowshed,	AreaTemplate{ Vector2i(12,12), true,  TileType::wooden, BorderStyle::brickWall, Color(204, 51, 0),	20 } },
-			{ AreaType::test,			AreaTemplate{ Vector2i(11,11), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } }
+			{ AreaType::test,			AreaTemplate{ Vector2i(11,11), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::medium_horizontal,AreaTemplate{Vector2i(5, 10),true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::long_horizontal,AreaTemplate{ Vector2i( 5,20), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::long_vertical,	AreaTemplate{ Vector2i(20, 5), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::medium_vertical,AreaTemplate{ Vector2i(10, 5), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::tiny,			AreaTemplate{ Vector2i( 5, 5), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } },
+			{ AreaType::very_tiny,		AreaTemplate{ Vector2i( 4, 4), true,  TileType::wooden, BorderStyle::brickWall, Color::Grey,		0  } }
 		};
 
 

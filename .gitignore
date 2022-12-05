@@ -2,6 +2,7 @@
 out
 linux_build
 windows_build
+CMakeSettings.json
 *.tlog
 *.obj
 *.idb

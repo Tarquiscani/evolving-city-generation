@@ -2,6 +2,8 @@
 
 
 #include <cmath>
+#include <chrono>
+#include <random>
 
 
 namespace tgm
@@ -40,6 +42,48 @@ namespace Utilities
 		auto const partial_delta = total_delta * std::clamp(delta_time * interp_speed, 0.f, 1.f);
 
 		return current + partial_delta;
+	}
+
+	static auto current_time_in_mcs()
+	{
+		auto const now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+		return static_cast<unsigned>(now % (std::numeric_limits<unsigned>::max() - 10));
+	}
+	
+	// TODO: Not thread-safe
+	auto rand(int const max) -> int
+	{
+		static auto random_engine = std::mt19937{ current_time_in_mcs() };
+
+		auto const random = random_engine();
+
+		return static_cast<int>(random % max); // Safe cast, because the result cannot be bigger than max (that is an integer).
+	}
+	
+	// TODO: Not thread-safe
+	static auto rand_normally_distributed_float(float const mean, float const standard_deviation) -> int
+	{
+		static auto random_engine = std::mt19937{ current_time_in_mcs() };
+
+		auto dist = std::normal_distribution<float>{ mean, standard_deviation };
+		return dist(random_engine);
+	}
+
+	// TODO: Not thread-safe
+	auto rand_normally_distributed_int(float const mean, float const standard_deviation) -> int
+	{
+		auto const random = rand_normally_distributed_float(mean, standard_deviation);
+
+		if (random > std::numeric_limits<int>::min() && random < std::numeric_limits<int>::max())
+		{
+			return static_cast<int>(random);
+		}
+		else
+		{
+			std::cout << "Error. The the normal distribution generated a random integer that is out of the 'int' allowed range.\n";
+			return mean;
+		}
 	}
 }
 

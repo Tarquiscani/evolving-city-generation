@@ -115,7 +115,13 @@ class BuildingManager
 						{ AreaType::super_field,	AreaExpansionTemplate{ {AreaType::field},						{AreaType::field}	} },
 						{ AreaType::cowshed,		AreaExpansionTemplate{ {AreaType::field},						{}					} },
 						{ AreaType::large_cowshed,	AreaExpansionTemplate{ {AreaType::field, AreaType::cowshed},	{AreaType::cowshed} } },
-						{ AreaType::test,			AreaExpansionTemplate{ {},										{}					} }
+						{ AreaType::test,			AreaExpansionTemplate{ {},										{}					} },
+						{ AreaType::medium_horizontal,AreaExpansionTemplate{{},										{}					} },
+						{ AreaType::long_horizontal,AreaExpansionTemplate{ {},										{}					} },
+						{ AreaType::medium_vertical,AreaExpansionTemplate{ {},										{}					} },
+						{ AreaType::long_vertical,	AreaExpansionTemplate{ {},										{}					} },
+						{ AreaType::tiny,			AreaExpansionTemplate{ {},										{}					} },
+						{ AreaType::very_tiny,		AreaExpansionTemplate{ {},										{}					} }
 					}
 				},
 
