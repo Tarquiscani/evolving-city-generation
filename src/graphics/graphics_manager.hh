@@ -164,7 +164,7 @@ class GraphicsManager
 			static const GLuint m_visibleTileACB_clearValue = 0u;
 			GLuint m_visibleTile_ACB = 0;
 
-			// SSBO of the already evaluated entities (used in visible_buffer_builder.fshader). Each GLuint stores 32 bits, each one representing a boolean flag 
+			// SSBO of the already evaluated entities (used in visible_buffer_builder.frag). Each GLuint stores 32 bits, each one representing a boolean flag 
 			// that indicates whether the corresponding entity_id has been already evaluated.
 			GLuint m_evaluatedEntities_SSBO = 0;
 		

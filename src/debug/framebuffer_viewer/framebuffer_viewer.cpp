@@ -57,12 +57,12 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 	// LOAD SHADER
 	std::string const fbwShaders_dir{"framebuffer_viewer/"};
-	auto const vshader_path = fbwShaders_dir + "default.vshader";
+	auto const vshader_path = fbwShaders_dir + "default.vert";
 	auto fshader_path = fbwShaders_dir;
 	if (shader_name.empty())
-		fshader_path += "default.fshader";
+		fshader_path += "default.frag";
 	else
-		fshader_path += "custom/" + shader_name + ".fshader";
+		fshader_path += "custom/" + shader_name + ".frag";
 
 	m_shader.load(vshader_path, fshader_path);
 

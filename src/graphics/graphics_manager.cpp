@@ -68,8 +68,8 @@ void GraphicsManager::init()
 
 
 	//--- Load all the shaders
-	m_tile_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
-											 { "main_shader.fshader", "discard_utilities.fshader" }, 
+	m_tile_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
+											 { "main_shader.frag", "discard_utilities.frag" }, 
 											 {
 												{"SHOW_LOD", "0 //false"},
 												{"EDGEABLE_IDS", "0 //false"},
@@ -81,16 +81,16 @@ void GraphicsManager::init()
 	#endif
 											 }												);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
 
-	m_dynamic_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
-												{ "main_shader.fshader", "discard_utilities.fshader" },
+	m_dynamic_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
+												{ "main_shader.frag", "discard_utilities.frag" },
 												{
 													{"SHOW_LOD", "0 //false"},
 													{"EDGEABLE_IDS", "0 //false"},
 													{"TILE_SHADER", "0 //false"},
 												}											);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
 	
-	m_edgeableIds_main_shader.load_from_multipleFiles({ "main_shader.vshader" }, 
-													  { "main_shader.fshader", "discard_utilities.fshader" },
+	m_edgeableIds_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
+													  { "main_shader.frag", "discard_utilities.frag" },
 													  {
 															{"SHOW_LOD", "0 //false"},
 															{"EDGEABLE_IDS", "1 //true"},
@@ -98,8 +98,8 @@ void GraphicsManager::init()
 													  }										);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
 	
 	#if OCCLUSION_CULLING
-		m_entityIds_shader.load_from_multipleFiles({ "entity_ids.vshader" }, 
-												   { "entity_ids.fshader","discard_utilities.fshader" },
+		m_entityIds_shader.load_from_multipleFiles({ "entity_ids.vert" }, 
+												   { "entity_ids.frag","discard_utilities.frag" },
 												   {
 	#if GSET_TILESET_TEXARRAY
 														{"GSET_TILESET_TEXARRAY", "1 //true"}
@@ -107,17 +107,17 @@ void GraphicsManager::init()
 														{"GSET_TILESET_TEXARRAY", "0 //false"}
 	#endif
 												   });
-		m_visibleBufferBuilder_shader.load("visible_buffer_builder.vshader", "visible_buffer_builder.fshader");
+		m_visibleBufferBuilder_shader.load("visible_buffer_builder.vert", "visible_buffer_builder.frag");
 	#endif
 
 	#if EDGE_DETECTION_FILTER
-		m_edgeDetector_shader.load("postprocessing/default.vshader", "postprocessing/edge_detector.fshader");
-		m_edgeThickener_shader.load("postprocessing/default.vshader", "postprocessing/erosion.fshader");
-		m_edgeTextureMixer_shader.load("postprocessing/default.vshader", "postprocessing/edge_texture_mixer.fshader");
+		m_edgeDetector_shader.load("postprocessing/default.vert", "postprocessing/edge_detector.frag");
+		m_edgeThickener_shader.load("postprocessing/default.vert", "postprocessing/erosion.frag");
+		m_edgeTextureMixer_shader.load("postprocessing/default.vert", "postprocessing/edge_texture_mixer.frag");
 	#endif
 		
 	#if OVERDRAW_FILTER
-		m_overdraw_screenShader.load("postprocessing/default.vshader", "postprocessing/overdraw.fshader");
+		m_overdraw_screenShader.load("postprocessing/default.vert", "postprocessing/overdraw.frag");
 	#endif
 
 

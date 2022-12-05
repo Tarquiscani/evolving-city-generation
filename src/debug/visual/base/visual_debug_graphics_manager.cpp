@@ -26,7 +26,7 @@ void VisualDebugGraphicsManager::init(Vector2i const fbo_size, Vector2i const wi
 	GraphicsManagerCore::init("Visual debug");
 
 
-	m_shader.load("visual_debug/visual_debug.vshader", "visual_debug/visual_debug.fshader");
+	m_shader.load("visual_debug/visual_debug.vert", "visual_debug/visual_debug.frag");
 
 
 	//glEnable(GL_DEPTH_TEST); //with enabled depth test I couldn't see highlightings that lied on the same z
