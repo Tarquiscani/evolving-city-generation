@@ -1,6 +1,7 @@
 #include "window_manager.hh"
 
 
+#include <thread>
 #include <type_traits>
 
 #include "imgui_impl_custom/imgui_impl_glfw.h"
@@ -229,11 +230,25 @@ void Window::display(MainLoopData & mainLoop_data)
 
 		m_is_imguiCanvas_active = false;
 	}
-																																mainLoop_data.rendering_end();
 
-																																mainLoop_data.swap_begin();
+	mainLoop_data.rendering_end();
+
+	mainLoop_data.swap_begin();
+
+	if (m_max_fps != 0)
+	{
+		auto const frame_duration = std::chrono::nanoseconds{ 1000000000ll / m_max_fps }; //in nanoseconds
+		auto elapsed_time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - m_previous_display_time);
+		while (elapsed_time <= frame_duration)
+		{
+			//std::this_thread::sleep_for(frame_duration - elapsed_time);
+			elapsed_time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - m_previous_display_time);
+		}
+		m_previous_display_time = std::chrono::system_clock::now();
+	}
 	glfwSwapBuffers(m_handler);
-																																mainLoop_data.swap_end();
+
+	mainLoop_data.swap_end();
 }
 
 void Window::assert_active() const
@@ -350,8 +365,9 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 	glfwMakeContextCurrent(handler);
 	m_activeWindow_id = wid;
 
-	//TODO: NOW: Rimetti normale dopo i test
-	glfwSwapInterval(opt.vsync/*0*/); //enables vsync
+	window.m_max_fps = opt.max_fps;
+	auto const should_enable_vsync = opt.vsync && opt.max_fps == 0;
+	glfwSwapInterval(should_enable_vsync); // Enables VSync
 
 
 	// Clear held keys of all other windows (otherwise they would never receive the released_key event)

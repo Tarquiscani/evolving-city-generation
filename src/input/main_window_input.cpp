@@ -36,7 +36,8 @@ namespace MainWindow
 		{
 			auto const area_length = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
 			auto const area_width = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
-			auto const building_recipe = BuildingRecipe{ { 200.f, 200.f }, AreaType::very_tiny, 
+			auto const building_recipe = BuildingRecipe{ { map.tiles().length() / 2.f, map.tiles().width() / 2.f}, 
+														 AreaType::very_tiny,
 														 { area_length, area_width }, "farm" };
 	
 

@@ -40,6 +40,7 @@ struct WindowOptions
 
 	std::optional<WindowId> shared_context; //this window will share the same context of share_window
 	bool vsync = true;
+	int max_fps = 0;						// If max_fps is set, VSync is turned off. '0' means no cap.
 
 	Vector2i starting_pos = { 50, 50 };
 
@@ -155,6 +156,10 @@ class Window
 		std::unordered_map<int, Clock> m_key_status;
 
 		std::any m_user_pointer;
+
+		int m_max_fps = 0;
+		std::chrono::system_clock::time_point m_previous_display_time = std::chrono::system_clock::now();
+
 
 		void assert_open() const
 		{
