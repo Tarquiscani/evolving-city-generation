@@ -32,6 +32,7 @@ Game::Game()
 								 nullptr,
 								 MainWindow::framebufferSize_callback, MainWindow::windowSize_callback);
 	
+	m_tile_graphics_manager.prepare(m_map);
 	m_graphics_manager.init();
 	
 	//tests::graphics_tests(tile_vertices, dynamic_manager);

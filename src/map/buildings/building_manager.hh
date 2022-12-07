@@ -50,7 +50,7 @@ class BuildingManager
 		void expand_buildings();
 		bool expand_building(BuildingId const id, int const queue_id);
 
-		auto buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> BuildingId;
+		auto buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> std::optional<BuildingId>;
 
 		
 

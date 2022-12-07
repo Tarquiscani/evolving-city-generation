@@ -347,7 +347,7 @@ namespace BuildingAlgorithmTests
 			lgr << Logger::nltb << "New building #" << i;
 
 			auto const building_id = map.debug_buildBuilding_inNearestCity(building_recipe);
-			if (building_id != 0) { created_buildings.push_back(building_id); }
+			if (building_id) { created_buildings.push_back(building_id.value()); }
 
 			lgr << Logger::addt;
 

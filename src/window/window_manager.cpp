@@ -279,6 +279,7 @@ WindowManager::WindowManager()
 	WindowOptions options{};
 
 	options.title = "Evolving City Generation";
+	//options.max_fps = 60;
 
 	if (GSet::video_mode.fullscreen())
 	{
@@ -338,6 +339,10 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 	if (opt.fullscreen)
 	{
 		monitor = glfwGetPrimaryMonitor();
+	}
+	else
+	{
+		//glfwWindowHint(GLFW_MAXIMIZED , GL_TRUE);
 	}
 
 	GLFWwindow * shared_context = nullptr;

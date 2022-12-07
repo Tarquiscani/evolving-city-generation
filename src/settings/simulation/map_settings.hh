@@ -27,6 +27,9 @@ struct MapSettings
 	//int const int test_height = 50;
 	//int const int ground_floor = 29; 
 		
+	//int const test_length = 150;
+	//int const test_width = 150;
+	//int const test_height = 1;
 	int const test_length = 1000;
 	int const test_width = 1500;
 	int const test_height = 1;
@@ -46,7 +49,7 @@ struct MapSettings
 
 
 	unsigned const max_roofCount = 2000u;
-	bool generate_roofs = true;				//if true the BuildingAlgorithm generates the roof logic
+	bool generate_roofs = false;				//if true the BuildingAlgorithm generates the roof logic
 	bool const roof_every_area = true;		//cover every area with a roof, despite of the fact that they are roofable areas or not
 
 	unsigned const test_farm_expId = 1;

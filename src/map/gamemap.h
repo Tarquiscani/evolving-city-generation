@@ -75,7 +75,7 @@ class GameMap
 		void debug_request_buildingExpansion(BuildingId const bid) { m_building_manager.request_buildingExpansion(bid); }
 		void debug_expand_buildings() { m_building_manager.expand_buildings(); }
 		void debug_expand_random_building() { m_building_manager.debug_expand_random_building(); }
-		auto debug_buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> BuildingId 
+		auto debug_buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> std::optional<BuildingId> 
 		{ 
 			return m_building_manager.buildBuilding_inNearestCity(recipe); 
 		};

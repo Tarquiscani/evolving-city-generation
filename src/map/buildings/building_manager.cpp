@@ -93,8 +93,10 @@ auto BuildingManager::compute_cityCenter(City const& city) const -> Vector2f
 	return center;
 }
 
-auto BuildingManager::buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> BuildingId 
+auto BuildingManager::buildBuilding_inNearestCity(BuildingRecipe const& recipe) -> std::optional<BuildingId> 
 {
+	auto ret = std::optional<BuildingId>{};
+
 	#if BUILDEXP_VISUALDEBUG
 		BEdeb.begin_chapter("Building building in the nearest city.", Vector3i{Vector3f{recipe.proposed_position().x, recipe.proposed_position().y, 0.f}});
 		BEdeb.focus_onPosition(recipe.proposed_position());
@@ -105,7 +107,11 @@ auto BuildingManager::buildBuilding_inNearestCity(BuildingRecipe const& recipe) 
 	auto const nearest_cid = get_nearestCity(recipe.proposed_position());
 	
 	new_bid = build_building_inCity(recipe, nearest_cid);
-	if (new_bid == 0) { throw std::runtime_error("Can't build in this city."); }
+	//if (new_bid == 0) { throw std::runtime_error("Can't build in this city."); }
+	if (new_bid != 0)
+	{
+		ret.emplace(new_bid);
+	}
 	
 	
 	#if BUILDEXP_VISUALDEBUG

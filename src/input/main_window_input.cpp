@@ -42,9 +42,9 @@ namespace MainWindow
 	
 
 			auto const building_id = map.debug_buildBuilding_inNearestCity(building_recipe);
-			if (building_id != 0)
+			if (building_id)
 			{
-				created_buildings.push_back(building_id);
+				created_buildings.push_back(building_id.value());
 			}
 
 			std::cout << "Building built in a city." << std::endl;
