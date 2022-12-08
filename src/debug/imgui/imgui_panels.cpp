@@ -5,9 +5,9 @@
 #include <cmath>
 
 #include "window/glfw_wrapper.hh" //must be included before imgui_impl_*
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <imgui/backends/imgui_impl_glfw.h>
 
-#include "imgui_impl_custom/imgui_impl_opengl3.h"
-#include "imgui_impl_custom/imgui_impl_glfw.h"
 #include "ui/on_screen_messages.hh"
 #include "utilities.hh"
 

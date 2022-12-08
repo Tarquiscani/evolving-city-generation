@@ -37,6 +37,8 @@ file(GLOB_RECURSE MAIN_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"  #TODO: Remove this line after converting all the source files to *.cpp
 	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/*.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_glfw.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_opengl3.cpp"
 )
 
 file(GLOB IMGUI_SOURCES

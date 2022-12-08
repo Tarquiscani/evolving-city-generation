@@ -4,8 +4,10 @@
 #include <thread>
 #include <type_traits>
 
-#include "imgui_impl_custom/imgui_impl_glfw.h"
-#include "imgui_impl_custom/imgui_impl_opengl3.h"
+#include "window/glfw_wrapper.hh"				// Must be included before imgui_impl_*
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+
 #include "settings/graphics_settings.hh"
 
 namespace tgm
@@ -412,7 +414,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window.m_handler, false);
-		ImGui_ImplOpenGL3_Init(window.m_imgui_context, glsl_version);
+		ImGui_ImplOpenGL3_Init(glsl_version);
 
 
 		window.m_has_imguiContext = true;
@@ -470,8 +472,6 @@ auto WindowManager::activate_window(WindowId const wid) -> Window &
 		if (new_window.m_has_imguiContext)
 		{
 			ImGui::SetCurrentContext(new_window.m_imgui_context);
-			ImGui_ImplGlfw_SetActiveWindow(new_window.m_handler);
-			ImGui_ImplOpenGL3_SetActiveContext(new_window.m_imgui_context);
 		}
 
 		m_activeWindow_id = wid;
@@ -622,25 +622,26 @@ void WindowManager::internal_keyCallback(GLFWwindow * window, int key, int scanc
 	auto & w = windows_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id != windows_manager().m_activeWindow_id)
-		return;
-
-
-	if (w.m_has_imguiContext)
+	if (w.m_id == windows_manager().m_activeWindow_id)
 	{
-		ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
-	}
+		// Being this the active window, the correct ImGui context should be already set
+
+		if (w.m_has_imguiContext)
+		{
+			ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
+		}
 
 
-	auto & imgui_io = ImGui_ImplGlfw_GetImGuiIO(window);
+		auto& imgui_io = ImGui::GetIO();
 
-	if (action == GLFW_PRESS && !imgui_io.WantCaptureKeyboard)
-	{
-		w.m_pressed_keys.insert(key);
-	}
-	else if (action == GLFW_RELEASE && !imgui_io.WantCaptureKeyboard)
-	{
-		w.m_released_keys.insert(key);
+		if (action == GLFW_PRESS && !imgui_io.WantCaptureKeyboard)
+		{
+			w.m_pressed_keys.insert(key);
+		}
+		else if (action == GLFW_RELEASE && !imgui_io.WantCaptureKeyboard)
+		{
+			w.m_released_keys.insert(key);
+		}
 	}
 }
 
@@ -649,20 +650,20 @@ void WindowManager::internal_cursorPosCallback(GLFWwindow* window, double x_pos,
 	auto & w = windows_manager().get_window_byHandler(window);
 
 	#if DYNAMIC_ASSERTS
-		if(!w.m_cursorPos_callback)
-			throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined CursorPosCallback is defined.");
+		if(!w.m_cursorPos_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined CursorPosCallback is defined."); }
 	#endif
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id != windows_manager().m_activeWindow_id)
-		return;
-
-
-	auto & imgui_io = ImGui_ImplGlfw_GetImGuiIO(window);
-
-	if (!imgui_io.WantCaptureMouse)
+	if (w.m_id == windows_manager().m_activeWindow_id)
 	{
-		w.m_cursorPos_callback(w, { static_cast<float>(x_pos), static_cast<float>(y_pos) });
+		// Being this the active window, the correct ImGui context should be already set		
+
+		auto & imgui_io = ImGui::GetIO();
+
+		if (!imgui_io.WantCaptureMouse)
+		{
+			w.m_cursorPos_callback(w, { static_cast<float>(x_pos), static_cast<float>(y_pos) });
+		}
 	}
 }
 
@@ -671,26 +672,27 @@ void WindowManager::internal_mouseButtonCallback(GLFWwindow* window, int button,
 	auto & w = windows_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id != windows_manager().m_activeWindow_id)
-		return;
-
-
-	if (w.m_has_imguiContext)
+	if (w.m_id == windows_manager().m_activeWindow_id)
 	{
-		ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-	}
+		// Being this the active window, the correct ImGui context should be already set
+
+		if (w.m_has_imguiContext)
+		{
+			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+		}
 
 
-	auto & imgui_io = ImGui_ImplGlfw_GetImGuiIO(window);
+		auto & imgui_io = ImGui::GetIO();
 
-	if (w.m_mouseButton_callback && !imgui_io.WantCaptureMouse)
-	{
-		auto cx = 0.,
-			 cy = 0.;
-		glfwGetCursorPos(window, &cx, &cy);
+		if (w.m_mouseButton_callback && !imgui_io.WantCaptureMouse)
+		{
+			auto cx = 0.,
+				 cy = 0.;
+			glfwGetCursorPos(window, &cx, &cy);
 
 
-		w.m_mouseButton_callback(w, { static_cast<float>(cx), static_cast<float>(cy) }, button, action, mods);
+			w.m_mouseButton_callback(w, { static_cast<float>(cx), static_cast<float>(cy) }, button, action, mods);
+		}
 	}
 }
 
@@ -699,21 +701,22 @@ void WindowManager::internal_mouseScrollCallback(GLFWwindow * window, double x_o
 	auto & w = windows_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id != windows_manager().m_activeWindow_id)
-		return;
-
-
-	if (w.m_has_imguiContext)
+	if (w.m_id == windows_manager().m_activeWindow_id)
 	{
-		ImGui_ImplGlfw_ScrollCallback(window, x_offset, y_offset);
-	}
+		// Being this the active window, the correct ImGui context should be already set
+
+		if (w.m_has_imguiContext)
+		{
+			ImGui_ImplGlfw_ScrollCallback(window, x_offset, y_offset);
+		}
 
 
-	auto & imgui_io = ImGui_ImplGlfw_GetImGuiIO(window);
+		auto & imgui_io = ImGui::GetIO();
 
-	if (w.m_mouseScroll_callback && !imgui_io.WantCaptureMouse)
-	{
-		w.m_mouseScroll_callback(w, static_cast<float>(x_offset), static_cast<float>(y_offset));
+		if (w.m_mouseScroll_callback && !imgui_io.WantCaptureMouse)
+		{
+			w.m_mouseScroll_callback(w, static_cast<float>(x_offset), static_cast<float>(y_offset));
+		}
 	}
 }
 
@@ -722,21 +725,22 @@ void WindowManager::internal_charCallback(GLFWwindow* window, unsigned int c)
 	auto & w = windows_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id != windows_manager().m_activeWindow_id)
-		return;
-
-
-	if (w.m_has_imguiContext)
+	if (w.m_id == windows_manager().m_activeWindow_id)
 	{
-		ImGui_ImplGlfw_CharCallback(window, c);
-	}
+		// Being this the active window, the correct ImGui context should be already set
+
+		if (w.m_has_imguiContext)
+		{
+			ImGui_ImplGlfw_CharCallback(window, c);
+		}
 
 
-	auto & imgui_io = ImGui_ImplGlfw_GetImGuiIO(window);
+		auto & imgui_io = ImGui::GetIO();
 
-	if (w.m_char_callback && !imgui_io.WantCaptureKeyboard)
-	{
-		w.m_char_callback(w, c);
+		if (w.m_char_callback && !imgui_io.WantCaptureKeyboard)
+		{
+			w.m_char_callback(w, c);
+		}
 	}
 }
 
