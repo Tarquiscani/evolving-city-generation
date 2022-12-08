@@ -9,13 +9,12 @@
 #include <unordered_set>
 #include <unordered_map>
 
-#include <imgui_impl_custom/imgui_wrapper.h>
-
 #include "data_strctures/data_array.hh"
 #include "system/clock.hh"
 #include "system/vector2.hh"
 #include "utilities/main_loop_data.hh"
 #include "window/glfw_wrapper.hh"
+#include "window/imgui_wrapper.h"
 
 
 namespace tgm

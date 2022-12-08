@@ -5,8 +5,9 @@
 #include <string>
 #include <unordered_map>
 
-#include <imgui_impl_custom/imgui_wrapper.h>
 #include <glad/glad.h>
+
+#include "window/imgui_wrapper.h"
 
 
 namespace tgm
