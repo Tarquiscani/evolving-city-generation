@@ -49,7 +49,7 @@ struct MapSettings
 
 
 	unsigned const max_roofCount = 2000u;
-	bool generate_roofs = false;				//if true the BuildingAlgorithm generates the roof logic
+	bool generate_roofs = true;				//if true the BuildingAlgorithm generates the roof logic
 	bool const roof_every_area = true;		//cover every area with a roof, despite of the fact that they are roofable areas or not
 
 	unsigned const test_farm_expId = 1;

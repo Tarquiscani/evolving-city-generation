@@ -3,7 +3,7 @@ City Generation Algorithm
 
 ![Evolving City Generation](../images/evolving-city-generation.gif)
 
-It's a bottom-up algorithm that generates a city. It means that given some simple rules, the city pattern *emerges* from a simple unorchestrated behavior.
+It's a bottom-up algorithm that generates a city in a top-down tile-based world. It's bottom-up because given some simple rules, the city pattern *emerges* from an unorchestrated behavior.
 
 I think that a bottom-up approach truly simulates what happens in a real settlement. Every person builds its own house without thinking too much about the urban planning.
 
@@ -53,7 +53,7 @@ These are the rules:
     ![Room](images/algorithm_expansion_adjacency.png)
 3. The new room must not block the access to existing buildings in the block (i.e. cannot create a courtyard in which there is a building with no other access to *the outisde*). 
     ![Room](images/algorithm_expansion_block_access.png)
-4. Among all the possible positions pick the one that maximizes the length of the wall shared with another room of that building.
+4. Among all the possible positions pick the one that maximizes the length of the wall shared with other rooms of that building.
     ![Room](images/algorithm_expansion_maximize_adjacency.png)
 
 ## Build a new building:
@@ -65,7 +65,7 @@ The rules are:
     ![Room](images/algorithm_new_building_block_access.png)
 3. The new building must be accessible from outside, i.e. cannot be built in a courtyard completely surrounded by other buildings.
     ![Room](images/algorithm_new_building_doesnt_have_access.png)
-4. Among all the possible positions pick the one that  maximizes the length of the wall shared with another room of a building belonging to the same block.
+4. Among all the possible positions pick the one that  maximizes the length of the wall shared with rooms of other buildings belonging to the same block.
     ![Room](images/algorithm_new_building_maximize_adjacency.png)
 5. When a block is full, build the new building in a new block. 
     1. Build it maximizing the proximity to the buildings of an existing block.
