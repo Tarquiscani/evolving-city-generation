@@ -242,13 +242,19 @@ namespace MainWindow
 				//auto prefab = BuildingSpecialCases::thinInnerYard_replacement(map.debug_getPlayerPosition_inTiles());
 
 				auto prefab = PrefabBuilding{ "farm" };
-				prefab.append_area(AreaType::field, map.debug_getPlayerPosition_inTiles() + Vector3i( 2, 2, 0), { 10, 10 });
+			auto const area_length = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
+			auto const area_width = std::max(4, Utilities::rand_normally_distributed_int(10, 3));
+				prefab.append_area(AreaType::field, map.debug_getPlayerPosition_inTiles() + Vector3i( 2, 2, 0), { area_length, area_width });
 
 
 				auto const& [bid, building] = map.debug_build_prefabBuilding(prefab);
 				if (bid != 0)
 				{
 					created_buildings.push_back(bid);
+				}
+				else
+				{
+					g_on_screen_messages.push_new_message("Cannot create a building here");
 				}
 
 				Tutorial::add_event<TutorialTriggerEv>("demo-tutorial", "first-building");
@@ -284,12 +290,12 @@ namespace MainWindow
 				break;
 			}
 
-			//case GLFW_KEY_F:
-			//{
-			//	//TODO: NOW: Manda un input alla simulazione e svolgi lì queste operazioni
-			//	debug_expand_city(map, created_buildings);
-			//	break;
-			//}
+			case GLFW_KEY_F:
+			{
+				//TODO: NOW: Manda un input alla simulazione e svolgi lì queste operazioni
+				debug_expand_city(map, created_buildings);
+				break;
+			}
 
 			case GLFW_KEY_O:
 			{
