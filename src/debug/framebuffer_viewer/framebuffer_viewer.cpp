@@ -26,7 +26,7 @@ FramebufferViewer::~FramebufferViewer()
 
 void FramebufferViewer::open(std::string const title, GLuint const texture, GLsizei const width, GLsizei const height, std::string const shader_name)
 {
-	if (GSet::video_mode.fullscreen()) // Opening framebuffer viewer in fullscreen mode it's complicated.
+	if (GSet::video_mode.fullscreen()) // Opening framebuffer viewer in fullscreen mode is complicated.
 	{ 
 		std::cout << "Cannot open " << title << " FramebufferViewer while in fullscreen mode." << std::endl;
 		return; 
@@ -105,7 +105,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 void FramebufferViewer::update()
 {
-	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode it's complicated.
+	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode is complicated.
 
 	#if DYNAMIC_ASSERTS
 		assert_open();
@@ -145,7 +145,7 @@ void FramebufferViewer::update()
 
 void FramebufferViewer::close()
 {
-	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode it's complicated.
+	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode is complicated.
 
 	#if DYNAMIC_ASSERTS
 		assert_open();

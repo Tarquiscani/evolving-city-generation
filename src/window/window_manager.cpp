@@ -746,12 +746,11 @@ void WindowManager::internal_charCallback(GLFWwindow* window, unsigned int c)
 
 void WindowManager::internal_framebufferSizeCallback(GLFWwindow * window, int new_width, int new_height)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
-
-	windows_manager().assert_active(w.m_id); //Often in the framebufferSizeCallback are executed OpenGL operations, so we must be sure that @window is the active window.
-	
+	// Often in the framebufferSizeCallback some OpenGL operations are executed, so we must ensure that the right window is activated before running any operation.
+	run_in_right_window(window, 
+						[new_width, new_height](Window & w) {
 	#if DYNAMIC_ASSERTS
-		if(!w.m_framebufferSize_callback)
+							if (!w.m_framebufferSize_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when there's a user-defined FramebufferSizeCallback."); }
 			throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined FramebufferSizeCallback is defined.");
 	#endif
 
@@ -759,22 +758,44 @@ void WindowManager::internal_framebufferSizeCallback(GLFWwindow * window, int ne
 	{
 		w.m_framebufferSize_callback(w, {new_width, new_height});
 	}
+						});
 }
 
 void WindowManager::internal_windowSizeCallback(GLFWwindow * window, int new_width, int new_height)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
-
-	windows_manager().assert_active(w.m_id); //Often in the framebufferSizeCallback are executed OpenGL operations, so we must be sure that @window is the active window.
-
+	// Often in the WindowSizeCallback some OpenGL operations are executed, so we must ensure that the right window is activated before running any operation.	
+	run_in_right_window(window, 
+						[new_width, new_height](Window & w) {
 	#if DYNAMIC_ASSERTS
-		if (!w.m_windowSize_callback)
-			throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined WindowSizeCallback is defined.");
+							if (!w.m_windowSize_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when there's user-defined WindowSizeCallback."); }
 	#endif
 
 	if (w.m_user_pointer.has_value())
 	{
 		w.m_windowSize_callback(w, { new_width, new_height });
+	}
+						});
+}
+
+
+void WindowManager::run_in_right_window(GLFWwindow * window, std::function<void(Window &)> body)
+{
+	auto & w = windows_manager().get_window_byHandler(window);
+
+	auto curr_active_window = windows_manager().activeWindow_id();
+	if (!curr_active_window) { throw std::runtime_error("Unexpected state. There should always be an active window."); }
+	
+	//Often in the framebufferSizeCallback are executed OpenGL operations, so we must be sure that @window is the active window.
+	auto const should_replace_active_window = curr_active_window.value() != w.m_id;
+	if (should_replace_active_window)
+	{
+		windows_manager().activate_window(w.m_id);
+		body(w);
+		windows_manager().activate_window(curr_active_window.value());
+	}
+	else
+	{
+		body(w);
 	}
 }
 
