@@ -35,7 +35,7 @@ auto operator<<(Logger & lgr, VisualDebugChange const& vdc) -> Logger &
 
 
 VisualDebug::VisualDebug():	
-	m_window{ windows_manager().create_window() }
+	m_window{ window_manager().create_window() }
 { 
 	std::cout << "Debug window after construction: " << m_window << std::endl;
 
@@ -503,7 +503,7 @@ void VisualDebug::open_window()
 
 
 
-	m_previousWindow_id = windows_manager().activeWindow_id();
+	m_previousWindow_id = window_manager().activeWindow_id();
 
 	WindowOptions opt;
 	opt.title = window_title();
@@ -537,7 +537,7 @@ void VisualDebug::close_window()
 
 	if (m_previousWindow_id)
 	{
-		windows_manager().activate_window(m_previousWindow_id.value());
+		window_manager().activate_window(m_previousWindow_id.value());
 	}
 }
 
