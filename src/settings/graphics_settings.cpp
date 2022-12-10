@@ -3,23 +3,21 @@
 
 #include <algorithm>
 
+#include "settings/debug/debug_settings.hh"
+
 
 namespace tgm
 {
 
 
 
-VideoMode::VideoMode(bool const fullscreen, int const width, int const height) :
+GameVideoMode::GameVideoMode(bool const fullscreen, int const width, int const height) :
 	m_fullscreen(fullscreen)
 {
-	auto const current_mode = g_glfw.video_mode();
-	auto const original_width = current_mode->width;
-	auto const original_height = current_mode->height;
-
-	std::cout << "Original VideoMode resolution: " << original_width << "x" << original_height << std::endl;
+	auto const original_mode = g_glfw.video_mode();
 
 
-	if (width > original_width || height > original_height)
+	if (width > original_mode.width() || height > original_mode.height())
 	{
 		throw std::runtime_error("The resolution can't be higher than the original one.");
 	}
@@ -27,36 +25,41 @@ VideoMode::VideoMode(bool const fullscreen, int const width, int const height) :
 
 	if (fullscreen)
 	{
-		if ((width > 0u && width < original_width) || (height > 0u && height < original_height))
+		if ((width > 0 && width < original_mode.width()) || (height > 0 && height < original_mode.height()))
 		{
 			m_width = width;
 			m_height = height;
-			std::cout << "Custom VideoMode resolution: " << width << "x" << height << std::endl;
+			std::cout << "GameVideoMode fullscreen resolution (" << width << "x" << height << ") is different from the original one." << std::endl;
 		}
 		else //if the specified resolution isn't supported
 		{
-			m_width = original_width;
-			m_height = original_height;
+			m_width = original_mode.width();
+			m_height = original_mode.height();
 		}
 	}
 	else
 	{
 		// In the window-mode the resolution is that of the native screen.
-		m_width = original_width;
-		m_height = original_height;
+		m_width = original_mode.width();
+		m_height = original_mode.height();
 	}
+	
+
+	m_red_bits = original_mode.red_bits();
+	m_green_bits = original_mode.green_bits();
+	m_blue_bits = original_mode.blue_bits();
+	m_refresh_rate = original_mode.refresh_rate();
 }
 
-
-auto GraphicsSettings::init_videoMode() -> VideoMode
+auto GraphicsSettings::init_game_video_mode() -> GameVideoMode
 {
-    return VideoMode{ false, 500, 500 };
-	//return VideoMode{ true, 800, 600 };
-	//return VideoMode{ true, 1600, 1200 };
-    //return VideoMode{ true, 1366, 768 };
-	//return VideoMode{ true, 1920, 1080 };
-	//return VideoMode{ true, 3840, 2160 };
-	//return VideoMode{ true };
+    //return GameVideoMode{ false, 500, 500 };
+	//return GameVideoMode{ true, 800, 600 };
+	//return GameVideoMode{ true, 1600, 1200 };
+    //return GameVideoMode{ true, 1366, 768 };
+	//return GameVideoMode{ true, 1920, 1080 };
+	//return GameVideoMode{ true, 3840, 2160 };
+	return GameVideoMode{ true };
 }
 
 static auto compute_imgui_scale(float const ppi_adjustment) -> float

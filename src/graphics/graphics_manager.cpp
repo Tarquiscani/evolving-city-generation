@@ -533,7 +533,7 @@ void GraphicsManager::generate_tileObjects()
 		//Compute a good tile dimension so that the whole map can fill up the screen resolution
 		//TODO: PERFORMANCE: Maybe when the resolution of the screen is really high (ultra hd), I could create an FBO smaller than screen dimensions. 
 		//					 I could set a max cap to improve performance.
-		auto const entityIdsFBO_ppt = GSet::video_mode.height() / (m_tile_vertices.map_length() + floorSlipping_inTiles);
+		auto const entityIdsFBO_ppt = GSet::game_video_mode.height() / (m_tile_vertices.map_length() + floorSlipping_inTiles);
 		std::cout << "entityIdsFBO_ppt: " << entityIdsFBO_ppt << std::endl;
 
 		m_entityIdsFBO_width  = static_cast<GLsizei>(m_tile_vertices.map_width() * entityIdsFBO_ppt);

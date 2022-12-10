@@ -283,24 +283,25 @@ WindowManager::WindowManager()
 		throw std::runtime_error("The main window must be the first element of m_windows.");
 
 
+
 	WindowOptions options{};
 
 	options.title = "Evolving City Generation";
 	//options.max_fps = 60;
 
-	if (GSet::video_mode.fullscreen())
+	if (GSet::game_video_mode.fullscreen())
 	{
 		options.fullscreen = true;
-		options.width = GSet::video_mode.width();
-		options.height = GSet::video_mode.height();
+		options.width = GSet::game_video_mode.width();
+		options.height = GSet::game_video_mode.height();
 	}
-	else //window-mode
+	else // Window mode
 	{
 		options.fullscreen = false;
 
 		auto const current_mode = g_glfw.video_mode();
-		options.width = current_mode->width / 10 * 7;
-		options.height = current_mode->height / 10 * 8;
+		options.width = GSet::game_video_mode.width() / 10 * 7;
+		options.height = GSet::game_video_mode.height() / 10 * 8;
 	}
 
 	options.create_imguiContext = true;
@@ -331,25 +332,21 @@ auto WindowManager::create_window() -> Window &
 
 auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) -> Window &
 {
-	std::cout << "Open window id: " << wid << " -- Title: " << opt.title << std::endl;
+	std::cout << "Opening window -- wid: " << wid << " -- Title: " << opt.title << std::endl;
 
 	#if DYNAMIC_ASSERTS
 		assert_wid(wid);
 		assert_closed(wid);
 	#endif
 
-	auto & window = m_windows[wid];
 
+	auto & window = m_windows[wid];
 
 
 	GLFWmonitor * monitor = nullptr;
 	if (opt.fullscreen)
 	{
 		monitor = glfwGetPrimaryMonitor();
-	}
-	else
-	{
-		//glfwWindowHint(GLFW_MAXIMIZED , GL_TRUE);
 	}
 
 	GLFWwindow * shared_context = nullptr;
@@ -358,15 +355,25 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 		shared_context = m_windows[opt.shared_context.value()].m_handler;
 	}
 
+
 	set_contextCreationHints();
-	glfwWindowHint(GLFW_RESIZABLE, opt.resizable);
+	
+	std::cout << "Creating a new window - WxH: " << opt.width << "x" << opt.height 
+			  << " - RGB depth: " << "(" << GSet::game_video_mode.red_bits() << ", " << GSet::game_video_mode.green_bits() << ", " << GSet::game_video_mode.blue_bits() << ") - "
+			  << "refresh_rate: " << GSet::game_video_mode.refresh_rate() << std::endl;
+	
+	glfwWindowHint(GLFW_RESIZABLE, opt.resizable ? GLFW_TRUE : GLFW_FALSE);
 	glfwWindowHint(GLFW_FLOATING, GLFW_FALSE);
 
+	// Better to enforce this hints, because in certain circumstances the default values chosen by GLFW aren't supported by the monitor.
+	glfwWindowHint(GLFW_RED_BITS, GSet::game_video_mode.red_bits());
+	glfwWindowHint(GLFW_GREEN_BITS, GSet::game_video_mode.green_bits());
+	glfwWindowHint(GLFW_BLUE_BITS, GSet::game_video_mode.blue_bits());
+	glfwWindowHint(GLFW_REFRESH_RATE, GSet::game_video_mode.refresh_rate());
+
 	auto handler = glfwCreateWindow(opt.width, opt.height, opt.title.c_str(), monitor, shared_context);
-	if (!handler)
-	{
-		throw std::runtime_error("Window or OpenGL context creation failed");
-	}
+	if (!handler) {	throw std::runtime_error("Window or OpenGL context creation failed"); }
+
 	glfwSetWindowPos(handler, opt.starting_pos.x, opt.starting_pos.y);
 
 
@@ -379,7 +386,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 
 	window.m_max_fps = opt.max_fps;
 	auto const should_enable_vsync = opt.vsync && opt.max_fps == 0;
-	glfwSwapInterval(should_enable_vsync); // Enables VSync
+	glfwSwapInterval(should_enable_vsync ? 1 : 0); // Enables VSync
 
 
 	// Clear held keys of all other windows (otherwise they would never receive the released_key event)

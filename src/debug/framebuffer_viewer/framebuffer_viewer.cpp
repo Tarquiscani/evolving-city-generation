@@ -44,11 +44,12 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 	auto previous_window = window_manager().activeWindow_id();
 
-	WindowOptions opt{};
+	auto opt = WindowOptions{};
 	opt.title = window_title;
+	opt.fullscreen;
+	opt.resizable = false;
 	opt.width = width;
 	opt.height = height;
-	opt.resizable = false;
 	opt.shared_context = WindowManager::mainWindow_id;
 
 	std::cout << "Framebuffer window: " << m_window << std::endl;
