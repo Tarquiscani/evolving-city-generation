@@ -337,6 +337,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 	exec_check( assert_wid(wid); assert_closed(wid); );
 
 
+
 	auto & window = m_windows[wid];
 
 
