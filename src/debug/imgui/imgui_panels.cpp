@@ -27,9 +27,11 @@ GuiManager::GuiManager(Window const& window, GuiEventQueues & gui_events, DemoTu
 
 	if (!tutorial_panel.is_open()) { tutorial_panel.switch_state(); }
 
+#if ENABLE_IMGUI
     auto & io = ImGui::GetIO();
 	io.Fonts->AddFontDefault();
     m_custom_font = io.Fonts->AddFontFromFileTTF("media/fonts/Roboto-Bold.ttf", 30 * GSet::imgui_scale());
+#endif
 }
 
 void GuiManager::update()

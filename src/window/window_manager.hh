@@ -137,8 +137,10 @@ class Window
 		GLFWwindow * m_handler = nullptr;
 
 		bool m_has_imguiContext = false;					//indicate whether this window has an associated ImGui context
+#if ENABLE_IMGUI
 		ImGuiContext * m_imgui_context = nullptr;
 		bool m_is_imguiCanvas_active = false;				//indicate whether the ImGui "canvas" has been activated for the current frame
+#endif
 
 		KeyCallback m_pressedKey_callback = nullptr;
 		KeyCallback m_heldKey_callback = nullptr;

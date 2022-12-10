@@ -155,8 +155,10 @@ void Game::tick_rendering()
 	m_roof_graphics_manager.prepare(m_map);
 	m_graphics_manager.draw();
 
+#if ENABLE_IMGUI
 	m_main_window.activate_imguiCanvas();
 	m_gui_manager.generate_layout(m_map, m_camera, m_camera_controller, m_fps_counter, m_ups_counter, m_main_loop_data, inputCounter);
+#endif //ENABLE_IMGUI
 
 	m_main_window.display(m_main_loop_data);
 	++m_fps_counter;

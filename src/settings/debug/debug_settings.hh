@@ -2,6 +2,12 @@
 #define GM_DEBUG_SETTINGS_HH
 
 
+#include <cassert>
+
+
+#define ENABLE_IMGUI true
+
+
 ////
 //  Activate dynamic asserts and safer constructs (e.g. dynamic_cast instead of static_cast).
 ////
