@@ -63,6 +63,8 @@ void Window::activate()
 //TODO: PERFORMANCE: Maybe this function could be inlined.
 void Window::poll_events()
 {
+	exec_check(assert_active());
+
 	glfwPollEvents();
 
 	process_keys();
@@ -443,7 +445,7 @@ void WindowManager::set_contextCreationHints()
 
 	// Note: GLFW MSAA hint comes with multiple issues:
 	//		 1) NVIDIA control panel (and graphics driver in general) may override this settings to an arbitrary value
-	//		 2) This hint affect only the default FBO. When postprocessing is enabled then the default FBO multisampling
+	//		 2) This hint just affects the default FBO. And when postprocessing is enabled the default FBO multisampling
 	//			doesn't affect the actual scene rendering.
 	#if ALPHA_TO_COVERAGE && !POSTPROCESSING
 		glfwWindowHint(GLFW_SAMPLES, GSet::samples);

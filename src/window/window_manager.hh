@@ -303,6 +303,8 @@ class WindowManager
 		static void internal_charCallback(GLFWwindow* window, unsigned int c);
 		static void internal_framebufferSizeCallback(GLFWwindow * window, int new_width, int new_height);
 		static void internal_windowSizeCallback(GLFWwindow * window, int new_width, int new_height);
+
+		static void run_in_right_window(GLFWwindow * window, std::function<void(Window &)> body);
 };
 
 
