@@ -364,8 +364,8 @@ auto VisualDebug::compute_bestTileDimension() -> int
 	if (!m_running)
 		throw std::runtime_error("Cannot compute best tile dimension for a non-started VisualDebug.");
 
-	auto const rectified_screenWidth = GSet::video_mode.width() / 10 * 9;
-	auto const rectified_screenHeight = GSet::video_mode.height() / 10 * 9;
+	auto const rectified_screenWidth = GSet::game_video_mode.width() / 10 * 9;
+	auto const rectified_screenHeight = GSet::game_video_mode.height() / 10 * 9;
 
 
 	auto const tileMaxDim_in_screenWidth = rectified_screenWidth / m_frame.width;

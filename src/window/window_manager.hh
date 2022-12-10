@@ -32,10 +32,11 @@ struct WindowOptions
 {
 	std::string title = "New Window";
 
-	int width = 800;
-	int height = 600;
 	bool fullscreen = false;
 	bool resizable = true;
+	
+	int width = 800;
+	int height = 600;
 
 	std::optional<WindowId> shared_context; //this window will share the same context of share_window
 	bool vsync = true;
@@ -135,7 +136,7 @@ class Window
 	private:
 		WindowId m_id = 0;
 		GLFWwindow * m_handler = nullptr;
-
+		
 		bool m_has_imguiContext = false;					//indicate whether this window has an associated ImGui context
 #if ENABLE_IMGUI
 		ImGuiContext * m_imgui_context = nullptr;

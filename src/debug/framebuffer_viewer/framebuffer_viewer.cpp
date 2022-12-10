@@ -26,7 +26,9 @@ FramebufferViewer::~FramebufferViewer()
 
 void FramebufferViewer::open(std::string const title, GLuint const texture, GLsizei const width, GLsizei const height, std::string const shader_name)
 {
-	if (GSet::video_mode.fullscreen()) // Opening framebuffer viewer in fullscreen mode is complicated.
+	// Opening framebuffer viewer in fullscreen mode doesn't wokr, because minimizing the fullscreen window causes
+	// a resizing in the framebuffer (that becomes 0*0). So there would be anything to see.
+	if (GSet::game_video_mode.fullscreen()) 
 	{ 
 		std::cout << "Cannot open " << title << " FramebufferViewer while in fullscreen mode." << std::endl;
 		return; 
@@ -44,11 +46,11 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 	auto previous_window = window_manager().activeWindow_id();
 
-	WindowOptions opt{};
+	auto opt = WindowOptions{};
 	opt.title = window_title;
+	opt.resizable = false;
 	opt.width = width;
 	opt.height = height;
-	opt.resizable = false;
 	opt.shared_context = WindowManager::mainWindow_id;
 
 	std::cout << "Framebuffer window: " << m_window << std::endl;
@@ -105,7 +107,9 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 void FramebufferViewer::update()
 {
-	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode is complicated.
+	// Opening framebuffer viewer in fullscreen mode doesn't wokr, because minimizing the fullscreen window causes
+	// a resizing in the framebuffer (that becomes 0*0). So there would be anything to see.
+	if (GSet::game_video_mode.fullscreen()) { return; }
 
 	#if DYNAMIC_ASSERTS
 		assert_open();
@@ -145,7 +149,10 @@ void FramebufferViewer::update()
 
 void FramebufferViewer::close()
 {
-	if (GSet::video_mode.fullscreen()) { return; } // Opening framebuffer viewer in fullscreen mode is complicated.
+	// Opening framebuffer viewer in fullscreen mode doesn't wokr, because minimizing the fullscreen window causes
+	// a resizing in the framebuffer (that becomes 0*0). So there would be anything to see.
+	if (GSet::game_video_mode.fullscreen()) { return; }
+
 
 	#if DYNAMIC_ASSERTS
 		assert_open();

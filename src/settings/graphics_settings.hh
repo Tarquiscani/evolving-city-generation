@@ -40,7 +40,7 @@
 
 // Enable alpha-to-coverage sampling in order to apply anti-aliasing also inside the sprites.
 // Note: When no postprocessing filter is active and the scene is drawn on the default FBO, the GPU driver may force an arbitrary MSAA value and override every GLFW hint.
-#define ALPHA_TO_COVERAGE true
+#define ALPHA_TO_COVERAGE false
 
 #if ALPHA_TO_COVERAGE && OVERDRAW_FILTER
 	#error ALPHA_TO_COVERAGE and OVERDRAW_FILTER cannot be both active.
@@ -64,31 +64,22 @@ namespace tgm
 
 
 
-class VideoMode
+////
+//	Actual VideoMode in which the game run. 
+////
+class GameVideoMode : public VideoMode
 {
 	public:
 		////
 		//	@fullscreen: Indicate whether the application have to be run in fullscreen mode or in window mode.
-		//	@width, @height: In fullscreen mode represent the custom resolution.
+		//	@width, @height: Ignored in window mode. In fullscreen mode represent the chosen resolution.
 		////
-		VideoMode(bool const fullscreen, int const width = 0, int const height = 0);
+		GameVideoMode(bool const fullscreen, int const width = 0, int const height = 0);
 
 		bool fullscreen() const noexcept { return m_fullscreen; }
 
-		////
-		//	@return: Screen resolution (in pixels).
-		////
-		auto width() const noexcept -> int { return m_width; }
-
-		////
-		//	@return: Screen height (in pixels).
-		////
-		auto height() const noexcept -> int { return m_height; }
-
 	private:
 		bool m_fullscreen = false;
-		int m_width = 0;
-		int m_height = 0;
 };
 
 
@@ -102,10 +93,10 @@ enum class TextureDefinition
 class GraphicsSettings
 {
 	private:
-		static auto init_videoMode() -> VideoMode;
+		static auto init_game_video_mode() -> GameVideoMode;
 
 	public:
-		static inline auto video_mode = init_videoMode();
+		static inline auto game_video_mode = init_game_video_mode();
 
 
 		static unsigned constexpr depthBuffer_bits = 24u;
@@ -119,7 +110,7 @@ class GraphicsSettings
 		////
 		//	Ratio useful to compute the GUI size and other PPI-dependant sizes.
 		////
-		static inline auto ppi_adjustment() noexcept -> int { return video_mode.width() / 640; }
+		static inline auto ppi_adjustment() noexcept -> int { return game_video_mode.width() / 640; }
 
 		////
 		//	Ratio useful to compute ImGui font and spacing sizes.
@@ -271,9 +262,9 @@ class GraphicsSettings
 
 
 		
-		static inline bool is_lowDef_resolution()  { return video_mode.width() > 700  && video_mode.width() <= 1400; }
-		static inline bool is_fullHD_resolution()  { return video_mode.width() > 1400 && video_mode.width() <= 1920; }
-		static inline bool is_ultraHD_resolution() { return video_mode.width() > 1920 && video_mode.width() <= 3840; }
+		static inline bool is_lowDef_resolution()  { return game_video_mode.width() > 700  && game_video_mode.width() <= 1400; }
+		static inline bool is_fullHD_resolution()  { return game_video_mode.width() > 1400 && game_video_mode.width() <= 1920; }
+		static inline bool is_ultraHD_resolution() { return game_video_mode.width() > 1920 && game_video_mode.width() <= 3840; }
 
 
 
