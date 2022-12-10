@@ -51,13 +51,13 @@ bool Window::should_close() const
 //TODO: PERFORMANCE: Maybe this function could be inlined.
 void Window::open(WindowOptions const& opt)
 {
-	windows_manager().open_window(m_id, opt);
+	window_manager().open_window(m_id, opt);
 }
 
 //TODO: PERFORMANCE: Maybe this function could be inlined.
 void Window::activate()
 {
-	windows_manager().activate_window(m_id);
+	window_manager().activate_window(m_id);
 }
 
 //TODO: PERFORMANCE: Maybe this function could be inlined.
@@ -149,7 +149,7 @@ void Window::release_all_keys()
 //TODO: PERFORMANCE: Maybe this function could be inlined.
 void Window::close()
 {
-	windows_manager().close_window(m_id);
+	window_manager().close_window(m_id);
 
 
 	m_pressedKey_callback = nullptr;
@@ -193,7 +193,7 @@ void Window::set_callabacks(KeyCallback pressed_key, KeyCallback held_key, KeyCa
 							CharCallback char_callback,
 						    FramebufferSizeCallback framebuffer_size, WindowSizeCallback window_size)
 {
-	windows_manager().set_callbacks(m_id, pressed_key, held_key, released_key, cursor_pos, mouse_button, scroll, char_callback, framebuffer_size, window_size);
+	window_manager().set_callbacks(m_id, pressed_key, held_key, released_key, cursor_pos, mouse_button, scroll, char_callback, framebuffer_size, window_size);
 }
 
 #if ENABLE_IMGUI
@@ -258,10 +258,10 @@ void Window::display(MainLoopData & mainLoop_data)
 
 void Window::assert_active() const
 {
-	if (m_id != windows_manager().activeWindow_id())
+	if (m_id != window_manager().activeWindow_id())
 	{
-		if(windows_manager().activeWindow_id())
-			std::cout << "The active window was " << windows_manager().activeWindow_id().value() << std::endl;
+		if(window_manager().activeWindow_id())
+			std::cout << "The active window was " << window_manager().activeWindow_id().value() << std::endl;
 		else
 			std::cout << "There was no window bound." << std::endl;
 
@@ -627,10 +627,10 @@ void WindowManager::set_callbacks(WindowId const wid,
 
 void WindowManager::internal_keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id == windows_manager().m_activeWindow_id)
+	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
 
@@ -659,14 +659,14 @@ void WindowManager::internal_keyCallback(GLFWwindow * window, int key, int scanc
 
 void WindowManager::internal_cursorPosCallback(GLFWwindow* window, double x_pos, double y_pos)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
 	#if DYNAMIC_ASSERTS
 		if(!w.m_cursorPos_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined CursorPosCallback is defined."); }
 	#endif
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id == windows_manager().m_activeWindow_id)
+	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set		
 
@@ -681,10 +681,10 @@ void WindowManager::internal_cursorPosCallback(GLFWwindow* window, double x_pos,
 
 void WindowManager::internal_mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id == windows_manager().m_activeWindow_id)
+	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
 
@@ -711,10 +711,10 @@ void WindowManager::internal_mouseButtonCallback(GLFWwindow* window, int button,
 
 void WindowManager::internal_mouseScrollCallback(GLFWwindow * window, double x_offset, double y_offset)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id == windows_manager().m_activeWindow_id)
+	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
 
@@ -736,10 +736,10 @@ void WindowManager::internal_mouseScrollCallback(GLFWwindow * window, double x_o
 
 void WindowManager::internal_charCallback(GLFWwindow* window, unsigned int c)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
 	// Process input callbacks only if this is the active window
-	if (w.m_id == windows_manager().m_activeWindow_id)
+	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
 
@@ -795,18 +795,18 @@ void WindowManager::internal_windowSizeCallback(GLFWwindow * window, int new_wid
 
 void WindowManager::run_in_right_window(GLFWwindow * window, std::function<void(Window &)> body)
 {
-	auto & w = windows_manager().get_window_byHandler(window);
+	auto & w = window_manager().get_window_byHandler(window);
 
-	auto curr_active_window = windows_manager().activeWindow_id();
+	auto curr_active_window = window_manager().activeWindow_id();
 	if (!curr_active_window) { throw std::runtime_error("Unexpected state. There should always be an active window."); }
 	
 	//Often in the framebufferSizeCallback are executed OpenGL operations, so we must be sure that @window is the active window.
 	auto const should_replace_active_window = curr_active_window.value() != w.m_id;
 	if (should_replace_active_window)
 	{
-		windows_manager().activate_window(w.m_id);
+		window_manager().activate_window(w.m_id);
 		body(w);
-		windows_manager().activate_window(curr_active_window.value());
+		window_manager().activate_window(curr_active_window.value());
 	}
 	else
 	{
@@ -816,9 +816,9 @@ void WindowManager::run_in_right_window(GLFWwindow * window, std::function<void(
 
 
 
-auto windows_manager() -> WindowManager &
+auto window_manager() -> WindowManager &
 {
-	static WindowManager wmgr;
+	static auto wmgr = WindowManager{};
 
 	return wmgr;
 }

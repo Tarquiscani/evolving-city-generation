@@ -12,7 +12,7 @@ namespace tgm
 
 
 Game::Game() 
-	: m_main_window{ windows_manager().activate_window(WindowManager::mainWindow_id) }
+	: m_main_window{ window_manager().activate_window(WindowManager::mainWindow_id) }
 	, m_dynamic_vertices{ 60000u }
 	, m_graphics_manager{ m_main_window.fbo_size(), m_main_window.window_size(), m_tile_vertices, &m_dynamic_vertices, m_roof_vertices, m_camera }
 	, m_dynamic_manager{ &m_camera, m_dynamic_vertices }

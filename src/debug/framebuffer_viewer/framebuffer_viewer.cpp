@@ -12,7 +12,7 @@ namespace tgm
 
 
 FramebufferViewer::FramebufferViewer() :
-	m_window{ windows_manager().create_window() }
+	m_window{ window_manager().create_window() }
 { }
 
 FramebufferViewer::~FramebufferViewer()
@@ -42,7 +42,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 
 	auto window_title = "Framebuffer Viewer - " + title;
 
-	auto previous_window = windows_manager().activeWindow_id();
+	auto previous_window = window_manager().activeWindow_id();
 
 	WindowOptions opt{};
 	opt.title = window_title;
@@ -98,7 +98,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 	// Restore the previous target, because otherwise update() cannot realize which was the previous target to restore
 	if (previous_window)
 	{
-		windows_manager().activate_window(previous_window.value());
+		window_manager().activate_window(previous_window.value());
 	}
 }
 
@@ -112,7 +112,7 @@ void FramebufferViewer::update()
 	#endif		
 	
 
-	auto previous_window = windows_manager().activeWindow_id();
+	auto previous_window = window_manager().activeWindow_id();
 
 	m_window.activate();
 
@@ -138,7 +138,7 @@ void FramebufferViewer::update()
 	// Restore the previous RenderTarget
 	if (previous_window)
 	{
-		windows_manager().activate_window(previous_window.value());
+		window_manager().activate_window(previous_window.value());
 	}
 }
 
@@ -152,7 +152,7 @@ void FramebufferViewer::close()
 	#endif
 
 
-	auto previous_window = windows_manager().activeWindow_id();
+	auto previous_window = window_manager().activeWindow_id();
 	m_window.activate();
 
 
@@ -167,7 +167,7 @@ void FramebufferViewer::close()
 	// Restore the previous RenderTarget
 	if (previous_window)
 	{
-		windows_manager().activate_window(previous_window.value());
+		window_manager().activate_window(previous_window.value());
 	}
 
 }

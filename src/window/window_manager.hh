@@ -314,7 +314,7 @@ class WindowManager
 //		  way the windowsManager is forced to be constructed before that object and the C++ rules imply that it'll be also destroyed after 
 //		  the destruction of that object.
 ////
-auto windows_manager() -> WindowManager &;
+auto window_manager() -> WindowManager &;
 
 
 
