@@ -91,6 +91,9 @@ if (MSVC)
     # warning level 4 and all warnings as errors
     #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
     target_compile_options(evolving_city_generation PRIVATE /W4 )
+
+    # Tell MSVC to use main instead of WinMain and hide the console.
+    #set_target_properties(evolving_city_generation PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 else()
 	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
 	#target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
