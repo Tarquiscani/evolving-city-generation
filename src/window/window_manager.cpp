@@ -8,6 +8,7 @@
 #include <imgui/backends/imgui_impl_opengl3.h>
 #include <imgui/backends/imgui_impl_glfw.h>
 
+#include "settings/debug/debug_settings.hh"
 #include "settings/graphics_settings.hh"
 
 namespace tgm
@@ -277,11 +278,10 @@ void Window::assert_active() const
 WindowManager::WindowManager()
 {
 	// Create and open the main window
-
+	
 	create_window();
-	if (m_windows.size() - 1 != mainWindow_id)
-		throw std::runtime_error("The main window must be the first element of m_windows.");
-
+	
+	exec_check( if (m_windows.size() - 1 != mainWindow_id) { throw std::runtime_error("The main window must be the first element of m_windows."); } );
 
 
 	WindowOptions options{};
@@ -334,10 +334,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 {
 	std::cout << "Opening window -- wid: " << wid << " -- Title: " << opt.title << std::endl;
 
-	#if DYNAMIC_ASSERTS
-		assert_wid(wid);
-		assert_closed(wid);
-	#endif
+	exec_check( assert_wid(wid); assert_closed(wid); );
 
 
 	auto & window = m_windows[wid];
@@ -387,7 +384,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 	window.m_max_fps = opt.max_fps;
 	auto const should_enable_vsync = opt.vsync && opt.max_fps == 0;
 	glfwSwapInterval(should_enable_vsync ? 1 : 0); // Enables VSync
-
+	
 
 	// Clear held keys of all other windows (otherwise they would never receive the released_key event)
 	for (auto& w : m_windows)
@@ -482,7 +479,7 @@ auto WindowManager::activate_window(WindowId const wid) -> Window &
 	{
 		auto & new_window = m_windows[wid];
 		glfwMakeContextCurrent(new_window.m_handler);
-
+		
 #if ENABLE_IMGUI
 		if (new_window.m_has_imguiContext)
 		{
@@ -642,7 +639,7 @@ void WindowManager::internal_keyCallback(GLFWwindow * window, int key, int scanc
 	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
-
+		
 		auto imgui_want_capture_keyboard = false;
 #if ENABLE_IMGUI
 		if (w.m_has_imguiContext)
@@ -655,15 +652,15 @@ void WindowManager::internal_keyCallback(GLFWwindow * window, int key, int scanc
 		if (!imgui_want_capture_keyboard)
 		{
 			if (action == GLFW_PRESS)
-		{
-			w.m_pressed_keys.insert(key);
-		}
+			{
+				w.m_pressed_keys.insert(key);
+			}
 			else if (action == GLFW_RELEASE)
-		{
-			w.m_released_keys.insert(key);
+			{
+				w.m_released_keys.insert(key);
+			}
 		}
 	}
-}
 }
 
 void WindowManager::internal_cursorPosCallback(GLFWwindow* window, double x_pos, double y_pos)
@@ -696,7 +693,7 @@ void WindowManager::internal_mouseButtonCallback(GLFWwindow* window, int button,
 	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
-
+		
 		auto imgui_want_capture_mouse = false;
 #if ENABLE_IMGUI
 		if (w.m_has_imguiContext)
@@ -726,7 +723,7 @@ void WindowManager::internal_mouseScrollCallback(GLFWwindow * window, double x_o
 	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
-
+		
 		auto imgui_want_capture_mouse = false;
 #if ENABLE_IMGUI
 		if (w.m_has_imguiContext)
@@ -751,7 +748,7 @@ void WindowManager::internal_charCallback(GLFWwindow* window, unsigned int c)
 	if (w.m_id == window_manager().m_activeWindow_id)
 	{
 		// Being this the active window, the correct ImGui context should be already set
-
+		
 		auto imgui_want_capture_keyboard = false;
 #if ENABLE_IMGUI
 		if (w.m_has_imguiContext)
@@ -773,15 +770,14 @@ void WindowManager::internal_framebufferSizeCallback(GLFWwindow * window, int ne
 	// Often in the framebufferSizeCallback some OpenGL operations are executed, so we must ensure that the right window is activated before running any operation.
 	run_in_right_window(window, 
 						[new_width, new_height](Window & w) {
-	#if DYNAMIC_ASSERTS
-							if (!w.m_framebufferSize_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when there's a user-defined FramebufferSizeCallback."); }
-			throw std::runtime_error("Unexpected state. This callback should be invoked only when an user-defined FramebufferSizeCallback is defined.");
-	#endif
-
-	if (w.m_user_pointer.has_value())
-	{
-		w.m_framebufferSize_callback(w, {new_width, new_height});
-	}
+							#if DYNAMIC_ASSERTS
+								if (!w.m_framebufferSize_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when there's a user-defined FramebufferSizeCallback."); }
+							#endif
+	
+							if (w.m_user_pointer.has_value())
+							{
+								w.m_framebufferSize_callback(w, {new_width, new_height});
+							}
 						});
 }
 
@@ -790,14 +786,14 @@ void WindowManager::internal_windowSizeCallback(GLFWwindow * window, int new_wid
 	// Often in the WindowSizeCallback some OpenGL operations are executed, so we must ensure that the right window is activated before running any operation.	
 	run_in_right_window(window, 
 						[new_width, new_height](Window & w) {
-	#if DYNAMIC_ASSERTS
+							#if DYNAMIC_ASSERTS
 							if (!w.m_windowSize_callback) { throw std::runtime_error("Unexpected state. This callback should be invoked only when there's user-defined WindowSizeCallback."); }
-	#endif
+							#endif
 
-	if (w.m_user_pointer.has_value())
-	{
-		w.m_windowSize_callback(w, { new_width, new_height });
-	}
+							if (w.m_user_pointer.has_value())
+							{
+								w.m_windowSize_callback(w, { new_width, new_height });
+							}
 						});
 }
 

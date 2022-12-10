@@ -34,9 +34,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
 		return; 
 	}
 
-	#if DYNAMIC_ASSERTS
-		if (m_open) { throw std::runtime_error("Trying to reopen an already open FramebufferViewer"); }
-	#endif
+	exec_check(if (m_open) { throw std::runtime_error("Trying to reopen an already open FramebufferViewer"); });
 
 
 	m_texture = texture;
@@ -111,9 +109,8 @@ void FramebufferViewer::update()
 	// a resizing in the framebuffer (that becomes 0*0). So there would be anything to see.
 	if (GSet::game_video_mode.fullscreen()) { return; }
 
-	#if DYNAMIC_ASSERTS
-		assert_open();
-	#endif		
+
+	exec_check(assert_open());
 	
 
 	auto previous_window = window_manager().activeWindow_id();
@@ -154,9 +151,7 @@ void FramebufferViewer::close()
 	if (GSet::game_video_mode.fullscreen()) { return; }
 
 
-	#if DYNAMIC_ASSERTS
-		assert_open();
-	#endif
+	exec_check(assert_open());
 
 
 	auto previous_window = window_manager().activeWindow_id();
