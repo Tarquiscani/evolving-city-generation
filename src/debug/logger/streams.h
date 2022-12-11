@@ -1,41 +1,44 @@
-#ifndef GM_LOGGER_STREAMS_H
-#define GM_LOGGER_STREAMS_H
+#ifndef GM_LOG_STREAMS_HH
+#define GM_LOG_STREAMS_HH
 
 
 #include <fstream>
+#include <iostream>
+#include <sstream>
 
+#include "debug/logger/debug_printers.hh"
+#include "debug/logger/log_buffer.hh"
+#include "debug/logger/logger.h"
 #include "settings/debug/debug_settings.hh"
 #include "utilities/filesystem_utilities.hh"
-#include "logger.h"
-#include "debug_printers.h"
+
+
+namespace tgm
+{
+
+
+
+inline auto & g_log = std::ostream{ &g_log_buffer };
 
 
 #if DEBUGLOG
+    #if BUILDEXP_DEBUGLOG
+        inline auto g_be_debug_stream = FsUtil::create_unique("_debug/debuglogs/building_expansion/BElog.txt");
+        inline Logger BElog{ g_be_debug_stream };
+    #endif
 
-	namespace tgm
-	{
+    #if PLAYERMOVEMENT_DEBUGLOG
+        inline Logger PMlog{ g_log };
+    #endif
 
-
-
-	#if BUILDEXP_DEBUGLOG
-		inline auto debug_stream = FsUtil::create_unique("_debug/debuglogs/building_expansion/BElog.txt");
-		inline Logger BElog{ debug_stream };
-	#endif
-
-	#if PLAYERMOVEMENT_DEBUGLOG
-		inline Logger PMlog{ std::cout };
-	#endif
-
-	#if VISUALDEBUG_DEBUGLOG
-		inline Logger VDlog{ std::cout };
-	#endif
-
-
-
-	}
-
+    #if VISUALDEBUG_DEBUGLOG
+        inline Logger VDlog{ g_log };
+    #endif
 #endif //DEBUGLOG
 
 
 
-#endif //GM_LOGGER_STREAMS_H
+} // namespace tgm
+
+
+#endif //GM_LOG_STREAMS_HH
