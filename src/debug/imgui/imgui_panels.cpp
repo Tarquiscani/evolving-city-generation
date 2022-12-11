@@ -1,7 +1,6 @@
 #include "imgui_panels.hh"
 
 
-
 #include <cmath>
 
 #include "window/glfw_wrapper.hh" //must be included before imgui_impl_*
@@ -353,10 +352,9 @@ void OnScreenMessagePanel::generate_layout(Vector2i const framebuffer_size, ImFo
 		ImGui::Begin("Main Menu", &m_open, 
 					 ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBackground 
 					 | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoNav);
-		ImGui::SetWindowFontScale(GSet::imgui_scale());
-
+	
 		auto const opacity = (1.333333f * g_on_screen_messages.remaining_life()) / (0.3333333f + g_on_screen_messages.remaining_life());
-		std::cout << std::setprecision(2) << g_on_screen_messages.remaining_life() << "--" << opacity << std::endl;
+		//g_log << std::setprecision(2) << g_on_screen_messages.remaining_life() << "--" << opacity << std::endl;
 
         ImGui::PushFont(custom_font);
 		ImGui::TextColored(ImVec4{ 1.f, 1.f, 1.f, opacity }, "%s", g_on_screen_messages.message().c_str());
