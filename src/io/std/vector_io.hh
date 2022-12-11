@@ -2,8 +2,10 @@
 #define GM_VECTOR_IOF_HH
 
 
-#include <vector>
 #include <fstream>
+#include <vector>
+
+#include "debug/logger/debug_printers.h"
 
 
 namespace tgm

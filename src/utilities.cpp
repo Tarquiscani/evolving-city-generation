@@ -8,6 +8,8 @@
 #include <random>
 #include <sstream>
 
+#include "settings/graphics_settings.hh"
+
 
 namespace tgm
 {
@@ -45,7 +47,9 @@ namespace Utilities
 		auto const partial_delta = total_delta * std::clamp(delta_time * interp_speed, 0.f, 1.f);
 
 		return current + partial_delta;
-	}
+	} 
+	
+	auto units_to_tiles(Vector2f const v) -> Vector2i { return { GSet::units_to_tiles(v.x), GSet::units_to_tiles(v.y) }; }
 
 	static auto current_time_in_mcs()
 	{

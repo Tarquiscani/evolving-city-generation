@@ -1,6 +1,10 @@
+#include "trail_system.hh"
+
+
+#include <iomanip>
+
 #include "std_extensions/hash_functions.hh"
 #include "system/clock.hh"
-#include "trail_system.hh"
 #include "utilities.hh"
 
 #include "debug/visual/player_movement_stream.hh"

@@ -2,8 +2,9 @@
 #define GM_COLOR_HH
 
 
-#include <cstdint>
 #include <algorithm>
+#include <cstdint>
+#include <ostream>
 
 
 namespace tgm
@@ -128,6 +129,14 @@ auto operator-=(Color & left, Color const& right) -> Color &;
 ////
 auto operator*=(Color & left, Color const& right) -> Color &;
 
+
+inline auto operator<<(std::ostream & os, Color const& c) -> std::ostream &
+{
+        os << "color(" << static_cast<unsigned>(c.r) << ", " << static_cast<unsigned>(c.g) << ", " << static_cast<unsigned>(c.b) << ")";
+
+        return os;
+}
+		
 
 
 } // namespace tgm

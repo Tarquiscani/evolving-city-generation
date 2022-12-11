@@ -2,6 +2,9 @@
 #define GM_VECTOR3_HH
 
 
+#include <iostream>
+
+
 namespace tgm
 {
 
@@ -152,6 +155,30 @@ namespace Versor3i
 	inline Vector3i constexpr NW{ -1, -1,  0 };
 	inline Vector3i constexpr U {  0,  0,  1 };
 	inline Vector3i constexpr D {  0,  0, -1 };
+}
+
+
+
+template<typename T>
+auto operator<<(std::ostream & os, Vector3<T> const& v) -> std::ostream &
+{
+    auto const w = os.width();
+    os.width(0);
+
+    os << "( " << std::setw(w) << v.x << " , " << std::setw(w) << v.y << " , " << std::setw(w) << v.z << " )";
+
+    return os;
+}
+
+template<typename T>
+auto operator>>(std::istream & is, Vector3<T> & v) -> std::istream &
+{
+	//TODO: PERFORMANCE: IO: Maybe it's better to make a custom parser, avoiding creating unused temporary variables
+	auto unused = ' ';
+
+	is >> unused >> v.x >> unused >> v.y >> unused >> v.z >> unused;
+
+    return is;
 }
 
 

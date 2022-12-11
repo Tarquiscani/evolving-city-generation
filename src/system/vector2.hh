@@ -3,6 +3,7 @@
 
 
 #include <cmath>
+#include <iostream>
 
 
 namespace tgm
@@ -159,6 +160,19 @@ inline auto distance(Vector2f const lhs, Vector2f const rhs) -> float
 	auto const diff = lhs - rhs;
 
     return ::sqrtf(diff.x * diff.x + diff.y * diff.y); //TODO: 11: It should be "std::sqtrf", but g++ doesn't allow it.
+}
+
+
+
+template<typename T>
+auto operator<<(std::ostream & os, Vector2<T> const& v) -> std::ostream &
+{
+        auto const w = os.width();
+        os.width(0);
+
+        os << "(" << std::setw(w) << v.x << ", " << std::setw(w) << v.y << ")";
+
+        return os;
 }
 
 

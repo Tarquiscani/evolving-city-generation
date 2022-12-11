@@ -656,6 +656,18 @@ namespace detail
 }
 
 
+
+////
+//	Convert a DataArrayId in a human readable string.
+////
+inline auto human_did(DataArrayId const did) -> std::string
+{
+	std::ostringstream oss;
+	oss << DataArray<int>::debug_slot(did) << " (v" << DataArray<int>::debug_version(did) << ')'; // The type "int" is used just to access the static function debug_slot that is independent from the tempate parameter
+
+	return oss.str();
+}
+
 template <typename T_, bool Resizable_>
 auto operator<<(std::ofstream & ofs, DataArray<T_, Resizable_> const& da) -> std::ofstream &
 {

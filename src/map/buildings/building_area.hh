@@ -2,8 +2,9 @@
 #define GM_BUILDING_AREA_HH
 
 
-#include "system/parallelepiped.hh"
+#include "data_strctures/data_array.hh"
 #include "map/buildings/area_template.hh"
+#include "system/parallelepiped.hh"
 
 #include "debug/logger/streams.h"
 
@@ -63,8 +64,16 @@ inline auto operator<<(Logger & lgr, BuildingArea const& ba) -> Logger &
 }
 
 
+inline auto operator<<(std::ostream & os, BuildingAreaCompleteId const& acid) -> std::ostream &
+{
+        os << "{ " << human_did(acid.bid) << ", " << human_did(acid.aid) << " }";
 
-} //namespace tgm
+        return os;
+}
+
+
+
+} // namespace tgm
 
 
 #endif //GM_BUILDING_AREA_HH

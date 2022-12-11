@@ -3,6 +3,7 @@
 
 #include <bitset>
 
+#include "map/buildings/building_area.hh"
 #include "settings/simulation/simulation_settings.hh"
 
 #include "debug/visual/player_movement_stream.hh"

@@ -5,11 +5,9 @@
 #include <cstdint>
 #include <cmath>
 
-#include "settings/graphics_settings.hh"
 #include "system/vector2.hh"
 #include "system/vector3.hh"
 #include "system/rect.hh"
-
 
 #include "settings/debug/debug_settings.hh"
 
@@ -51,7 +49,7 @@ namespace Utilities
 	inline auto v2f_to_v3i(Vector2f const v) -> Vector3i { return { static_cast<int>(v.x), static_cast<int>(v.y), 0 }; }
 	inline auto v3i_to_v2f(Vector3i const v) -> Vector2f { return { static_cast<float>(v.x), static_cast<float>(v.y) }; }
 
-	inline auto units_to_tiles(Vector2f const v) -> Vector2i { return { GSet::units_to_tiles(v.x), GSet::units_to_tiles(v.y) }; }
+	auto units_to_tiles(Vector2f const v) -> Vector2i;
 
 	auto round(Vector3f const v) -> Vector3f;
 

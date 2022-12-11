@@ -55,7 +55,7 @@ namespace FsUtil
 
 	inline auto create_unique(std::string const& pathstring, bool const prepend_datetime = false) -> std::ofstream
 	{
-		fss::path path(pathstring, fss::path::generic_format);
+		auto path = fss::path(pathstring, fss::path::generic_format);
 		
 		if (!path.has_filename()) { throw std::runtime_error("The path must have a filename."); }
 		if (path.has_root_path()) { throw std::runtime_error("The path must be relative."); }
