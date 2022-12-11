@@ -70,7 +70,7 @@ namespace FsUtil
 			auto unique_index = std::ostringstream{};
 			unique_index << std::setfill('_') << std::setw(6) << i << "_";
 
-			auto unique_filename = Util::human_readable_datetime() + unique_index.str() + path.stem().string() + path.extension().string();
+			auto unique_filename = unique_index.str() + path.stem().string() + path.extension().string();
 			if (prepend_datetime)
 			{
 				unique_filename = Util::human_readable_datetime() + unique_filename;
