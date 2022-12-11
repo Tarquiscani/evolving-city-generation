@@ -66,6 +66,9 @@ namespace Utilities
 	//	Generate a random integers according to a normal distribution.
 	////
 	auto rand_normally_distributed_int(float const mean, float const standard_deviation) -> int;
+
+	
+	auto human_readable_datetime() -> std::string;
 }
 
 namespace Util = Utilities;

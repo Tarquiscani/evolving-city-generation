@@ -10,6 +10,9 @@
 #include <chrono>
 
 
+#include "utilities.hh"
+
+
 namespace tgm
 {
 
@@ -50,7 +53,7 @@ namespace FsUtil
 		return ofstream;
 	}
 
-	inline auto create_without_overwriting(std::string const& pathstring) -> std::ofstream
+	inline auto create_unique(std::string const& pathstring, bool const prepend_datetime = false) -> std::ofstream
 	{
 		fss::path path(pathstring, fss::path::generic_format);
 		
@@ -60,30 +63,31 @@ namespace FsUtil
 
 		fss::create_directories(path.relative_path().parent_path());
 
-
-		fss::path fixed_path;
-		for (int i = 0; ; ++i)
+		auto unique_path = fss::path{};
+		auto unique_path_found = false;
+		for (int i = 0; !unique_path_found; ++i)
 		{
-			std::ostringstream i_oss;
-			i_oss << std::setfill('_') << std::setw(6) << i;
+			auto unique_index = std::ostringstream{};
+			unique_index << std::setfill('_') << std::setw(6) << i << "_";
 
-			fixed_path.clear();
-			fixed_path = (path.parent_path() / path.stem() += i_oss.str()) += path.extension();
+			auto unique_filename = Util::human_readable_datetime() + unique_index.str() + path.stem().string() + path.extension().string();
+			if (prepend_datetime)
+			{
+				unique_filename = Util::human_readable_datetime() + unique_filename;
+			}
 
-			if (!fss::exists(fixed_path))
-				break;
+			unique_path.clear();
+			unique_path = path.parent_path() / unique_filename;
+
+			unique_path_found = !fss::exists(unique_path);
 		}
 
 
-		std::ofstream stream(fixed_path, std::ios::trunc);
-		if (!stream)
-			throw std::runtime_error("An error occurred when creating an ofstream.");
+		auto stream = std::ofstream{ unique_path, std::ios::trunc };
+		if (!stream) { throw std::runtime_error("An error occurred when creating an ofstream."); }
 
 
-		// Print the current datetime
-		auto now = std::chrono::system_clock::now();
-		auto in_time_t = std::chrono::system_clock::to_time_t(now);
-		stream << "Unix epoch time: " << in_time_t << std::endl; //TODO: Replace with human readable datetime
+		stream << "File creation time: " << Util::human_readable_datetime() << std::endl;
 
 
 		return stream;

@@ -18,7 +18,7 @@
 
 
 	#if BUILDEXP_DEBUGLOG
-		inline auto debug_stream = FsUtil::create_without_overwriting("_debug/debuglogs/building_expansion/BElog.txt");
+		inline auto debug_stream = FsUtil::create_unique("_debug/debuglogs/building_expansion/BElog.txt");
 		inline Logger BElog{ debug_stream };
 	#endif
 

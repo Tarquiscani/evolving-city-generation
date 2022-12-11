@@ -30,7 +30,7 @@ class TestLogger
 			if (reporting)
 				throw std::runtime_error("Cannot begin a new report if the previous one has not ended.");
 
-			output = FsUtil::create_without_overwriting("_debug/testlogs/" + dir_name + "/" + file_name);
+			output = FsUtil::create_unique("_debug/testlogs/" + dir_name + "/" + file_name, true);
 			if (!output)
 				throw std::runtime_error("An error occurred when creating the report file.");
 
