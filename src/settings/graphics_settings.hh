@@ -8,7 +8,8 @@
 #include "system/vector3.hh"
 #include "window/glfw_wrapper.hh"
 
-#include "debug/logger/streams.h"
+#include "debug/logger/log_streams.hh"
+
 
 #define POLYGON_MODE false
 

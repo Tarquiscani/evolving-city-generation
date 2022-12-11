@@ -8,7 +8,7 @@
 
 #include "debug/logger/debug_printers.hh"
 #include "debug/logger/log_buffer.hh"
-#include "debug/logger/logger.h"
+#include "debug/logger/logger.hh"
 #include "settings/debug/debug_settings.hh"
 #include "utilities/filesystem_utilities.hh"
 

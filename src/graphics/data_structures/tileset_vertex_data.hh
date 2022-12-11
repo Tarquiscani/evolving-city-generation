@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-#include "debug/logger/logger.h"
+#include "debug/logger/logger.hh"
 
 
 namespace tgm
@@ -14,10 +14,10 @@ namespace tgm
 
 struct TilesetVertexData
 {
-	GLfloat world_pos[3];	//OpenGL world reference system
-	GLfloat tex_coords[2];
-	GLuint layer;
-	GLuint entity_id;
+    GLfloat world_pos[3];	//OpenGL world reference system
+    GLfloat tex_coords[2];
+    GLuint layer;
+    GLuint entity_id;
 };
 
 auto operator<<(Logger & lgr, TilesetVertexData const& tvd) -> Logger &;

@@ -6,16 +6,16 @@
 #if TESTLOG
 
 
-	#include "test_logger.h"
+    #include "test_logger.h"
 
-	#if PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
-	namespace tgm
-	{
+    #if PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
+    namespace tgm
+    {
 
-		inline static TestLogger PMtest("player_movement", "PMtest.txt");
+        inline static TestLogger PMtest("player_movement", "PMtest.txt");
 
-	} // namespace tgm
-	#endif //PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
+    } // namespace tgm
+    #endif //PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
 
 
 #endif //TESTLOG
