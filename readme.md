@@ -108,7 +108,7 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
 
 6. Create a new folder:
 
-        mkdir linux_build & cd linux_build
+        mkdir linux_build && cd linux_build
 
 7. Generate the native build system:
 

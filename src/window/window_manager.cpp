@@ -354,11 +354,13 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
     }
 
 
+    auto const should_enable_vsync = opt.vsync && opt.max_fps == 0;
+
     set_contextCreationHints();
     
     std::cout << "Creating a new window - WxH: " << opt.width << "x" << opt.height 
               << " - RGB depth: " << "(" << GSet::game_video_mode.red_bits() << ", " << GSet::game_video_mode.green_bits() << ", " << GSet::game_video_mode.blue_bits() << ") - "
-              << "refresh_rate: " << GSet::game_video_mode.refresh_rate() << std::endl;
+              << "refresh_rate: " << GSet::game_video_mode.refresh_rate() << " - vsync: " << std::boolalpha << should_enable_vsync << std::endl;
     
     glfwWindowHint(GLFW_RESIZABLE, opt.resizable ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_FLOATING, GLFW_FALSE);
@@ -383,7 +385,6 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
     m_activeWindow_id = wid;
 
     window.m_max_fps = opt.max_fps;
-    auto const should_enable_vsync = opt.vsync && opt.max_fps == 0;
     glfwSwapInterval(should_enable_vsync ? 1 : 0); // Enables VSync
     
 

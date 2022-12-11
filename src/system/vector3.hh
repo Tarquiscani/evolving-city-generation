@@ -2,6 +2,7 @@
 #define GM_VECTOR3_HH
 
 
+#include <iomanip>
 #include <iostream>
 
 

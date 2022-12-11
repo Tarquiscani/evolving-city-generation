@@ -1,5 +1,6 @@
 .vs
 out
+build
 linux_build
 windows_build
 CMakeSettings.json

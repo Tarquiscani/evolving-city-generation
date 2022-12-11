@@ -20,4 +20,4 @@ namespace Time
 } // namespace tgm
 
 
-#endif GM_TIME_UTILITIES_HH
+#endif //GM_TIME_UTILITIES_HH
