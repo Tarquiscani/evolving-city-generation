@@ -7,7 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "graphics/opengl/draw_arrays_indirect_command.hh"
-#include "debug/logger/debug_printers.h"
+
+#include "debug/logger/debug_printers.hh"
 
 
 namespace tgm
@@ -22,7 +23,7 @@ namespace GraphicsManagerCore
 
 static void print_openGLVersion_infos()
 {
-	Logger lgr{ std::cout };
+	Logger lgr{ null_stream };
 
 	GLint context_major = 0;
 	GLint context_minor = 0;

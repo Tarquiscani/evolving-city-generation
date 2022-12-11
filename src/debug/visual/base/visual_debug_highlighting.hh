@@ -13,7 +13,7 @@
 #include "settings/graphics_settings.hh"
 #include "system/parallelepiped.hh"
 
-#include "debug/logger/debug_printers.h"
+#include "debug/logger/debug_printers.hh"
 #include "debug/logger/logger.h"
 
 

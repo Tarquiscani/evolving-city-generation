@@ -1,7 +1,7 @@
 #include "mobile_subimage_set.hh"
 
 
-#include "debug/logger/debug_printers.h"
+#include "debug/logger/debug_printers.hh"
 #include "debug/logger/logger.h"
 
 

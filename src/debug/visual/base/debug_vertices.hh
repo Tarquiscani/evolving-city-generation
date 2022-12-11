@@ -15,7 +15,7 @@
 #include "system/vector3.hh"
 #include "visual_debug_utilities.hh"
 
-#include "debug/logger/debug_printers.h"
+#include "debug/logger/debug_printers.hh"
 
 
 namespace tgm 

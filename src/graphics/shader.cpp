@@ -1,10 +1,12 @@
 #include "shader.hh"
 
 
-#include "debug/logger/debug_printers.h"
+#include "debug/logger/debug_printers.hh"
+
 
 namespace tgm
 {
+
 
 
 auto operator<<(std::ostream & os, ShaderType const scp)->std::ostream &
@@ -173,4 +175,5 @@ void Shader::check_linkingErrors(GLuint const program_id) const
 }
 
 
-} //namespace tgm
+
+} // namespace tgm

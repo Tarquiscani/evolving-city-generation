@@ -4,6 +4,7 @@
 
 #include <map>
 #include <vector>
+#include <unordered_set>
 
 #include <glad/glad.h> //needed only for OpenGL types
 
