@@ -6,9 +6,9 @@
 
 class BaseEvent 
 {
-	protected:
-		// Disallow deleting/destroying derived-class objects through "BaseClass*"
-		~BaseEvent() {};
+    protected:
+        // Disallow deleting/destroying derived-class objects through "BaseClass*"
+        ~BaseEvent() {};
 };
 
 #endif //GM_BASE_EVENT_HH

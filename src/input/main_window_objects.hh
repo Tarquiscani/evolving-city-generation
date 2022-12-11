@@ -14,18 +14,18 @@ namespace tgm
 {
 
 
-	
+    
 struct MainWindowObjects
 {
-	RoofVertices & roof_vertices;
-	Camera & camera;
-	CameraController & camera_controller;
-	GraphicsManager & graphics_manager;
-	TileGraphicsMediator& tileGraphics_mediator;
-	GameMap & map;
-	GuiManager & gui_mgr;
+    RoofVertices & roof_vertices;
+    Camera & camera;
+    CameraController & camera_controller;
+    GraphicsManager & graphics_manager;
+    TileGraphicsMediator& tileGraphics_mediator;
+    GameMap & map;
+    GuiManager & gui_mgr;
 
-	std::vector<BuildingId> & created_buildings;
+    std::vector<BuildingId> & created_buildings;
 };
 
 

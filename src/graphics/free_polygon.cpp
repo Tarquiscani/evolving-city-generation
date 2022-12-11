@@ -11,14 +11,14 @@ namespace tgm
 
 auto operator<<(Logger & lgr, FreePolygon const& fp) -> Logger &
 {
-	lgr << "FreePolygon{"
-		<< Logger::addt
-		<< Logger::nltb << "pos: " << fp.m_pos
-		<< Logger::nltb << "vertices: " << fp.m_vertices
-		<< Logger::remt
-		<< Logger::nltb << "}";
+    lgr << "FreePolygon{"
+        << Logger::addt
+        << Logger::nltb << "pos: " << fp.m_pos
+        << Logger::nltb << "vertices: " << fp.m_vertices
+        << Logger::remt
+        << Logger::nltb << "}";
 
-	return lgr;
+    return lgr;
 }
 
 

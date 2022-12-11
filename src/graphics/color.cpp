@@ -8,16 +8,16 @@ namespace tgm
 
 bool operator==(Color const& left, Color const& right)
 {
-	return (left.r == right.r)
-		&& (left.g == right.g)
-		&& (left.b == right.b)
-		&& (left.a == right.a);
+    return (left.r == right.r)
+        && (left.g == right.g)
+        && (left.b == right.b)
+        && (left.a == right.a);
 }
 
 
 bool operator!=(Color const& left, Color const& right)
 {
-	return !(left == right);
+    return !(left == right);
 }
 
 
@@ -27,10 +27,10 @@ bool operator!=(Color const& left, Color const& right)
 ////
 auto operator+(Color const& left, Color const& right) -> Color
 {
-	return Color(std::uint8_t(std::min(int(left.r) + right.r, 255)),
-		std::uint8_t(std::min(int(left.g) + right.g, 255)),
-		std::uint8_t(std::min(int(left.b) + right.b, 255)),
-		std::uint8_t(std::min(int(left.a) + right.a, 255)));
+    return Color(std::uint8_t(std::min(int(left.r) + right.r, 255)),
+        std::uint8_t(std::min(int(left.g) + right.g, 255)),
+        std::uint8_t(std::min(int(left.b) + right.b, 255)),
+        std::uint8_t(std::min(int(left.a) + right.a, 255)));
 }
 
 
@@ -39,10 +39,10 @@ auto operator+(Color const& left, Color const& right) -> Color
 ////
 auto operator-(Color const& left, Color const& right) -> Color
 {
-	return Color(std::uint8_t(std::max(int(left.r) - right.r, 0)),
-		std::uint8_t(std::max(int(left.g) - right.g, 0)),
-		std::uint8_t(std::max(int(left.b) - right.b, 0)),
-		std::uint8_t(std::max(int(left.a) - right.a, 0)));
+    return Color(std::uint8_t(std::max(int(left.r) - right.r, 0)),
+        std::uint8_t(std::max(int(left.g) - right.g, 0)),
+        std::uint8_t(std::max(int(left.b) - right.b, 0)),
+        std::uint8_t(std::max(int(left.a) - right.a, 0)));
 }
 
 
@@ -52,10 +52,10 @@ auto operator-(Color const& left, Color const& right) -> Color
 ////
 auto operator*(Color const& left, Color const& right) -> Color
 {
-	return Color(std::uint8_t(int(left.r) * right.r / 255),
-		std::uint8_t(int(left.g) * right.g / 255),
-		std::uint8_t(int(left.b) * right.b / 255),
-		std::uint8_t(int(left.a) * right.a / 255));
+    return Color(std::uint8_t(int(left.r) * right.r / 255),
+        std::uint8_t(int(left.g) * right.g / 255),
+        std::uint8_t(int(left.b) * right.b / 255),
+        std::uint8_t(int(left.a) * right.a / 255));
 }
 
 
@@ -65,7 +65,7 @@ auto operator*(Color const& left, Color const& right) -> Color
 ////
 auto operator+=(Color & left, Color const& right) -> Color &
 {
-	return left = left + right;
+    return left = left + right;
 }
 
 
@@ -75,7 +75,7 @@ auto operator+=(Color & left, Color const& right) -> Color &
 ////
 auto operator-=(Color & left, Color const& right) -> Color &
 {
-	return left = left - right;
+    return left = left - right;
 }
 
 
@@ -85,7 +85,7 @@ auto operator-=(Color & left, Color const& right) -> Color &
 ////
 auto operator*=(Color & left, Color const& right) -> Color &
 {
-	return left = left * right;
+    return left = left * right;
 }
 
 

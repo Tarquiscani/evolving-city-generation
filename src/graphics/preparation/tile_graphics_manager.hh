@@ -17,21 +17,21 @@ namespace tgm
 
 class TileGraphicsManager
 {
-	public:
-		TileGraphicsManager(TileGraphicsMediator & m, TileVertices & tv) : m_mediator{ m }, m_tile_vertices{ tv } {}
-		TileGraphicsManager(TileGraphicsManager const&) = delete;
-		auto operator=(TileGraphicsManager const&) -> TileGraphicsManager & = delete;
+    public:
+        TileGraphicsManager(TileGraphicsMediator & m, TileVertices & tv) : m_mediator{ m }, m_tile_vertices{ tv } {}
+        TileGraphicsManager(TileGraphicsManager const&) = delete;
+        auto operator=(TileGraphicsManager const&) -> TileGraphicsManager & = delete;
 
-		void prepare(GameMap const& simulation);
+        void prepare(GameMap const& simulation);
 
-	private:
-		TileGraphicsMediator & m_mediator;
-		TileVertices & m_tile_vertices;
+    private:
+        TileGraphicsMediator & m_mediator;
+        TileVertices & m_tile_vertices;
 
-		void compute_tileGraphics(TileSet const& tiles, int const x, int const y, int const z, bool const recursive_on_neighbors = true);
+        void compute_tileGraphics(TileSet const& tiles, int const x, int const y, int const z, bool const recursive_on_neighbors = true);
 
-		static auto compute_borderType(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border) -> BorderType;
-		static void computeTileGraphics_error(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border);
+        static auto compute_borderType(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border) -> BorderType;
+        static void computeTileGraphics_error(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border);
 };
 
 

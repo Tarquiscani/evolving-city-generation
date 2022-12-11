@@ -16,18 +16,18 @@ namespace tgm
 
 class MobileSubimageSet
 {
-	public:
-		MobileSubimageSet(GIMPSquare const gimp, Texture2D const& texture);
+    public:
+        MobileSubimageSet(GIMPSquare const gimp, Texture2D const& texture);
 
-		auto width() const noexcept -> float { return m_width; }
-		auto height() const noexcept -> float { return m_height; }
+        auto width() const noexcept -> float { return m_width; }
+        auto height() const noexcept -> float { return m_height; }
 
-		auto pick_subimage(Direction const drc) const -> DynamicSubimage const&;
+        auto pick_subimage(Direction const drc) const -> DynamicSubimage const&;
 
-	private:
-		float m_width = 0.f;
-		float m_height = 0.f;
-		std::array<DynamicSubimage, 4> m_subimages;  //N, E, S, W
+    private:
+        float m_width = 0.f;
+        float m_height = 0.f;
+        std::array<DynamicSubimage, 4> m_subimages;  //N, E, S, W
 };
 
 

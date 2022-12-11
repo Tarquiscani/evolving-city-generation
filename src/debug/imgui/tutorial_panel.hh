@@ -15,14 +15,14 @@ namespace tgm
 
 class TutorialPanel : public BaseGui
 {
-	public:
-		TutorialPanel(DemoTutorial & demo_tutorial)
-			: m_demo_tutorial{ demo_tutorial } {}
+    public:
+        TutorialPanel(DemoTutorial & demo_tutorial)
+            : m_demo_tutorial{ demo_tutorial } {}
 
-		void generate_layout(Vector2i const framebuffer_size);
+        void generate_layout(Vector2i const framebuffer_size);
 
-	private:
-		DemoTutorial & m_demo_tutorial;
+    private:
+        DemoTutorial & m_demo_tutorial;
 };
 
 

@@ -12,8 +12,8 @@ namespace tgm
 
 namespace GStateSet
 {
-	inline std::string saves_folder = { "_SAVES/" };
-	inline std::string saves_ext = { ".gstate" };
+    inline std::string saves_folder = { "_SAVES/" };
+    inline std::string saves_ext = { ".gstate" };
 } //namespace tgm
 
 

@@ -12,10 +12,10 @@ namespace tgm
 
 struct DrawArraysIndirectCommand 
 {
-	GLuint count;
-	GLuint primCount;
-	GLuint first;
-	GLuint baseInstance;
+    GLuint count;
+    GLuint primCount;
+    GLuint first;
+    GLuint baseInstance;
 };
 
 

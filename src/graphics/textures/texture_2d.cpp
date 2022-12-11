@@ -13,52 +13,52 @@ namespace tgm
 
 Texture2D::Texture2D(char const* lowDef_path, char const* highDef_path, char const* ultraHD_path)
 {
-	auto path = "";
+    auto path = "";
 
-	switch (GSet::texture_definition())
-	{
-		case TextureDefinition::LowDefinition:
-			path = lowDef_path;
-			break;
+    switch (GSet::texture_definition())
+    {
+        case TextureDefinition::LowDefinition:
+            path = lowDef_path;
+            break;
 
-		case TextureDefinition::HighDefinition:
-			path = highDef_path;
-			break;
+        case TextureDefinition::HighDefinition:
+            path = highDef_path;
+            break;
 
-		case TextureDefinition::UltraHighDefinition:
-			path = ultraHD_path;
-			break;
+        case TextureDefinition::UltraHighDefinition:
+            path = ultraHD_path;
+            break;
 
-		default:
-			throw std::runtime_error("Unexpected texture definition.");
-			break;
-	}
+        default:
+            throw std::runtime_error("Unexpected texture definition.");
+            break;
+    }
 
 
-	// load image, create texture
-	int nrChannels;
+    // load image, create texture
+    int nrChannels;
 
-	// By default we flip loaded texture on the y-axis. This is needed because images usually have the origin in top-left corner,
-	// while OpenGL expects the origin to be in bottom-left corner. 
-	stbi_set_flip_vertically_on_load(true);
+    // By default we flip loaded texture on the y-axis. This is needed because images usually have the origin in top-left corner,
+    // while OpenGL expects the origin to be in bottom-left corner. 
+    stbi_set_flip_vertically_on_load(true);
 
-	m_data = stbi_load(path, &m_width, &m_height, &nrChannels, 0);
+    m_data = stbi_load(path, &m_width, &m_height, &nrChannels, 0);
 
-	if (m_data)
-		std::cout << "Texture loaded:   name: " << path << "   width: " << m_width << "    height: " << m_height << "   channels: " << nrChannels << std::endl;
-	else
-		throw std::runtime_error("Failed to load texture");
+    if (m_data)
+        std::cout << "Texture loaded:   name: " << path << "   width: " << m_width << "    height: " << m_height << "   channels: " << nrChannels << std::endl;
+    else
+        throw std::runtime_error("Failed to load texture");
 }
 
 
 void Texture2D::free()
 {
-	if (m_freed)
-		throw std::runtime_error("Cannot free an already freed texture.");
+    if (m_freed)
+        throw std::runtime_error("Cannot free an already freed texture.");
 
-	stbi_image_free(m_data);
+    stbi_image_free(m_data);
 
-	m_freed = true;
+    m_freed = true;
 }
 
 

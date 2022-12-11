@@ -17,32 +17,32 @@ bool constexpr all_base_of()
 template <typename ...Ts>
 class EventQueuesImpl
 {
-	static_assert(all_base_of<BaseEvent, Ts...>(), "EventQueues has been designed only for events.");
-	//TODO: Make an assert to force all types to be different (unique)
-	static_assert(true, "Types must be all different."); 
+    static_assert(all_base_of<BaseEvent, Ts...>(), "EventQueues has been designed only for events.");
+    //TODO: Make an assert to force all types to be different (unique)
+    static_assert(true, "Types must be all different."); 
 
 
-	public:
-		EventQueuesImpl() = default;
-		EventQueuesImpl(EventQueuesImpl const&) = delete;
-		auto operator=(EventQueuesImpl const&) -> EventQueuesImpl = delete;
+    public:
+        EventQueuesImpl() = default;
+        EventQueuesImpl(EventQueuesImpl const&) = delete;
+        auto operator=(EventQueuesImpl const&) -> EventQueuesImpl = delete;
 
-		template<typename T, typename ...Us>
-		void push(Us... args)
-		{
-			std::get<std::queue<T>>(queues).emplace(std::forward<Us>(args)...);
-		}
+        template<typename T, typename ...Us>
+        void push(Us... args)
+        {
+            std::get<std::queue<T>>(queues).emplace(std::forward<Us>(args)...);
+        }
 
 
-		template<typename T>
-		auto get() noexcept -> std::queue<T> &
-		{
-			return std::get<std::queue<T>>(queues);
-		}
-	
+        template<typename T>
+        auto get() noexcept -> std::queue<T> &
+        {
+            return std::get<std::queue<T>>(queues);
+        }
+    
 
-	private:
-		std::tuple<std::queue<Ts>...> queues;
+    private:
+        std::tuple<std::queue<Ts>...> queues;
 };
 
 

@@ -15,14 +15,14 @@ namespace tgm
 
 class DebugPlayerTeleportationEv : public BaseEvent
 {
-	public:
-		/////
-		//  Note: Map reference system (in pixels)
-		////
-		DebugPlayerTeleportationEv(Vector3i const a_tile_pos) :
-			tile_pos(a_tile_pos) {}
+    public:
+        /////
+        //  Note: Map reference system (in pixels)
+        ////
+        DebugPlayerTeleportationEv(Vector3i const a_tile_pos) :
+            tile_pos(a_tile_pos) {}
 
-		Vector3i const tile_pos;
+        Vector3i const tile_pos;
 };
 
 class DebugShrinkPlayerFeetSquareEv : public BaseEvent {};

@@ -13,7 +13,7 @@ namespace tgm
 
 namespace tests
 {
-	void graphics_tests(TileVertices & tile_vertices, DynamicManager & dynamic_manager);
+    void graphics_tests(TileVertices & tile_vertices, DynamicManager & dynamic_manager);
 }
 
 

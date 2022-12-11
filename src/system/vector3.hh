@@ -13,107 +13,107 @@ namespace tgm
 template <typename T>
 class Vector3
 {
-	public:
-		////
-		//  Creates a Vector3(0, 0, 0).
-		////
-		constexpr inline Vector3() :
-			x(0), y(0),	z(0) { }
+    public:
+        ////
+        //  Creates a Vector3(0, 0, 0).
+        ////
+        constexpr inline Vector3() :
+            x(0), y(0),	z(0) { }
 
-		constexpr inline Vector3(T a_x, T a_y, T a_z): 
-			x(a_x), y(a_y), z(a_z) { }
+        constexpr inline Vector3(T a_x, T a_y, T a_z): 
+            x(a_x), y(a_y), z(a_z) { }
 
-		////
-		//  This constructor doesn't replace the copy constructor, it's called only when U != T.
-		//  A call to this constructor will fail to compile if U is not convertible to T.
-		////
-		template <typename U>
-		constexpr inline explicit Vector3(Vector3<U> const& vector) :
-			x(static_cast<T>(vector.x)),
-			y(static_cast<T>(vector.y)),
-			z(static_cast<T>(vector.z))	{}
+        ////
+        //  This constructor doesn't replace the copy constructor, it's called only when U != T.
+        //  A call to this constructor will fail to compile if U is not convertible to T.
+        ////
+        template <typename U>
+        constexpr inline explicit Vector3(Vector3<U> const& vector) :
+            x(static_cast<T>(vector.x)),
+            y(static_cast<T>(vector.y)),
+            z(static_cast<T>(vector.z))	{}
 
 
-		T x;
-		T y;
-		T z;
+        T x;
+        T y;
+        T z;
 };
 
 
 template <typename T>
 inline auto operator-(Vector3<T> const& lhs) -> Vector3<T>
 {
-	return Vector3<T>(-lhs.x, -lhs.y, -lhs.z);
+    return Vector3<T>(-lhs.x, -lhs.y, -lhs.z);
 }
 
 template <typename T>
 inline auto operator +=(Vector3<T>& lhs, const Vector3<T>& rhs) -> Vector3<T> &
 {
-	lhs.x += rhs.x;
-	lhs.y += rhs.y;
-	lhs.z += rhs.z;
+    lhs.x += rhs.x;
+    lhs.y += rhs.y;
+    lhs.z += rhs.z;
 
-	return lhs;
+    return lhs;
 }
 
 template <typename T>
 inline auto operator -=(Vector3<T> & lhs, Vector3<T> const& rhs) -> Vector3<T> &
 {
-	lhs.x -= rhs.x;
-	lhs.y -= rhs.y;
-	lhs.z -= rhs.z;
+    lhs.x -= rhs.x;
+    lhs.y -= rhs.y;
+    lhs.z -= rhs.z;
 
-	return lhs;
+    return lhs;
 }
 
 template <typename T>
 inline auto operator *=(Vector3<T> & lhs, T rhs) -> Vector3<T> &
 {
-	lhs.x *= rhs;
-	lhs.y *= rhs;
-	lhs.z *= rhs;
+    lhs.x *= rhs;
+    lhs.y *= rhs;
+    lhs.z *= rhs;
 
-	return lhs;
+    return lhs;
 }
 
 template <typename T>
 inline auto operator /=(Vector3<T> & lhs, T rhs) -> Vector3<T> &
 {
-	lhs.x /= rhs;
-	lhs.y /= rhs;
-	lhs.z /= rhs;
+    lhs.x /= rhs;
+    lhs.y /= rhs;
+    lhs.z /= rhs;
 
-	return lhs;
+    return lhs;
 }
 
 template <typename T>
 inline auto operator+(const Vector3<T>& lhs, const Vector3<T>& rhs) -> Vector3<T>
 {
-	return Vector3<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+    return Vector3<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
 }
 
 template <typename T>
 inline auto operator-(const Vector3<T>& lhs, const Vector3<T>& rhs) -> Vector3<T>
 {
-	return Vector3<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+    return Vector3<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 }
 
 template <typename T>
 inline auto operator*(const Vector3<T>& lhs, T rhs) -> Vector3<T>
 {
-	return Vector3<T>(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
+    return Vector3<T>(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
 }
 
 template <typename T>
 inline auto operator*(T lhs, const Vector3<T>& rhs) -> Vector3<T>
 {
-	return Vector3<T>(rhs.x * lhs, rhs.y * lhs, rhs.z * lhs);
+    return Vector3<T>(rhs.x * lhs, rhs.y * lhs, rhs.z * lhs);
 }
 
 template <typename T>
 inline auto operator/(const Vector3<T>& lhs, T rhs) -> Vector3<T>
 {
-	return Vector3<T>(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
+    return Vector3<T>(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
 }
 
 
@@ -124,7 +124,7 @@ inline auto operator/(const Vector3<T>& lhs, T rhs) -> Vector3<T>
 template <typename T>
 inline bool operator ==(Vector3<T> const& lhs,  Vector3<T> const& rhs)
 {
-	return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
+    return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
 }
 
 ////
@@ -133,7 +133,7 @@ inline bool operator ==(Vector3<T> const& lhs,  Vector3<T> const& rhs)
 template <typename T>
 inline bool operator !=(Vector3<T> const& lhs, Vector3<T> const& rhs)
 {
-	return !(lhs == rhs);
+    return !(lhs == rhs);
 }
 
 
@@ -145,16 +145,16 @@ using Vector3f = Vector3<float>;
 
 namespace Versor3i
 {
-	inline Vector3i constexpr N { -1,  0,  0 };
-	inline Vector3i constexpr NE{ -1,  1,  0 };
-	inline Vector3i constexpr E {  0,  1,  0 };
-	inline Vector3i constexpr SE{  1,  1,  0 };
-	inline Vector3i constexpr S {  1,  0,  0 };
-	inline Vector3i constexpr SW{  1, -1,  0 };
-	inline Vector3i constexpr W {  0, -1,  0 };
-	inline Vector3i constexpr NW{ -1, -1,  0 };
-	inline Vector3i constexpr U {  0,  0,  1 };
-	inline Vector3i constexpr D {  0,  0, -1 };
+    inline Vector3i constexpr N { -1,  0,  0 };
+    inline Vector3i constexpr NE{ -1,  1,  0 };
+    inline Vector3i constexpr E {  0,  1,  0 };
+    inline Vector3i constexpr SE{  1,  1,  0 };
+    inline Vector3i constexpr S {  1,  0,  0 };
+    inline Vector3i constexpr SW{  1, -1,  0 };
+    inline Vector3i constexpr W {  0, -1,  0 };
+    inline Vector3i constexpr NW{ -1, -1,  0 };
+    inline Vector3i constexpr U {  0,  0,  1 };
+    inline Vector3i constexpr D {  0,  0, -1 };
 }
 
 
@@ -173,10 +173,10 @@ auto operator<<(std::ostream & os, Vector3<T> const& v) -> std::ostream &
 template<typename T>
 auto operator>>(std::istream & is, Vector3<T> & v) -> std::istream &
 {
-	//TODO: PERFORMANCE: IO: Maybe it's better to make a custom parser, avoiding creating unused temporary variables
-	auto unused = ' ';
+    //TODO: PERFORMANCE: IO: Maybe it's better to make a custom parser, avoiding creating unused temporary variables
+    auto unused = ' ';
 
-	is >> unused >> v.x >> unused >> v.y >> unused >> v.z >> unused;
+    is >> unused >> v.x >> unused >> v.y >> unused >> v.z >> unused;
 
     return is;
 }

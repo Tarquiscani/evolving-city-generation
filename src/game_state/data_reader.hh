@@ -13,7 +13,7 @@ namespace tgm
 
 namespace DataReader
 {
-	auto generate_loadStream(std::string const& filename) -> std::ifstream;
+    auto generate_loadStream(std::string const& filename) -> std::ifstream;
 } //namespace DataReader
 
 

@@ -14,11 +14,11 @@ namespace tgm
 
 auto operator<<(Logger & lgr, VisualDebugHighlighting const& vdh) -> Logger &
 {
-	vdh.print(lgr)
-		<< Logger::remt
-		<< Logger::nltb << "}";
+    vdh.print(lgr)
+        << Logger::remt
+        << Logger::nltb << "}";
 
-	return lgr;
+    return lgr;
 }
 
 

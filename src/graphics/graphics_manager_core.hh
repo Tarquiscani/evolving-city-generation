@@ -19,10 +19,10 @@ namespace tgm
 
 enum class TextureFormat
 {
-	Red,
-	RGB,
-	RGBA,
-	DepthStencil
+    Red,
+    RGB,
+    RGBA,
+    DepthStencil
 };
 
 
@@ -60,7 +60,7 @@ auto fragmentRS_to_openGlWorldSpaceRS(Vector2f const fbo_pos, float const z_dept
 //	@rect_width, @rect_height: Beginning of the rectangle of texels that have to be printed on the console.
 ////
 void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsigned const tex_height, TextureFormat const format, 
-						GLint const beg_x, GLint const beg_y, GLsizei const rect_width, GLsizei const rect_height);
+                        GLint const beg_x, GLint const beg_y, GLsizei const rect_width, GLsizei const rect_height);
 
 
 void debug_printDrawArraysIndirectCommandBuffer(GLuint const cmd_id);

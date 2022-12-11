@@ -30,21 +30,21 @@ using WindowId = std::vector<Window>::size_type;
 
 struct WindowOptions
 {
-	std::string title = "New Window";
+    std::string title = "New Window";
 
-	bool fullscreen = false;
-	bool resizable = true;
-	
-	int width = 800;
-	int height = 600;
+    bool fullscreen = false;
+    bool resizable = true;
+    
+    int width = 800;
+    int height = 600;
 
-	std::optional<WindowId> shared_context; //this window will share the same context of share_window
-	bool vsync = true;
-	int max_fps = 0;						// If max_fps is set, VSync is turned off. '0' means no cap.
+    std::optional<WindowId> shared_context; //this window will share the same context of share_window
+    bool vsync = true;
+    int max_fps = 0;						// If max_fps is set, VSync is turned off. '0' means no cap.
 
-	Vector2i starting_pos = { 50, 50 };
+    Vector2i starting_pos = { 50, 50 };
 
-	bool create_imguiContext = false;
+    bool create_imguiContext = false;
 };
 
 
@@ -55,144 +55,144 @@ struct WindowOptions
 ////
 class Window
 {
-	public:
-		using KeyCallback = std::function<void(Window & window, int const key)>;
-		using CursorPosCallback = std::function<void(Window & window, Vector2f const pos)>;
-		using MouseButtonCallback = std::function<void(Window & window, Vector2f const pos, int const button, int const action, int const mods)>;
-		using MouseScrollCallback = std::function<void(Window & window, float const x_offset, float const y_offset)>;
-		using CharCallback = std::function<void(Window & window, unsigned int c)>;
-		using FramebufferSizeCallback = std::function<void(Window & window, Vector2i const new_size)>;
-		using WindowSizeCallback = std::function<void(Window & window, Vector2i const new_size)>;
+    public:
+        using KeyCallback = std::function<void(Window & window, int const key)>;
+        using CursorPosCallback = std::function<void(Window & window, Vector2f const pos)>;
+        using MouseButtonCallback = std::function<void(Window & window, Vector2f const pos, int const button, int const action, int const mods)>;
+        using MouseScrollCallback = std::function<void(Window & window, float const x_offset, float const y_offset)>;
+        using CharCallback = std::function<void(Window & window, unsigned int c)>;
+        using FramebufferSizeCallback = std::function<void(Window & window, Vector2i const new_size)>;
+        using WindowSizeCallback = std::function<void(Window & window, Vector2i const new_size)>;
 
 
-		Window() = default;
-		Window(Window const&) = delete;
-		auto operator=(Window const&) -> Window & = delete;
+        Window() = default;
+        Window(Window const&) = delete;
+        auto operator=(Window const&) -> Window & = delete;
 
 
-		auto id() const noexcept -> WindowId { return m_id; }
-		bool is_open() const noexcept { return m_handler; }
-		bool should_close() const;
+        auto id() const noexcept -> WindowId { return m_id; }
+        bool is_open() const noexcept { return m_handler; }
+        bool should_close() const;
 
-		////
-		//	@return: The dimensions of the window framebuffer (in pixels -- OpenGL framebuffer reference system).
-		////
-		auto fbo_size() const -> Vector2i;
+        ////
+        //	@return: The dimensions of the window framebuffer (in pixels -- OpenGL framebuffer reference system).
+        ////
+        auto fbo_size() const -> Vector2i;
 
-		////
-		//	@return: The dimensions of the window (GLFW screen reference system).
-		////
-		auto window_size() const -> Vector2i;
+        ////
+        //	@return: The dimensions of the window (GLFW screen reference system).
+        ////
+        auto window_size() const -> Vector2i;
 
-		void open(WindowOptions const& opt);
-		void activate();
-		void close();
-
-
-		void set_shouldClose();
-		////
-		//	Set the dimensions of the window.
-		//	@new_size: (GLFW screen reference system)
-		////
-		void set_size(Vector2i const new_size);
-		void set_callabacks(KeyCallback pressed_key, KeyCallback held_key, KeyCallback released_key,
-						    CursorPosCallback cursor_pos, MouseButtonCallback mouse_button, MouseScrollCallback scroll,
-							CharCallback char_callback,
-						    FramebufferSizeCallback framebuffer_size, WindowSizeCallback window_size);
-
-		////
-		//	Associate to the window a generic chunk of data, whose type is ignored both by Window and WindowManager and known only to the input callbacks.
-		////
-		template <typename T>
-		void set_userPointer(T user_pointer)
-		{
-			static_assert(std::is_pointer_v<T>, "'user_pointer' must be a pointer");
-
-			m_user_pointer = user_pointer;
-		}
+        void open(WindowOptions const& opt);
+        void activate();
+        void close();
 
 
-		////
-		//	Associate to the window a generic chunk of data, whose type is ignored both by Window and WindowManager and known only to the input callbacks.
-		////
-		auto user_pointer() const -> std::any {	return m_user_pointer; }
+        void set_shouldClose();
+        ////
+        //	Set the dimensions of the window.
+        //	@new_size: (GLFW screen reference system)
+        ////
+        void set_size(Vector2i const new_size);
+        void set_callabacks(KeyCallback pressed_key, KeyCallback held_key, KeyCallback released_key,
+                            CursorPosCallback cursor_pos, MouseButtonCallback mouse_button, MouseScrollCallback scroll,
+                            CharCallback char_callback,
+                            FramebufferSizeCallback framebuffer_size, WindowSizeCallback window_size);
 
-		void poll_events();
-		////
-		//	Note: wait_events() doesn't work fine with ImGui.
-		////
-		void wait_events();
+        ////
+        //	Associate to the window a generic chunk of data, whose type is ignored both by Window and WindowManager and known only to the input callbacks.
+        ////
+        template <typename T>
+        void set_userPointer(T user_pointer)
+        {
+            static_assert(std::is_pointer_v<T>, "'user_pointer' must be a pointer");
 
-		void activate_imguiCanvas();
-		
-		//TODO: 99: E' poco elegante passare questo parametro trova alternative
-		static inline auto fake_mainLoopData = MainLoopData{};
-		void display(MainLoopData & mainLoop_data = fake_mainLoopData);
-
-		// Forcibly release all keys
-		void release_all_keys();
+            m_user_pointer = user_pointer;
+        }
 
 
-	private:
-		WindowId m_id = 0;
-		GLFWwindow * m_handler = nullptr;
-		
-		bool m_has_imguiContext = false;					//indicate whether this window has an associated ImGui context
+        ////
+        //	Associate to the window a generic chunk of data, whose type is ignored both by Window and WindowManager and known only to the input callbacks.
+        ////
+        auto user_pointer() const -> std::any {	return m_user_pointer; }
+
+        void poll_events();
+        ////
+        //	Note: wait_events() doesn't work fine with ImGui.
+        ////
+        void wait_events();
+
+        void activate_imguiCanvas();
+        
+        //TODO: 99: E' poco elegante passare questo parametro trova alternative
+        static inline auto fake_mainLoopData = MainLoopData{};
+        void display(MainLoopData & mainLoop_data = fake_mainLoopData);
+
+        // Forcibly release all keys
+        void release_all_keys();
+
+
+    private:
+        WindowId m_id = 0;
+        GLFWwindow * m_handler = nullptr;
+        
+        bool m_has_imguiContext = false;					//indicate whether this window has an associated ImGui context
 #if ENABLE_IMGUI
-		ImGuiContext * m_imgui_context = nullptr;
-		bool m_is_imguiCanvas_active = false;				//indicate whether the ImGui "canvas" has been activated for the current frame
+        ImGuiContext * m_imgui_context = nullptr;
+        bool m_is_imguiCanvas_active = false;				//indicate whether the ImGui "canvas" has been activated for the current frame
 #endif
 
-		KeyCallback m_pressedKey_callback = nullptr;
-		KeyCallback m_heldKey_callback = nullptr;
-		KeyCallback m_releasedKey_callback = nullptr; 
-		CursorPosCallback m_cursorPos_callback = nullptr;
-		MouseButtonCallback m_mouseButton_callback = nullptr;
-		MouseScrollCallback m_mouseScroll_callback = nullptr;
-		CharCallback m_char_callback = nullptr;
-		FramebufferSizeCallback m_framebufferSize_callback = nullptr;
-		WindowSizeCallback m_windowSize_callback = nullptr;
+        KeyCallback m_pressedKey_callback = nullptr;
+        KeyCallback m_heldKey_callback = nullptr;
+        KeyCallback m_releasedKey_callback = nullptr; 
+        CursorPosCallback m_cursorPos_callback = nullptr;
+        MouseButtonCallback m_mouseButton_callback = nullptr;
+        MouseScrollCallback m_mouseScroll_callback = nullptr;
+        CharCallback m_char_callback = nullptr;
+        FramebufferSizeCallback m_framebufferSize_callback = nullptr;
+        WindowSizeCallback m_windowSize_callback = nullptr;
 
-		std::unordered_set<int> m_pressed_keys;
-		std::unordered_set<int> m_released_keys;
-		std::unordered_map<int, Clock> m_key_status;
+        std::unordered_set<int> m_pressed_keys;
+        std::unordered_set<int> m_released_keys;
+        std::unordered_map<int, Clock> m_key_status;
 
-		std::any m_user_pointer;
+        std::any m_user_pointer;
 
-		int m_max_fps = 0;
-		std::chrono::system_clock::time_point m_previous_display_time = std::chrono::system_clock::now();
+        int m_max_fps = 0;
+        std::chrono::system_clock::time_point m_previous_display_time = std::chrono::system_clock::now();
 
 
-		void assert_open() const
-		{
-			if (!is_open())
-				throw std::runtime_error("Unexpected state. The Window was expected to be open.");
-		}
+        void assert_open() const
+        {
+            if (!is_open())
+                throw std::runtime_error("Unexpected state. The Window was expected to be open.");
+        }
 
-		void assert_closed() const
-		{
-			if (is_open())
-				throw std::runtime_error("Unexpected state. The Window was expected to be closed.");
-		}
+        void assert_closed() const
+        {
+            if (is_open())
+                throw std::runtime_error("Unexpected state. The Window was expected to be closed.");
+        }
 
-		void assert_active() const;
+        void assert_active() const;
 
-		void assert_userPointer() const
-		{
-			if (!m_user_pointer.has_value())
-			{
-				throw std::runtime_error("No user pointer set.");
-			}
-		}
+        void assert_userPointer() const
+        {
+            if (!m_user_pointer.has_value())
+            {
+                throw std::runtime_error("No user pointer set.");
+            }
+        }
 
-		////
-		//	From the pressed and released keys during this tick, update their status and call the right 
-		//	user-defined callback for each of them.
-		////
-		void process_keys();
+        ////
+        //	From the pressed and released keys during this tick, update their status and call the right 
+        //	user-defined callback for each of them.
+        ////
+        void process_keys();
 
-	friend class WindowManager;
-	friend auto operator<<(std::ostream & lgr, Window const& w) ->std::ostream &;
+    friend class WindowManager;
+    friend auto operator<<(std::ostream & lgr, Window const& w) ->std::ostream &;
 };
 
 
@@ -205,107 +205,107 @@ class Window
 //////
 class WindowManager
 {
-	public:
-		enum class RenderType
-		{
-			OpenGL,
-			SFML,
-		};
+    public:
+        enum class RenderType
+        {
+            OpenGL,
+            SFML,
+        };
 
-		static WindowId constexpr mainWindow_id = 0;
+        static WindowId constexpr mainWindow_id = 0;
 
-		WindowManager();
-		~WindowManager();
+        WindowManager();
+        ~WindowManager();
 
-		////
-		//	Create a new closed window.
-		////
-		auto create_window() -> Window &;
+        ////
+        //	Create a new closed window.
+        ////
+        auto create_window() -> Window &;
 
-		////
-		//	Open an existing window.
-		////
-		auto open_window(WindowId const wid, WindowOptions const& opt) -> Window &;
+        ////
+        //	Open an existing window.
+        ////
+        auto open_window(WindowId const wid, WindowOptions const& opt) -> Window &;
 
-		auto get_window(WindowId const wid) -> Window &;
+        auto get_window(WindowId const wid) -> Window &;
 
-		auto activeWindow_id() -> std::optional<WindowId> { return m_activeWindow_id; }
+        auto activeWindow_id() -> std::optional<WindowId> { return m_activeWindow_id; }
 
-		auto activate_window(WindowId const wid) -> Window &;
+        auto activate_window(WindowId const wid) -> Window &;
 
-		void close_window(WindowId const wid);
+        void close_window(WindowId const wid);
 
-		void close_allWindows();
+        void close_allWindows();
 
-		void set_callbacks(WindowId const wid, 
-						   Window::KeyCallback pressed_key, Window::KeyCallback held_key, Window::KeyCallback released_key,
-						   Window::CursorPosCallback cursor_pos, Window::MouseButtonCallback mouse_button, Window::MouseScrollCallback scroll,
-						   Window::CharCallback char_clbk,
-						   Window::FramebufferSizeCallback framebuffer_size, Window::WindowSizeCallback window_size);
+        void set_callbacks(WindowId const wid, 
+                           Window::KeyCallback pressed_key, Window::KeyCallback held_key, Window::KeyCallback released_key,
+                           Window::CursorPosCallback cursor_pos, Window::MouseButtonCallback mouse_button, Window::MouseScrollCallback scroll,
+                           Window::CharCallback char_clbk,
+                           Window::FramebufferSizeCallback framebuffer_size, Window::WindowSizeCallback window_size);
 
-		auto main_window() -> Window & { return m_windows[mainWindow_id]; }
-
-
-	private:
-		std::deque<Window> m_windows{}; //std::deque doesn't invalidate references
-
-		std::optional<WindowId> m_activeWindow_id{};
+        auto main_window() -> Window & { return m_windows[mainWindow_id]; }
 
 
+    private:
+        std::deque<Window> m_windows{}; //std::deque doesn't invalidate references
 
-		auto get_window_byHandler(GLFWwindow * handler) -> Window &
-		{
-			//TODO: PERFORMANCE: Maybe std::find_if with a lambda it's better, but the lambda can't access m_handler because it's not friend of Window class
-			for (auto & w : m_windows)
-			{
-				if (w.m_handler == handler)
-				{
-					return w;
-				}
-			}
-
-			throw std::runtime_error("WindowManager received a callback for a window, but it doesn't contain any window with that callback.");
-		}
+        std::optional<WindowId> m_activeWindow_id{};
 
 
-		void assert_wid(WindowId const wid) const
-		{
-			if (wid >= m_windows.size())
-				throw std::runtime_error("Invalid WindowId");
-		}
 
-		void assert_closed(WindowId const wid) const
-		{
-			if (m_windows[wid].is_open())
-				throw std::runtime_error("Unexpected state. The window should have been closed");
-		}
+        auto get_window_byHandler(GLFWwindow * handler) -> Window &
+        {
+            //TODO: PERFORMANCE: Maybe std::find_if with a lambda it's better, but the lambda can't access m_handler because it's not friend of Window class
+            for (auto & w : m_windows)
+            {
+                if (w.m_handler == handler)
+                {
+                    return w;
+                }
+            }
 
-		void assert_open(WindowId const wid) const
-		{
-			if (!m_windows[wid].is_open())
-				throw std::runtime_error("Unexpected state. The window should have been open.");
-		}
+            throw std::runtime_error("WindowManager received a callback for a window, but it doesn't contain any window with that callback.");
+        }
 
-		void assert_active(WindowId const wid) const
-		{
-			if (wid != m_activeWindow_id)
-				throw std::runtime_error("Unexpected state. It's not the current active window");
-		}
 
-		static void set_contextCreationHints();
+        void assert_wid(WindowId const wid) const
+        {
+            if (wid >= m_windows.size())
+                throw std::runtime_error("Invalid WindowId");
+        }
 
-		////
-		//	Internal callbacks associated to every window. They call user-defined callbacks.
-		////
-		static void internal_keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
-		static void internal_cursorPosCallback(GLFWwindow* window, double x_pos, double y_pos);
-		static void internal_mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-		static void internal_mouseScrollCallback(GLFWwindow * window, double x_offset, double y_offset);
-		static void internal_charCallback(GLFWwindow* window, unsigned int c);
-		static void internal_framebufferSizeCallback(GLFWwindow * window, int new_width, int new_height);
-		static void internal_windowSizeCallback(GLFWwindow * window, int new_width, int new_height);
+        void assert_closed(WindowId const wid) const
+        {
+            if (m_windows[wid].is_open())
+                throw std::runtime_error("Unexpected state. The window should have been closed");
+        }
 
-		static void run_in_right_window(GLFWwindow * window, std::function<void(Window &)> body);
+        void assert_open(WindowId const wid) const
+        {
+            if (!m_windows[wid].is_open())
+                throw std::runtime_error("Unexpected state. The window should have been open.");
+        }
+
+        void assert_active(WindowId const wid) const
+        {
+            if (wid != m_activeWindow_id)
+                throw std::runtime_error("Unexpected state. It's not the current active window");
+        }
+
+        static void set_contextCreationHints();
+
+        ////
+        //	Internal callbacks associated to every window. They call user-defined callbacks.
+        ////
+        static void internal_keyCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
+        static void internal_cursorPosCallback(GLFWwindow* window, double x_pos, double y_pos);
+        static void internal_mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+        static void internal_mouseScrollCallback(GLFWwindow * window, double x_offset, double y_offset);
+        static void internal_charCallback(GLFWwindow* window, unsigned int c);
+        static void internal_framebufferSizeCallback(GLFWwindow * window, int new_width, int new_height);
+        static void internal_windowSizeCallback(GLFWwindow * window, int new_width, int new_height);
+
+        static void run_in_right_window(GLFWwindow * window, std::function<void(Window &)> body);
 };
 
 

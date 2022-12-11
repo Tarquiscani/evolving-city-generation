@@ -15,10 +15,10 @@ namespace tgm
 
 struct TutorialTriggerEv : public BaseEvent
 {
-		TutorialTriggerEv(std::string const& a_tutorial_step_id)
-			: tutorial_step_id{ a_tutorial_step_id } {}
-		
-		std::string const tutorial_step_id;
+        TutorialTriggerEv(std::string const& a_tutorial_step_id)
+            : tutorial_step_id{ a_tutorial_step_id } {}
+        
+        std::string const tutorial_step_id;
 };
 
 struct TutorialGoBackEv : public BaseEvent {};

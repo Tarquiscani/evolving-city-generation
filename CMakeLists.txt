@@ -23,26 +23,26 @@ add_subdirectory(third_party/glfw)
 
 
 include_directories(
-	src
-	third_party
+    src
+    third_party
     third_party/earcut.hpp/include
     third_party/flatbuffers/include
-	third_party/glad
-	third_party/glfw/include
-	third_party/glm
-	third_party/imgui)
+    third_party/glad
+    third_party/glfw/include
+    third_party/glm
+    third_party/imgui)
 
 
 file(GLOB_RECURSE MAIN_SOURCES 
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
-	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"  #TODO: Remove this line after converting all the source files to *.cpp
-	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/*.c"
-	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_glfw.cpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_opengl3.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"  #TODO: Remove this line after converting all the source files to *.cpp
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_glfw.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_opengl3.cpp"
 )
 
 file(GLOB IMGUI_SOURCES
-	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/*.cpp"   # Only add main .cpp files in the main directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/*.cpp"   # Only add main .cpp files in the main directory
 )
 
 set(SOURCES ${MAIN_SOURCES} ${IMGUI_SOURCES})
@@ -86,7 +86,7 @@ add_custom_command(TARGET evolving_city_generation POST_BUILD
 
 
 if (MSVC)
-	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
+    target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
     
     # warning level 4 and all warnings as errors
     #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
@@ -95,8 +95,8 @@ if (MSVC)
     # Tell MSVC to use main instead of WinMain and hide the console.
     #set_target_properties(evolving_city_generation PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 else()
-	target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
-	#target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
+    target_link_libraries(evolving_city_generation glfw ${GLFW_LIBRARIES})
+    #target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
     # lots of warnings and all warnings as errors
     #[[target_compile_options(evolving_city_generation PRIVATE -Wall -Wextra -pedantic -Werror)]]
 endif()

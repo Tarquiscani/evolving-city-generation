@@ -15,7 +15,7 @@ namespace tgm
 
 namespace DataWriter
 {
-	auto generate_saveStream(std::string const& filename) -> std::ofstream;
+    auto generate_saveStream(std::string const& filename) -> std::ofstream;
 } //namespace DataWriter
 
 

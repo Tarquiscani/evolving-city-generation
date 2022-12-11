@@ -3,12 +3,12 @@
 
 int main()
 {
-	auto game = tgm::Game{};
+    auto game = tgm::Game{};
 
-	while (!game.should_shutdown())
-	{
-		game.tick();
-	}
+    while (!game.should_shutdown())
+    {
+        game.tick();
+    }
 
-	return 0;
+    return 0;
 }

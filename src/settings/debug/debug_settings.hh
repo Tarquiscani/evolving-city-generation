@@ -50,35 +50,35 @@
 namespace tgm
 {
 
-	inline bool visualDebug_runtime_openWindow = true;			// Enable the opening of the window at each step.
-	inline int visualDebug_runtime_maxRecordableDepth = 0;		// Indicate what type of steps have to be recorded.
-	inline int constexpr visualDebug_maxStepDepth = 5;			// Indicate the maximum possible depth for a step.
+    inline bool visualDebug_runtime_openWindow = true;			// Enable the opening of the window at each step.
+    inline int visualDebug_runtime_maxRecordableDepth = 0;		// Indicate what type of steps have to be recorded.
+    inline int constexpr visualDebug_maxStepDepth = 5;			// Indicate the maximum possible depth for a step.
 
-	inline bool visualDebug_runtime_openWindowForBuildingExpansion = false;		// Enable the opening of the window at each step only for BuildingExpansionVisualDebug.
-	inline bool visualDebug_runtime_openWindowForPlayerMovement = false;	    // Enable the opening of the window at each step only for PlayerMovementVisualDebug.
-	inline bool visualDebug_runtime_openWindowForHipRoofMatrix = false;			// Enable the opening of the window at each step only for HipRoofMatrixVisualDebug.
+    inline bool visualDebug_runtime_openWindowForBuildingExpansion = false;		// Enable the opening of the window at each step only for BuildingExpansionVisualDebug.
+    inline bool visualDebug_runtime_openWindowForPlayerMovement = false;	    // Enable the opening of the window at each step only for PlayerMovementVisualDebug.
+    inline bool visualDebug_runtime_openWindowForHipRoofMatrix = false;			// Enable the opening of the window at each step only for HipRoofMatrixVisualDebug.
 
-	inline long long debug_highlightings_count = 0;
-	inline long long debug_unhighlightings_count = 0;
+    inline long long debug_highlightings_count = 0;
+    inline long long debug_unhighlightings_count = 0;
 
 } // namespace tgm
 
 
 #endif //VISUALDEBUG
-	
+    
 
 #define check(expr) \
 { \
-	assert(expr); \
+    assert(expr); \
 }
 
 #if DYNAMIC_ASSERTS
-	#define exec_check(expr) \
-	{ \
-		expr; \
-	}
+    #define exec_check(expr) \
+    { \
+        expr; \
+    }
 #elif
-	#define exec_check(expr) do {} while(0)
+    #define exec_check(expr) do {} while(0)
 #endif
 
 

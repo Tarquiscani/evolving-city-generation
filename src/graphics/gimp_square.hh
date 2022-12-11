@@ -16,18 +16,18 @@ namespace tgm
 //////
 struct GIMPSquare
 {
-	GIMPSquare(float const left_ld,  float const top_ld,
-			   float const left_hd,  float const top_hd);
+    GIMPSquare(float const left_ld,  float const top_ld,
+               float const left_hd,  float const top_hd);
 
-	GIMPSquare(float const left_ld,  float const top_ld,  float const width_ld,  float const height_ld,
-			   float const left_hd,  float const top_hd,  float const width_hd,  float const height_hd);
+    GIMPSquare(float const left_ld,  float const top_ld,  float const width_ld,  float const height_ld,
+               float const left_hd,  float const top_hd,  float const width_hd,  float const height_hd);
 
-	float left = 0.f;
-	float top = 0.f;
-	float width = 0.f;
-	float height = 0.f;
+    float left = 0.f;
+    float top = 0.f;
+    float width = 0.f;
+    float height = 0.f;
 
-	friend auto operator<<(std::ostream & os, GIMPSquare const& gs) -> std::ostream &;
+    friend auto operator<<(std::ostream & os, GIMPSquare const& gs) -> std::ostream &;
 };
 
 

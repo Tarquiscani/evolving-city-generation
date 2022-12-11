@@ -16,17 +16,17 @@ namespace tgm
 
 struct SaveWorldEv : public BaseEvent 
 { 
-	SaveWorldEv(std::string const& a_filename) : filename{ a_filename } {}
+    SaveWorldEv(std::string const& a_filename) : filename{ a_filename } {}
 
-	std::string const filename;
+    std::string const filename;
 };
 
 
 struct LoadWorldEv : public BaseEvent 
 {
-	LoadWorldEv(std::string const& a_filename) : filename{ a_filename } {}
+    LoadWorldEv(std::string const& a_filename) : filename{ a_filename } {}
 
-	std::string const filename;
+    std::string const filename;
 };
 
 struct ExitEv : public BaseEvent { };
@@ -39,28 +39,28 @@ struct ControlPanelEv : public BaseEvent { };
 
 struct RetrieveCityBlockEv : public BaseEvent
 {
-	RetrieveCityBlockEv(bool const a_user_request, CityBlockId const a_cbid) :
-		user_request{ a_user_request }, cbid{ a_cbid } {}
-		
-	bool const user_request;
-	CityBlockId const cbid;
+    RetrieveCityBlockEv(bool const a_user_request, CityBlockId const a_cbid) :
+        user_request{ a_user_request }, cbid{ a_cbid } {}
+        
+    bool const user_request;
+    CityBlockId const cbid;
 };
 
 
 struct OpenCityBlockGuiEv : public BaseEvent
 {
-	OpenCityBlockGuiEv(bool const a_user_request, CityBlockId const a_cbid, CityBlock const*const a_city_block) :
-		user_request{ a_user_request }, cbid{ a_cbid }, city_block { a_city_block } {}
-		
-	bool const user_request;
-	CityBlockId const cbid;
-	CityBlock const*const city_block;
+    OpenCityBlockGuiEv(bool const a_user_request, CityBlockId const a_cbid, CityBlock const*const a_city_block) :
+        user_request{ a_user_request }, cbid{ a_cbid }, city_block { a_city_block } {}
+        
+    bool const user_request;
+    CityBlockId const cbid;
+    CityBlock const*const city_block;
 };
 
 
 using GuiEventQueues = EventQueuesImpl< SaveWorldEv, LoadWorldEv, ExitEv, 
-										MainLoopAnalyzerEv, MovementAnalyzerEv, ControlPanelEv,
-										RetrieveCityBlockEv, OpenCityBlockGuiEv >;
+                                        MainLoopAnalyzerEv, MovementAnalyzerEv, ControlPanelEv,
+                                        RetrieveCityBlockEv, OpenCityBlockGuiEv >;
 
 
 

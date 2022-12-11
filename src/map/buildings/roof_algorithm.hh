@@ -18,11 +18,11 @@ namespace tgm
 namespace RoofAlgorithm
 {
 
-	auto compute_roofablePositions_fromArea(BuildingAreaCompleteId const starting_area, DataArray<Building> const& buildings, TileSet const& tiles)
-		-> std::unordered_set<Vector3i>;
-	
-	auto compute_roofablePositions_fromTile(BuildingId const bid, Vector3i const starting_pos, DataArray<Building> const& buildings, TileSet const& tiles)
-		-> std::unordered_set<Vector3i>;
+    auto compute_roofablePositions_fromArea(BuildingAreaCompleteId const starting_area, DataArray<Building> const& buildings, TileSet const& tiles)
+        -> std::unordered_set<Vector3i>;
+    
+    auto compute_roofablePositions_fromTile(BuildingId const bid, Vector3i const starting_pos, DataArray<Building> const& buildings, TileSet const& tiles)
+        -> std::unordered_set<Vector3i>;
 
 } //namespace RoofAlgorithm
 

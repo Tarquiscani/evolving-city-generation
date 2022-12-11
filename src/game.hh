@@ -36,56 +36,56 @@ namespace tgm
 
 class Game
 {
-	public:
-		Game();
+    public:
+        Game();
 
-		bool should_shutdown() const { return m_main_window.should_close(); }
+        bool should_shutdown() const { return m_main_window.should_close(); }
 
-		void tick();
+        void tick();
 
-	private:
-		AudioManager m_audio_manager{};
+    private:
+        AudioManager m_audio_manager{};
 
-		Window & m_main_window;
+        Window & m_main_window;
 
-		TileVertices m_tile_vertices{};
-		DynamicVertices m_dynamic_vertices;
-		RoofVertices m_roof_vertices{};
+        TileVertices m_tile_vertices{};
+        DynamicVertices m_dynamic_vertices;
+        RoofVertices m_roof_vertices{};
 
-		Camera m_camera{};
+        Camera m_camera{};
 
-		GraphicsManager m_graphics_manager;
+        GraphicsManager m_graphics_manager;
 
-		DynamicManager m_dynamic_manager;
-		TileGraphicsMediator m_tile_graphics_mediator{};
-		RoofGraphicsMediator m_roof_graphics_mediator{};
-		GuiEventQueues m_gui_events{};
-	
-		GameMap m_map;
+        DynamicManager m_dynamic_manager;
+        TileGraphicsMediator m_tile_graphics_mediator{};
+        RoofGraphicsMediator m_roof_graphics_mediator{};
+        GuiEventQueues m_gui_events{};
+    
+        GameMap m_map;
 
-		TileGraphicsManager m_tile_graphics_manager;
-		RoofGraphicsManager m_roof_graphics_manager;
+        TileGraphicsManager m_tile_graphics_manager;
+        RoofGraphicsManager m_roof_graphics_manager;
 
-		DemoTutorial m_demo_tutorial;
-		GuiManager m_gui_manager;
+        DemoTutorial m_demo_tutorial;
+        GuiManager m_gui_manager;
 
-		CameraController m_camera_controller{};
-		std::vector<BuildingId> m_created_buildings;
+        CameraController m_camera_controller{};
+        std::vector<BuildingId> m_created_buildings;
 
-		MainWindowObjects m_main_window_objects;
-
-
-		TimedCounter m_fps_counter{};	
-		TimedCounter m_ups_counter{};
-		MainLoopData m_main_loop_data{};
-
-		Clock m_input_clock{};
+        MainWindowObjects m_main_window_objects;
 
 
-		void tick_major_events();
-		void tick_update();
-		void tick_rendering();
-		void tick_input();
+        TimedCounter m_fps_counter{};	
+        TimedCounter m_ups_counter{};
+        MainLoopData m_main_loop_data{};
+
+        Clock m_input_clock{};
+
+
+        void tick_major_events();
+        void tick_update();
+        void tick_rendering();
+        void tick_input();
 };
 
 

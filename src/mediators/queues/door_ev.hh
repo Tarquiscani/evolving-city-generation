@@ -17,11 +17,11 @@ namespace tgm
 
 class TryOpenDoorEv : public BaseEvent
 {
-	public:
-		TryOpenDoorEv(DoorId a_door_id) :
-			door_id(a_door_id) {}
+    public:
+        TryOpenDoorEv(DoorId a_door_id) :
+            door_id(a_door_id) {}
 
-		DoorId const door_id;
+        DoorId const door_id;
 };
 
 class DebugInteractWithAllDoorsEv : public BaseEvent {};

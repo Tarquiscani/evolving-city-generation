@@ -37,23 +37,23 @@ void centered_text(std::string const& text)
 
 void TutorialPanel::generate_layout(Vector2i const framebuffer_size)
 {
-	if (m_open)
-	{
-		if (!m_demo_tutorial.is_over())
-		{
-			auto const width_min = 400.f * GSet::imgui_scale();
-			auto const height_min = 350.f * GSet::imgui_scale();
+    if (m_open)
+    {
+        if (!m_demo_tutorial.is_over())
+        {
+            auto const width_min = 400.f * GSet::imgui_scale();
+            auto const height_min = 350.f * GSet::imgui_scale();
 
             ImGui::SetNextWindowPos({ 10.f * GSet::imgui_scale(), 10.f * GSet::imgui_scale() });
-			ImGui::SetNextWindowSizeConstraints({ width_min, height_min }, { framebuffer_size.x * 1.f, framebuffer_size.y * 1.f });
+            ImGui::SetNextWindowSizeConstraints({ width_min, height_min }, { framebuffer_size.x * 1.f, framebuffer_size.y * 1.f });
 
-			ImGui::Begin("Tutorial Panel", &m_open, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize);
-			ImGui::SetWindowFontScale(GSet::imgui_scale());
+            ImGui::Begin("Tutorial Panel", &m_open, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize);
+            ImGui::SetWindowFontScale(GSet::imgui_scale());
 
-			auto const curr_tutorial_step = m_demo_tutorial.get_current_step();
-			assert(curr_tutorial_step.has_value());
-			
-			
+            auto const curr_tutorial_step = m_demo_tutorial.get_current_step();
+            assert(curr_tutorial_step.has_value());
+            
+            
             // Main window
             bool previous_pressed = ImGui::Button("Previous");
             ImGui::SameLine();
@@ -96,9 +96,9 @@ void TutorialPanel::generate_layout(Vector2i const framebuffer_size)
             ImGui::PopStyleVar();
 
 
-			ImGui::End();
-		}
-	}
+            ImGui::End();
+        }
+    }
 }
 
 

@@ -37,8 +37,8 @@ using BuildingAreaId = DataArrayId;
 
 struct BuildingAreaCompleteId
 {
-	BuildingId bid = 0;
-	BuildingAreaId aid = 0;
+    BuildingId bid = 0;
+    BuildingAreaId aid = 0;
 };
 inline auto operator==(BuildingAreaCompleteId const lhs, BuildingAreaCompleteId const rhs) { return lhs.bid == rhs.bid && lhs.aid == rhs.aid; }
 

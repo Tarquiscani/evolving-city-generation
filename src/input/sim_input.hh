@@ -7,26 +7,26 @@
 
 enum class SimInputType
 {
-	PlayerChangeDrc,
-	DebugPlayerTeleportation,
-	DebugPlayerDecreaseVelocity,
-	DebugPlayerIncreaseVelocity,
-	DebugPlayerShrinkFeetSquare,
-	DebugPlayerEnlargeFeetSquare,
+    PlayerChangeDrc,
+    DebugPlayerTeleportation,
+    DebugPlayerDecreaseVelocity,
+    DebugPlayerIncreaseVelocity,
+    DebugPlayerShrinkFeetSquare,
+    DebugPlayerEnlargeFeetSquare,
 
-	DebugAddBuilding,
-	DebugRemoveBuilding,
-	DebugExpandCity,
+    DebugAddBuilding,
+    DebugRemoveBuilding,
+    DebugExpandCity,
 
-	DebugSwitchAllDoors,
-	DebugCreateDestroyDoor,
+    DebugSwitchAllDoors,
+    DebugCreateDestroyDoor,
 };
 
 class SimInput
 {
-	SimInputType type;
+    SimInputType type;
 
-	Vector3i param1;
+    Vector3i param1;
 };
 
 

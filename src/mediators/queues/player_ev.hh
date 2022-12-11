@@ -14,11 +14,11 @@ namespace tgm
 
 class PlayerMovementEv : public BaseEvent
 {
-	public:
-		PlayerMovementEv(Direction a_direction) :
-			direction(a_direction) {}
+    public:
+        PlayerMovementEv(Direction a_direction) :
+            direction(a_direction) {}
 
-		Direction const direction = Direction::none;
+        Direction const direction = Direction::none;
 };
 
 

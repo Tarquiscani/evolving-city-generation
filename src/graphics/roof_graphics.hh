@@ -15,10 +15,10 @@ namespace tgm
 
 struct RoofGraphics
 {
-	std::vector<FreePolygonId> south_polygons;
-	std::vector<FreePolygonId> west_polygons;
-	std::vector<FreePolygonId> north_polygons;
-	std::vector<FreePolygonId> east_polygons;
+    std::vector<FreePolygonId> south_polygons;
+    std::vector<FreePolygonId> west_polygons;
+    std::vector<FreePolygonId> north_polygons;
+    std::vector<FreePolygonId> east_polygons;
 };
 
 

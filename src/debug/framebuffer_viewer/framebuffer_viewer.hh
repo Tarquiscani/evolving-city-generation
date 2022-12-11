@@ -23,41 +23,41 @@ namespace tgm
 ////
 class FramebufferViewer
 {
-	public:
-		FramebufferViewer();
-		~FramebufferViewer();
+    public:
+        FramebufferViewer();
+        ~FramebufferViewer();
 
-		bool is_open() const noexcept { return m_open; }
+        bool is_open() const noexcept { return m_open; }
 
-		void open(std::string const title, GLuint const texture, GLsizei const width, GLsizei const height, std::string const shader_name);
-		void update();
-		void close();
+        void open(std::string const title, GLuint const texture, GLsizei const width, GLsizei const height, std::string const shader_name);
+        void update();
+        void close();
 
-	private:
-		bool m_open = false;
+    private:
+        bool m_open = false;
 
-		GLuint m_texture = 0;
+        GLuint m_texture = 0;
 
-		Window & m_window;
+        Window & m_window;
 
-		Shader m_shader;
+        Shader m_shader;
 
-		static inline std::vector<float> const m_VAO_vertices = {
-			//top-left triangle
-			-1.f, -1.f,		0.f, 0.f,
-			-1.f,  1.f,		0.f, 1.f,
-			 1.f,  1.f,		1.f, 1.f,
+        static inline std::vector<float> const m_VAO_vertices = {
+            //top-left triangle
+            -1.f, -1.f,		0.f, 0.f,
+            -1.f,  1.f,		0.f, 1.f,
+             1.f,  1.f,		1.f, 1.f,
 
-			 //bottom-right triangle
-			 -1.f, -1.f,		0.f, 0.f,
-			  1.f,  1.f,		1.f, 1.f,
-			  1.f, -1.f, 	1.f, 0.f
-		};
+             //bottom-right triangle
+             -1.f, -1.f,		0.f, 0.f,
+              1.f,  1.f,		1.f, 1.f,
+              1.f, -1.f, 	1.f, 0.f
+        };
 
-		GLuint m_VAO = 0;
-		GLuint m_VBO = 0;
+        GLuint m_VAO = 0;
+        GLuint m_VBO = 0;
 
-		void assert_open() const;
+        void assert_open() const;
 };
 
 

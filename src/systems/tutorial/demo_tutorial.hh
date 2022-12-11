@@ -12,8 +12,8 @@ namespace tgm
 
 class DemoTutorial : public Tutorial
 {
-	public:
-		DemoTutorial(AudioManager & audio_manager);
+    public:
+        DemoTutorial(AudioManager & audio_manager);
 };
 
 
