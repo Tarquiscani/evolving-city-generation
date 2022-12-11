@@ -13,6 +13,9 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include "debug/logger/logger.hh"
+#include "debug/logger/log_streams.hh"
+
 
 namespace tgm
 {
@@ -20,57 +23,57 @@ namespace tgm
 
 struct VideoMode
 {
-	public:
-		VideoMode() = default;
+    public:
+        VideoMode() = default;
 
-		VideoMode(int const width, int const height, int const red_bits, int const green_bits, int const blue_bits, int const refresh_rate)
-			: m_width{ width }, m_height{ height }, m_red_bits{ red_bits }, m_green_bits{ green_bits }, m_blue_bits{ blue_bits }, m_refresh_rate{ refresh_rate } {}
+        VideoMode(int const width, int const height, int const red_bits, int const green_bits, int const blue_bits, int const refresh_rate)
+            : m_width{ width }, m_height{ height }, m_red_bits{ red_bits }, m_green_bits{ green_bits }, m_blue_bits{ blue_bits }, m_refresh_rate{ refresh_rate } {}
 
-		////
-		//	@return: Screen resolution (in pixels).
-		////
-		auto width() const noexcept -> int { return m_width; }
+        ////
+        //	@return: Screen resolution (in pixels).
+        ////
+        auto width() const noexcept -> int { return m_width; }
 
-		////
-		//	@return: Screen height (in pixels).
-		////
-		auto height() const noexcept -> int { return m_height; }
+        ////
+        //	@return: Screen height (in pixels).
+        ////
+        auto height() const noexcept -> int { return m_height; }
 
-		auto red_bits() const noexcept -> int { return m_red_bits; }
-		auto green_bits() const noexcept -> int { return m_green_bits; }
-		auto blue_bits() const noexcept -> int { return m_blue_bits; }
-		auto refresh_rate() const noexcept -> int { return m_refresh_rate; }
+        auto red_bits() const noexcept -> int { return m_red_bits; }
+        auto green_bits() const noexcept -> int { return m_green_bits; }
+        auto blue_bits() const noexcept -> int { return m_blue_bits; }
+        auto refresh_rate() const noexcept -> int { return m_refresh_rate; }
 
-	protected:
-		int m_width = 0;
-		int m_height = 0;
-		int m_red_bits = 0;
-		int m_green_bits = 0;
-		int m_blue_bits = 0;
-		int m_refresh_rate = 0;
+    protected:
+        int m_width = 0;
+        int m_height = 0;
+        int m_red_bits = 0;
+        int m_green_bits = 0;
+        int m_blue_bits = 0;
+        int m_refresh_rate = 0;
 };
 
 
 class GLFW
 {
-	public:
-		////
-		//	Initialize both GLFW and GLAD.
-		////
-		GLFW();
-		GLFW(GLFW const&) = delete;
-		GLFW& operator=(GLFW const&) = delete;
+    public:
+        ////
+        //	Initialize both GLFW and GLAD.
+        ////
+        GLFW();
+        GLFW(GLFW const&) = delete;
+        GLFW& operator=(GLFW const&) = delete;
 
-		~GLFW();
+        ~GLFW();
 
-		auto video_mode() -> VideoMode;
+        auto video_mode() -> VideoMode;
 
-	private:
-		bool m_is_init = false;
-		
-		void print_monitor_info();
-		auto print_monitor(std::ostream & os, GLFWmonitor * monitor) -> std::ostream &;
-		auto print_mode(std::ostream & os, GLFWvidmode const& mode) -> std::ostream &;
+    private:
+        bool m_is_init = false;
+        
+        void print_monitor_info();
+        auto print_monitor(Logger & logger, GLFWmonitor * monitor) -> Logger &;
+        auto print_mode(Logger & logger, GLFWvidmode const& mode) -> Logger &;
 };
 
 

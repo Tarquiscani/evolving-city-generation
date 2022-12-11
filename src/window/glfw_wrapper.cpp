@@ -3,6 +3,8 @@
 
 #include "settings/debug/debug_settings.hh"
 
+#include "debug/logger/log_streams.hh"
+
 
 namespace tgm
 {
@@ -11,110 +13,119 @@ namespace tgm
 
 static void glfw_error_callback(int error, char const* description)
 {
-	std::cout << "GLFW error #" << error << ": " << description;
+    g_log << "GLFW error #" << error << ": " << description;
 }
 
 
 
 GLFW::GLFW()
 {
-	glfwSetErrorCallback(glfw_error_callback);
+    glfwSetErrorCallback(glfw_error_callback);
 
-	if (!glfwInit())
-	{
-		throw std::runtime_error("Failed to initialize GLFW");
-	}
-	else
-	{
-		m_is_init = true;
+    if (!glfwInit())
+    {
+        throw std::runtime_error("Failed to initialize GLFW");
+    }
+    else
+    {
+        m_is_init = true;
 
-		print_monitor_info();
-	}
+        print_monitor_info();
+    }
 }
 
 GLFW::~GLFW()
 {
-	if (m_is_init)
-	{
-		glfwTerminate();
-	}
+    if (m_is_init)
+    {
+        glfwTerminate();
+    }
 }
 
 void GLFW::print_monitor_info()
 {
-	auto curr_monitor = glfwGetPrimaryMonitor();
-	if (curr_monitor)
-	{
-		std::cout << "Current monitor: "; print_monitor(std::cout, curr_monitor) << std::endl;
+    auto logger = Logger{ g_log };
 
-		auto curr_mode = glfwGetVideoMode(curr_monitor);
-		if (curr_mode)
-		{
-			std::cout << "Current video mode: "; print_mode(std::cout, *curr_mode) << std::endl;
-		}
-		else
-		{
-			std::cout << "No current video mode found" << std::endl;
-		}
-	}
-	else
-	{
-		std::cout << "No current monitor found" << std::endl;
-	}
-		
-	auto monitor_num = 0;
-	auto monitors = glfwGetMonitors(&monitor_num);
-	std::cout << "Monitor Num: " << monitor_num << std::endl;
-	for (auto i = 0; i < monitor_num; ++i)
-	{
-		auto monitor = monitors[i];
-		std::cout << "Monitor #" << i << ": "; print_monitor(std::cout, monitor) << std::endl;
+    auto curr_monitor = glfwGetPrimaryMonitor();
+    if (curr_monitor)
+    {
+        logger << "Current monitor: "; print_monitor(logger, curr_monitor);
 
-		auto modes_num = 0;
-		auto modes = glfwGetVideoModes(monitor, &modes_num);
-			
-		for (auto j = 0; j < modes_num; ++j)
-		{
-			auto mode = modes[j];
-			std::cout << "\t Mode #" << j << ": "; print_mode(std::cout, mode) << std::endl;
-		}
-	}
+        auto curr_mode = glfwGetVideoMode(curr_monitor);
+        if (curr_mode)
+        {
+            logger << Logger::nltb << "Current video mode: "; print_mode(logger, *curr_mode);
+        }
+        else
+        {
+            logger << Logger::nltb << "No current video mode found";
+        }
+    }
+    else
+    {
+        logger << Logger::nltb << "No current monitor found";
+    }
+        
+    auto monitor_num = 0;
+    auto monitors = glfwGetMonitors(&monitor_num);
+    logger << Logger::nltb << "Monitor Num: " << monitor_num 
+           << Logger::addt;
+    for (auto i = 0; i < monitor_num; ++i)
+    {
+        auto monitor = monitors[i];
+        logger << Logger::nltb << "Monitor #" << i << ": "; print_monitor(logger, monitor);
+
+        auto modes_num = 0;
+        auto modes = glfwGetVideoModes(monitor, &modes_num);
+            
+        logger << Logger::addt;
+
+        for (auto j = 0; j < modes_num; ++j)
+        {
+            auto mode = modes[j];
+            logger << Logger::nltb << "Mode #" << j << ": "; print_mode(logger, mode) << std::endl;
+        }
+
+        logger << Logger::remt;
+    }
+        
+    logger << Logger::remt;
 }
 
-auto GLFW::print_monitor(std::ostream & os, GLFWmonitor * monitor) -> std::ostream &
+auto GLFW::print_monitor(Logger & logger, GLFWmonitor * monitor) -> Logger &
 {
-	assert(monitor);
+    assert(monitor);
 
-	auto posx = 0;
-	auto posy = 0;
-	auto width = 0;
-	auto height = 0;
-	glfwGetMonitorWorkarea(monitor, &posx, &posy, &width, &height);
+    auto posx = 0;
+    auto posy = 0;
+    auto width = 0;
+    auto height = 0;
+    glfwGetMonitorWorkarea(monitor, &posx, &posy, &width, &height);
 
-	os << ": " << width << "x" << height << " --- " << "(" << posx << ", " << posy << ")" << glfwGetMonitorName(monitor);
+    logger << ": " << width << "x" << height << " --- " << "(" << posx << ", " << posy << ")" << glfwGetMonitorName(monitor);
 
-    return os;
+    return logger;
 }
 
-auto GLFW::print_mode(std::ostream & os, GLFWvidmode const& mode) -> std::ostream &
+auto GLFW::print_mode(Logger & logger, GLFWvidmode const& mode) -> Logger &
 {
-	os << mode.width << "x" << mode.height << " --- " << "(" << mode.redBits << ", " << mode.blueBits << ", " << mode.greenBits << ") --- refresh rate: " << mode.refreshRate << std::endl;
+    logger << mode.width << "x" << mode.height << " --- " << "(" << mode.redBits << ", " << mode.blueBits << ", " << mode.greenBits << ") --- refresh rate: " << mode.refreshRate << std::endl;
 
-    return os;
+    return logger;
 }
 
 
 auto GLFW::video_mode() -> VideoMode
 {
-	check(m_is_init);
-	
-	auto monitor = glfwGetPrimaryMonitor();
-	check(monitor);
+    check(m_is_init);
+    
+    auto monitor = glfwGetPrimaryMonitor();
+    check(monitor);
 
-	auto mode = glfwGetVideoMode(monitor);
-	check(mode);
+    auto mode = glfwGetVideoMode(monitor);
+    check(mode);
 
-	return VideoMode{ mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits, mode->refreshRate };
+    return VideoMode{ mode->width, mode->height, mode->redBits, mode->greenBits, mode->blueBits, mode->refreshRate };
 }
 
 

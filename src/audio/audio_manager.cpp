@@ -6,6 +6,8 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio/miniaudio.h"
 
+#include "debug/logger/log_streams.hh"
+
 
 namespace tgm
 {
@@ -16,7 +18,7 @@ AudioDecoder::AudioDecoder(char const* filename)
     auto result = ma_decoder_init_file(filename, NULL, &m_decoder);
     if (result != MA_SUCCESS) 
     {
-        std::cout << "ma_decoder_init_file failed." << std::endl;
+        g_log << "ma_decoder_init_file failed." << std::endl;
     }
     else
     {
@@ -36,7 +38,7 @@ AudioDevice::AudioDevice(ma_device_config const& device_config)
 {
     if (ma_device_init(NULL, &device_config, &m_device) != MA_SUCCESS) 
     {
-        std::cout << "Failed to open playback device." << std::endl;
+        g_log << "Failed to open playback device." << std::endl;
     }
     else
     {
@@ -56,7 +58,7 @@ void AudioDevice::start()
 {
     if (ma_device_start(&m_device) != MA_SUCCESS) 
     {
-        std::cout << "Failed to start playback device." << std::endl;
+        g_log << "Failed to start playback device." << std::endl;
     }
 }
 
@@ -65,7 +67,7 @@ AudioManager::AudioManager()
     auto result = ma_engine_init(NULL, &m_engine);
     if (result != MA_SUCCESS) 
     {
-        std::cout << "Failed to initialize audio engine." << std::endl;
+        g_log << "Failed to initialize audio engine." << std::endl;
     }
     else
     {
