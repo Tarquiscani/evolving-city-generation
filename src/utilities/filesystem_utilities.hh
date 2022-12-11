@@ -10,7 +10,7 @@
 #include <chrono>
 
 
-#include "utilities.hh"
+#include "time_utilities.hh"
 
 
 namespace tgm
@@ -73,7 +73,7 @@ namespace FsUtil
             auto unique_filename = unique_index.str() + path.stem().string() + path.extension().string();
             if (prepend_datetime)
             {
-                unique_filename = Util::human_readable_datetime() + unique_filename;
+                unique_filename = Time::human_readable_datetime() + unique_filename;
             }
 
             unique_path.clear();
@@ -87,7 +87,7 @@ namespace FsUtil
         if (!stream) { throw std::runtime_error("An error occurred when creating an ofstream."); }
 
 
-        stream << "File creation time: " << Util::human_readable_datetime() << std::endl;
+        stream << "File creation time: " << Time::human_readable_datetime() << std::endl;
 
 
         return stream;

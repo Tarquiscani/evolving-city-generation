@@ -1,8 +1,9 @@
 #ifndef GM_RECT_HH
 #define GM_RECT_HH
 
-#include <iostream>
+
 #include <algorithm>
+#include <iostream>
 
 #include "system/vector2.hh"
 

@@ -311,7 +311,7 @@ bool BuildingManager::expand_building(BuildingId const bid, int const queue_id)
             }
 
             #if BUILDEXP_DEBUGLOG
-                BElog << Logger::nltb << "---- " << n << "th expansion ends.\n\n";
+                BElog << Logger::nltb << "---- " << queue_id << "th expansion in queue ends.\n\n";
             #endif
             #if BUILDEXP_VISUALDEBUG
                 BEdeb.end_chapter();

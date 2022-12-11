@@ -91,7 +91,7 @@ class Building
             candidate_areas = select_candidateAreas(bld_exptempl, gen);
 
             #if BUILDEXP_DEBUGLOG
-                BElog << Logger::nltb << "Potential Areas: " << *m_expansion_template;
+                BElog << Logger::nltb << "Potential Areas: " << bld_exptempl;
                 BElog << Logger::nltb << "Proposed candidate areas: " << candidate_areas;
             #endif
 

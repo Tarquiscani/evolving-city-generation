@@ -86,8 +86,7 @@ class Logger
         using LoggerManipulator = auto (Logger&) -> Logger&;
         void apply_LoggerManipulator(std::function<LoggerManipulator> manip)
         {
-            if (!out)
-                throw std::runtime_error("Cannot apply a manip: the stream is in an error state.");
+            if (!out) { throw std::runtime_error("Cannot apply a manip: the stream is in an error state."); }
 
             manip(*this);
         }
