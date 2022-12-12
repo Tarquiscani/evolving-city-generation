@@ -14,8 +14,8 @@ This was an abandoned project developed between 2018 and 2019 with the main goal
 ![Evolving City Generation](doc/images/evolving-city-generation.gif)
 
 ## Algorithm Descriptions
-* [City generation algorithm.](doc/city_generation_algorithm/city_generation_algorithm.md)
-* [Roof generation algorithm.](doc/roof_generation_algorithm/roof_generation_algorithm.md)
+* [City generation algorithm](doc/city_generation_algorithm/city_generation_algorithm.md).
+* [Roof generation algorithm](doc/roof_generation_algorithm/roof_generation_algorithm.md).
 
 ## Download
 The binaries are available on Itch.io.
@@ -39,10 +39,11 @@ The binaries are available on Itch.io.
 * Pixel perfect (for Zoom = 1).
 * Support for multiple versions of the same texture, depending on the screen resolution (low-definition, HD, 4K).
 * Support for custom tile dimensions.
-* Alpha-to-coverage to enable antialiasing inside the sprites.
 * Automatic conversion of texture atlases in array textures (to avoid sprite bleeding at low mipmap levels).
-* Support for shaders split in multiple files. 
-* Edge-detection filter.
+* In-sprite anti-aliasing (through a technique involing alpha-to-coverage). This improves the graphics for zoom levels different than 1.
+* Ability to round the movement of a character to the nearest pixel (for any zoom level). This improves the graphics, avoiding that a sprite texel is sampled half in a pixel and half in another pixel, and also avoiding the disturbing flickering that this would produce when the sampling isn't homogenous across frames.
+* Edge-detection filter for 3D models.
+* Support for splitting shaders in multiple files.
 * GPU-based occlusion culling.
 * Dev tools:
   * LOD coloration view mode.

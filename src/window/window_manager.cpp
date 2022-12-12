@@ -453,7 +453,7 @@ void WindowManager::set_contextCreationHints()
     //		 1) NVIDIA control panel (and graphics driver in general) may override this settings to an arbitrary value
     //		 2) This hint just affects the default FBO. And when postprocessing is enabled the default FBO multisampling
     //			doesn't affect the actual scene rendering.
-    #if ALPHA_TO_COVERAGE && !POSTPROCESSING
+    #if GSET_ALPHA_TO_COVERAGE && !GSET_POSTPROCESSING
         glfwWindowHint(GLFW_SAMPLES, GSet::samples);
     #endif
 

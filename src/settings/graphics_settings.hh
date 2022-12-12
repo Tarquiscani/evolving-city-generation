@@ -11,54 +11,124 @@
 #include "debug/logger/log_streams.hh"
 
 
-#define POLYGON_MODE false
+////
+//  COMPILE-TIME SETTINGS
+//  The following settings are meant to be used just for debug and give the ability to test different techniques of the engine. 
+////
 
 
-#define EDGE_DETECTION_FILTER true
-
-#define EDGE_DETECTION_FILTER_INTERMEDIATE_STEPS (EDGE_DETECTION_FILTER && false)
-
-// It renders a post-processing effect that shows, for each pixel, how many non-discarded fragments compete for that pixel.
-// (black: no fragments; green: 1 fragment; dark orange -> yellow: 2 -> 10 fragments; dark red -> bright red: 11 -> 50 fragments)
-#define OVERDRAW_FILTER false
+////
+//  Enable the pipeline of off-screen buffers that allows to compute and render the black edges of roofs.
+//  Default: true. Turning it off improves the performance.
+////
+#define GSET_EDGE_DETECTION_FILTER true
 
 
-#define POSTPROCESSING (EDGE_DETECTION_FILTER || OVERDRAW_FILTER)
-
-#if EDGE_DETECTION_FILTER && OVERDRAW_FILTER
-    #error EDGE_DETECTION_FILTER and OVERDRAW_FILTER cannot be both active
-#endif
-
-#if POLYGON_MODE && POSTPROCESSING
-    #error POLYGON_MODE and POSTPROCESSING effects cannot be both active
-#endif
+////
+//  Enable alpha-to-coverage sampling in order to apply the anti-aliasing also inside the sprites. 
+//  Useful to improve graphics in zoom levels different than 1 (remember that for zoom=1 the sprite rendering is pixel-perfect and there's no need for anti-aliasing).
+//  Note: When no postprocessing filter is active and the scene is drawn on the default FBO, the GPU driver may force an arbitrary MSAA value and override every GLFW hint.
+//  Default: true. Turning it off improves the performance.
+////
+#define GSET_ALPHA_TO_COVERAGE true
 
 
-// It avoids that hidden entites are drawn each frame, computing their visibility in advance.
-#define OCCLUSION_CULLING false
-
-#define SHOW_VISIBLE_ENTITIES_FBO (OCCLUSION_CULLING && false)
-
-
-// Enable alpha-to-coverage sampling in order to apply anti-aliasing also inside the sprites.
-// Note: When no postprocessing filter is active and the scene is drawn on the default FBO, the GPU driver may force an arbitrary MSAA value and override every GLFW hint.
-#define ALPHA_TO_COVERAGE false
-
-#if ALPHA_TO_COVERAGE && OVERDRAW_FILTER
-    #error ALPHA_TO_COVERAGE and OVERDRAW_FILTER cannot be both active.
-#endif
-
-
-// If true the tileset texture atlas is converted to a Texture2DArray. If false the texture atlas is used "as is".
+////
+//  If true the tileset texture atlas is converted to a Texture2DArray. If false the texture atlas is used "as is".
+//  It improves graphics for high zoom levels, avoiding sprite bleeding for low mipmap levels.
+//  Default: true. It doesn't affect the performance.
+////
 #define GSET_TILESET_TEXARRAY true
 
 
-// If true the mobile movement is rounded so that each frame they cover a distance that's a multiple of 1 pixel.
+////
+//  If true the characters' (and in general mobiles') movement is rounded such in a way that each frame they cover a distance that's a multiple of 1 pixel.
+//  This improves the graphics, avoiding that a sprite texel is sampled half in a pixel and half in another pixel. And also avoiding the disturbing flickering 
+//  that this would produce when the sampling isn't homogeneous across frames.
+//  Default: true. It doesn't affect the performance.
+////
 #define GSET_ROUND_TO_NEAREST_PIXEL true
 
 
-// It changes the texture used to represent the scene switching to royalty free assets.
-#define FREE_ASSETS false
+////
+//  When enabled it avoids that hidden polygons are drawn each frame, computing their visibility in advance.
+//  It's an experimental feature, not really optimized, and only works with tiles. And it hasn't been maintained or tested for a while.
+//  Default: false. Turning it on decreases the performance a bit.
+////
+#define GSET_OCCLUSION_CULLING false
+
+
+////
+//  It allows to quickly switch from a texture atlas to another. It is used to test different texture atlases with differen tile dimensions
+//  and check that tile-dimension is really a variable and doesn't hardly affect any engine feature.
+//  It also contains useful examples of how to change the tile dimension.
+//  Default: false.
+////
+#define GSET_ALTERNATIVE_ASSETS false
+
+
+////
+//  It allows to view the polygons that make up the world, without rendering the surfaces but just the edges of them.
+//  Default: false.
+////
+#define GSET_WIREFRAME_MODE false
+
+
+////
+//  It renders a post-processing effect that shows, for each pixel, how many non-discarded fragments compete for that pixel:
+//      - Black: no fragments
+//      - Green: 1 fragment
+//      - Dark orange -> Yellow: 2 -> 10 fragments
+//      - Dark red -> Bright red: 11 -> 50 fragments
+//  It's useful to optimize the performance and test the occlusion culling.
+//  Default: false
+//// 
+#define GSET_OVERDRAW_MODE false
+
+
+////
+//  It opens additional windows, besides the main game window, showing the off-screen framebuffers related to the edge detection.
+//  It's only effective when the game is run in windowed mode and when the edge detection filter is enabled.
+//  Default: false.
+////
+#define GSET_SHOW_EDGE_DETECTION_FBOS false
+
+
+////
+//  It opens an additional window, besides the main game window, showing the off-screen framebuffers related to the occlusion culling.
+//  It's only effective when the game is run in windowed mode and when the edge detection filter is enabled.
+//  Default: false.
+////
+#define GSET_SHOW_OCCLUSION_CULLING_FBO false
+
+
+
+////
+//  IMPLEMENTATION MACROS
+//  Do not touch.
+////
+
+#if GSET_EDGE_DETECTION_FILTER && GSET_OVERDRAW_MODE
+    #error GSET_EDGE_DETECTION_FILTER and GSET_OVERDRAW_MODE cannot be both active
+#endif
+
+
+// True when there's at least one postprocessing effect active (postprocessing implies that the scene is rendered to an off-screen framebuffer).
+#define GSET_POSTPROCESSING (GSET_EDGE_DETECTION_FILTER || GSET_OVERDRAW_MODE)
+
+#if GSET_WIREFRAME_MODE && GSET_POSTPROCESSING
+    #error GSET_WIREFRAME_MODE and GSET_POSTPROCESSING effects cannot be both active
+#endif
+
+#if GSET_ALPHA_TO_COVERAGE && GSET_OVERDRAW_MODE
+    #error GSET_ALPHA_TO_COVERAGE and GSET_OVERDRAW_MODE cannot be both active.
+#endif
+
+
+#define GSET_SHOW_EDGE_DETECTION_FBOS_IMPL (GSET_EDGE_DETECTION_FILTER && GSET_SHOW_EDGE_DETECTION_FBOS)
+
+#define GSET_SHOW_OCCLUSION_CULLING_FBO_IMPL (GSET_OCCLUSION_CULLING && GSET_SHOW_OCCLUSION_CULLING_FBO)
+
 
 
 namespace tgm
@@ -183,7 +253,7 @@ class GraphicsSettings
         //	TEXTURES
         ////
         
-        #if FREE_ASSETS
+        #if GSET_ALTERNATIVE_ASSETS
             static constexpr auto lowDefinition_pptxu = 216.f;
             static constexpr auto highDefinition_pptxu = 216.f;
             static constexpr auto ultraHighDefinition_pptxu = 216.f;
@@ -252,7 +322,7 @@ class GraphicsSettings
     private:
         
 
-        #if FREE_ASSETS
+        #if GSET_ALTERNATIVE_ASSETS
             static constexpr auto m_lowDefinition_tpt = 216.f;
             static constexpr auto m_highDefinition_tpt = 216.f;
             static constexpr auto m_ultraHighDefinition_tpt = 216.f;
@@ -267,8 +337,6 @@ class GraphicsSettings
         static inline bool is_lowDef_resolution()  { return game_video_mode.width() > 700  && game_video_mode.width() <= 1400; }
         static inline bool is_fullHD_resolution()  { return game_video_mode.width() > 1400 && game_video_mode.width() <= 1920; }
         static inline bool is_ultraHD_resolution() { return game_video_mode.width() > 1920 && game_video_mode.width() <= 3840; }
-
-
 
 
         ////

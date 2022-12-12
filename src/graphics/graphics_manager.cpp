@@ -97,7 +97,7 @@ void GraphicsManager::init()
                                                             {"TILE_SHADER", "0 //false"},
                                                       }										);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
     
-    #if OCCLUSION_CULLING
+    #if GSET_OCCLUSION_CULLING
         m_entityIds_shader.load_from_multipleFiles({ "entity_ids.vert" }, 
                                                    { "entity_ids.frag","discard_utilities.frag" },
                                                    {
@@ -110,13 +110,13 @@ void GraphicsManager::init()
         m_visibleBufferBuilder_shader.load("visible_buffer_builder.vert", "visible_buffer_builder.frag");
     #endif
 
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         m_edgeDetector_shader.load("postprocessing/default.vert", "postprocessing/edge_detector.frag");
         m_edgeThickener_shader.load("postprocessing/default.vert", "postprocessing/erosion.frag");
         m_edgeTextureMixer_shader.load("postprocessing/default.vert", "postprocessing/edge_texture_mixer.frag");
     #endif
         
-    #if OVERDRAW_FILTER
+    #if GSET_OVERDRAW_MODE
         m_overdraw_screenShader.load("postprocessing/default.vert", "postprocessing/overdraw.frag");
     #endif
 
@@ -133,15 +133,15 @@ void GraphicsManager::generate_objects()
     prepare_windowQuadVAO();
 
 
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         generate_edgeDetectionFilterObjects();
-    #elif OVERDRAW_FILTER
+    #elif GSET_OVERDRAW_MODE
         generate_overdrawObjects();
     #endif
 
 
     //--- Occlusion culling objects (must be called after the generation of tile_VAO).
-    #if OCCLUSION_CULLING
+    #if GSET_OCCLUSION_CULLING
         generate_occlusionCullingObjects();
     #endif
 
@@ -316,10 +316,10 @@ void GraphicsManager::generate_tileObjects()
     glBindVertexArray(0); 
 }
 
-#if EDGE_DETECTION_FILTER
+#if GSET_EDGE_DETECTION_FILTER
     void GraphicsManager::generate_edgeDetectionFilterObjects()
     {
-        #if ALPHA_TO_COVERAGE
+        #if GSET_ALPHA_TO_COVERAGE
             //--- Generate multisampled edge-detection scene FBO
             glGenFramebuffers(1, &m_edfScene_msFBO);
             glBindFramebuffer(GL_FRAMEBUFFER, m_edfScene_msFBO);
@@ -462,7 +462,7 @@ void GraphicsManager::generate_tileObjects()
 
 
         
-        #if EDGE_DETECTION_FILTER_INTERMEDIATE_STEPS
+        #if GSET_SHOW_EDGE_DETECTION_FBOS_IMPL
             m_textured_viewer.open("Textured scene", m_edfScene_texturedColorTex, m_defaultFbo_size.x, m_defaultFbo_size.y, "");
             m_edgeableIds_viewer.open("EdgeableIds scene", m_edfScene_edgeableIdsTex, m_defaultFbo_size.x, m_defaultFbo_size.y, "edgeable_ids");
             m_edges_viewer.open("Thickened edge scene", m_edfThickenedEdges_colorTex, m_defaultFbo_size.x, m_defaultFbo_size.y, "");
@@ -470,7 +470,7 @@ void GraphicsManager::generate_tileObjects()
     }
 #endif
 
-#if OVERDRAW_FILTER
+#if GSET_OVERDRAW_MODE
 
     void GraphicsManager::generate_overdrawObjects()
     {
@@ -517,7 +517,7 @@ void GraphicsManager::generate_tileObjects()
 #endif
 
 
-#if OCCLUSION_CULLING
+#if GSET_OCCLUSION_CULLING
     void GraphicsManager::generate_occlusionCullingObjects()
     {
         // VISIBLE ENTITIES FRAMEBUFFER
@@ -578,7 +578,7 @@ void GraphicsManager::generate_tileObjects()
         glBindFramebuffer(GL_FRAMEBUFFER, 0); //unbind
 
 
-        #if SHOW_VISIBLE_ENTITIES_FBO
+        #if GSET_SHOW_OCCLUSION_CULLING_FBO_IMPL
             // Initialize (or reinitilize) the FBO viewer
             if (m_entityIds_viewer.is_open()) {	m_entityIds_viewer.close();	}
             m_entityIds_viewer.open("EntityIds scene", m_entityIds_tex, m_entityIdsFBO_width, m_entityIdsFBO_height, "entity_ids");
@@ -785,13 +785,13 @@ void GraphicsManager::resize_fbo(Vector2i const new_fbo_size)
 
 
 
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         //Recreate the framebuffer and its textures from scratch in order to fit the new window size.
         free_edgeDetectionFilterObjects();
         generate_edgeDetectionFilterObjects();
     #endif
 
-    #if OVERDRAW_FILTER
+    #if GSET_OVERDRAW_MODE
         //Recreate the framebuffer and its textures from scratch in order fitting the new window size.
         free_overdrawObjects();
         generate_overdrawObjects();
@@ -815,7 +815,7 @@ void GraphicsManager::draw()
         free_tileObjects();
         generate_tileObjects();
 
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             free_occlusionCullingObjects();
             generate_occlusionCullingObjects();
         #endif
@@ -836,29 +836,29 @@ void GraphicsManager::draw()
 
         glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind
         
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             occlusion_culling();
         #endif
     }
 
     if(m_camera.are_noRoofRects_changed())
     {
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             occlusion_culling();
         #endif
     }
 
 
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         drawScene_with_edgeDetectionFilter();
-    #elif OVERDRAW_FILTER
+    #elif GSET_OVERDRAW_MODE
         drawScene_with_overdrawFilter();
     #else
         drawScene_without_filters();
     #endif
 }
 
-#if OCCLUSION_CULLING
+#if GSET_OCCLUSION_CULLING
     void GraphicsManager::occlusion_culling()
     {
         // DRAW VISIBLE ENTITIES TEXTURE
@@ -966,7 +966,7 @@ void GraphicsManager::draw()
             glEnable(GL_DEPTH_TEST);
     
         
-        #if SHOW_VISIBLE_ENTITIES_FBO
+        #if GSET_SHOW_OCCLUSION_CULLING_FBO_IMPL
             // Update the entityIds_tex viewer
             m_entityIds_viewer.update();
         #endif
@@ -989,7 +989,7 @@ void GraphicsManager::drawScene_without_filters()
 
     glEnable(GL_DEPTH_TEST);
 
-    #if POLYGON_MODE
+    #if GSET_WIREFRAME_MODE
         glClearColor(1.f, 1.f, 1.f, 1.0f);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     #else
@@ -1003,17 +1003,17 @@ void GraphicsManager::drawScene_without_filters()
 
 
 
-    #if POLYGON_MODE
+    #if GSET_WIREFRAME_MODE
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     #endif
 }
 
 
-#if EDGE_DETECTION_FILTER
+#if GSET_EDGE_DETECTION_FILTER
     void GraphicsManager::drawScene_with_edgeDetectionFilter()
     {
-        #if ALPHA_TO_COVERAGE
+        #if GSET_ALPHA_TO_COVERAGE
             // Bind a multisampled framebuffer where the scene must be rendered (it has 2 color outputs, one for the textured scene and one for the edgeableIds scene).
             glBindFramebuffer(GL_FRAMEBUFFER, m_edfScene_msFBO);
                 glEnable(GL_DEPTH_TEST);
@@ -1112,7 +1112,7 @@ void GraphicsManager::drawScene_without_filters()
 
 
         
-        #if EDGE_DETECTION_FILTER_INTERMEDIATE_STEPS
+        #if GSET_SHOW_EDGE_DETECTION_FBOS_IMPL
             m_textured_viewer.update();
             m_edgeableIds_viewer.update();
             m_edges_viewer.update();
@@ -1147,7 +1147,7 @@ void GraphicsManager::drawScene_without_filters()
 #endif
 
 
-#if OVERDRAW_FILTER
+#if GSET_OVERDRAW_MODE
     void GraphicsManager::drawScene_with_overdrawFilter()
     {
         // Bind a custom framebuffer to store the output on a texture
@@ -1197,7 +1197,7 @@ void GraphicsManager::drawScene_without_filters()
 
 void GraphicsManager::draw_scene()
 {
-    #if ALPHA_TO_COVERAGE
+    #if GSET_ALPHA_TO_COVERAGE
         glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);		// it requires also an active MSAA to work
     #endif
 
@@ -1219,7 +1219,7 @@ void GraphicsManager::draw_scene()
     set_sceneUniforms(m_tile_main_shader, view, projection, are_noRoofRects_changed);
     m_tile_main_shader.set_int("u_texture", tilesetTexarray_unit); //"1" means texture bound at the unit "GL_TEXTURE1"
 
-    #if OCCLUSION_CULLING
+    #if GSET_OCCLUSION_CULLING
         // Draw visible tile triangles
         glBindBuffer(GL_DRAW_INDIRECT_BUFFER, m_visibleTile_indirectCommandBuffer);
         glBindVertexArray(m_visibleTile_VAO);
@@ -1298,7 +1298,7 @@ void GraphicsManager::draw_scene()
     draw_genericVAO(m_roofEast_VAO, m_roof_vertices.east_roof);
 
 
-    #if ALPHA_TO_COVERAGE
+    #if GSET_ALPHA_TO_COVERAGE
         glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
     #endif
 }
@@ -1486,9 +1486,9 @@ auto GraphicsManager::glfwWindowPixel_to_mapUnits(Vector2f const glfw_cursorPos)
     auto z_depth = 0.f;
     
     //bind the framebuffer where the actual depth test happens
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         glBindFramebuffer(GL_FRAMEBUFFER, m_edfScene_FBO);
-    #elif OVERDRAW_FILTER
+    #elif GSET_OVERDRAW_MODE
         glBindFramebuffer(GL_FRAMEBUFFER, m_overdraw_FBO);
     #else
         glBindFramebuffer(GL_FRAMEBUFFER, default_FBO);		
@@ -1497,7 +1497,7 @@ auto GraphicsManager::glfwWindowPixel_to_mapUnits(Vector2f const glfw_cursorPos)
     //read the depth component from the active framebuffer (be it the default one or an user-defined one)
     glReadPixels((GLint)openGl_fboPos.x, (GLint)openGl_fboPos.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z_depth);
     
-    #if EDGE_DETECTION_FILTER || OVERDRAW_FILTER
+    #if GSET_EDGE_DETECTION_FILTER || GSET_OVERDRAW_MODE
         //rebind the default framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, default_FBO);
     #endif
@@ -1561,7 +1561,7 @@ void GraphicsManager::free_objects()
 {
     g_log << "FREE OBJECTS" << std::endl;
 
-    #if SHOW_VISIBLE_ENTITIES_FBO
+    #if GSET_SHOW_OCCLUSION_CULLING_FBO_IMPL
         m_entityIds_viewer.close();
     #endif
 
@@ -1570,16 +1570,16 @@ void GraphicsManager::free_objects()
     glDeleteBuffers(1, &m_windowQuad_VBO);
 
 
-    #if EDGE_DETECTION_FILTER
+    #if GSET_EDGE_DETECTION_FILTER
         free_edgeDetectionFilterObjects();
-    #elif OVERDRAW_FILTER
+    #elif GSET_OVERDRAW_MODE
         free_overdrawObjects();
     #endif
         
     free_tileObjects();
 
 
-    #if OCCLUSION_CULLING
+    #if GSET_OCCLUSION_CULLING
         free_occlusionCullingObjects();
     #endif	
 
@@ -1616,16 +1616,16 @@ void GraphicsManager::free_objects()
 }
 
 
-#if EDGE_DETECTION_FILTER
+#if GSET_EDGE_DETECTION_FILTER
     void GraphicsManager::free_edgeDetectionFilterObjects()
     {
-        #if EDGE_DETECTION_FILTER_INTERMEDIATE_STEPS
+        #if GSET_SHOW_EDGE_DETECTION_FBOS_IMPL
             m_textured_viewer.close();
             m_edgeableIds_viewer.close();
             m_edges_viewer.close();
         #endif
 
-        #if ALPHA_TO_COVERAGE
+        #if GSET_ALPHA_TO_COVERAGE
             glDeleteFramebuffers(1, &m_edfScene_msFBO);
             glDeleteRenderbuffers(1, &m_edfScene_msTexturedColorRBO);
             glDeleteTextures(1, &m_edfScene_msEdgeableIdsTex);
@@ -1645,7 +1645,7 @@ void GraphicsManager::free_objects()
     }
 #endif
 
-#if OVERDRAW_FILTER
+#if GSET_OVERDRAW_MODE
     void GraphicsManager::free_overdrawObjects()
     {
         glDeleteFramebuffers(1, &m_overdraw_FBO);
@@ -1660,7 +1660,7 @@ void GraphicsManager::free_tileObjects()
     glDeleteBuffers(1, &m_tile_VBO);
 }
 
-#if OCCLUSION_CULLING
+#if GSET_OCCLUSION_CULLING
     void GraphicsManager::free_occlusionCullingObjects()
     {
         glDeleteFramebuffers(1, &m_entityIds_FBO);

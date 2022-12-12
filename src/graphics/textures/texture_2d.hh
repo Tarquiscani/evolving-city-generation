@@ -47,17 +47,17 @@ class Texture2D
 };
 
 
-#if FREE_ASSETS
+#if GSET_ALTERNATIVE_ASSETS
 
     #if !GSET_TILESET_TEXARRAY
-        inline Texture2D default_texture_tileset{"_DATA/free_assets/free_tileset.png", 
-                                                 "media/free_assets/free_tileset.png", 
-                                                 "media/free_assets/free_tileset.png" };
+        inline Texture2D default_texture_tileset{"media/textures/alternative_tileset.png", 
+                                                 "media/textures/alternative_tileset.png", 
+                                                 "media/textures/alternative_tileset.png" };
     #endif
 
-    inline Texture2D default_texture_dynamics{"media/free_assets/free_dynamics.png", 
-                                              "media/free_assets/free_dynamics.png", 
-                                              "media/free_assets/free_dynamics.png" };
+    inline Texture2D default_texture_dynamics{"media/textures/alternative_dynamics.png", 
+                                              "media/textures/alternative_dynamics.png", 
+                                              "media/textures/alternative_dynamics.png" };
 #else
 
     #if !GSET_TILESET_TEXARRAY

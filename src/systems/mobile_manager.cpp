@@ -247,8 +247,8 @@ auto MobileManager::pick_subimageSet(MobileStyle const style) -> MobileSubimageS
         case MobileStyle::Builder:
             return builder_subimageSet;
             break;
-        case MobileStyle::FatRich:
-            return fatRich_subimageSet;
+        case MobileStyle::TestCharacter:
+            return test_character_subimage_set;
             break;
         case MobileStyle::Fireman:
             return fireman_subimageSet;

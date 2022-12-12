@@ -15,9 +15,9 @@ namespace tests
     void graphics_tests(TileVertices & tile_vertices, DynamicManager & dynamic_manager)
     {
     
-        #if FREE_ASSETS
+        #if GSET_ALTERNATIVE_ASSETS
             DynamicSubimage free_wall{ {1000.f, 0, 602.f, 220.f, 1000.f, 0, 602.f, 220.f }, default_texture_dynamics };
-            dynamic_vertices.create_sprite({ 5.f * GSet::upt, 5.f * GSet::upt, 5.f * GSet::upt, 0.4f * GSet::upt, 0.4f * GSet::upt, 0.6f * GSet::upt }, free_wall);
+            dynamic_manager.create({ 5.f * GSet::upt, 5.f * GSet::upt, sim_settings.map.ground_floor * 5.f * GSet::upt, 0.4f * GSet::upt, 0.4f * GSet::upt, 0.6f * GSet::upt }, free_wall);
         #else
             DynamicSubimage tree{		{ 64.f, 700.f, 64.f, 55.f,  128.f, 1792.f, 128.f, 111.f},                     default_texture_dynamics };
             DynamicSubimage tree_roots{ { 64.f, 951.f, 64.f,  9.f,  128.f, 1903.f, 128.f,  17.f}, GraphicLayer::Mats, default_texture_dynamics };

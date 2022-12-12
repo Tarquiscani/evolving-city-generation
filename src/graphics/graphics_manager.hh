@@ -59,7 +59,7 @@ class GraphicsManager
         static constexpr int dynamicTexture_unit = 2;
         static constexpr int roofTexture_unit = 3;
 
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             Shader m_entityIds_shader;
             Shader m_visibleBufferBuilder_shader;
             static constexpr GLuint entityIdsTexture_unit = 10;
@@ -70,7 +70,7 @@ class GraphicsManager
             static constexpr GLuint visibleTileBufferSSBO_unit = 12;
         #endif
 
-        #if EDGE_DETECTION_FILTER
+        #if GSET_EDGE_DETECTION_FILTER
             Shader m_edgeDetector_shader;
             static constexpr int edgeDetectorEdgeableIdsTex_unit = 16;
             Shader m_edgeThickener_shader;
@@ -80,7 +80,7 @@ class GraphicsManager
             static constexpr int edgeTextureMixerThickenedEdgesTex_unit = 16;
         #endif
         
-        #if OVERDRAW_FILTER
+        #if GSET_OVERDRAW_MODE
             Shader m_overdraw_screenShader;
             static constexpr int overdrawDepthStencilTex_unit = 16;
         #endif
@@ -91,9 +91,9 @@ class GraphicsManager
 
 
 
-        #if EDGE_DETECTION_FILTER
+        #if GSET_EDGE_DETECTION_FILTER
 
-            #if ALPHA_TO_COVERAGE
+            #if GSET_ALPHA_TO_COVERAGE
                 GLuint m_edfScene_msFBO = 0;
                 GLuint m_edfScene_msTexturedColorRBO = 0;
                 GLuint m_edfScene_msEdgeableIdsTex = 0;
@@ -112,14 +112,14 @@ class GraphicsManager
             GLuint m_edfThickenedEdges_colorTex = 0;
 
             
-            #if EDGE_DETECTION_FILTER_INTERMEDIATE_STEPS
+            #if GSET_SHOW_EDGE_DETECTION_FBOS_IMPL
                 FramebufferViewer m_textured_viewer;
                 FramebufferViewer m_edgeableIds_viewer;
                 FramebufferViewer m_edges_viewer;
             #endif
         #endif
 
-        #if OVERDRAW_FILTER
+        #if GSET_OVERDRAW_MODE
             GLuint m_overdraw_FBO = 0;
             GLuint m_overdraw_colorRBO = 0;
             GLuint m_overdraw_depthStencilTex = 0;
@@ -136,7 +136,7 @@ class GraphicsManager
         GLuint m_tile_VAO = 0;
 
 
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             //Framebuffer used to compute the texture of the entity ids
             GLuint m_entityIds_FBO = 0;
             GLsizei m_entityIdsFBO_width = 0;
@@ -144,7 +144,7 @@ class GraphicsManager
             GLuint m_entityIds_tex = 0;
             GLuint m_entityIds_depthStencilRBO = 0;
 
-            #if SHOW_VISIBLE_ENTITIES_FBO
+            #if GSET_SHOW_OCCLUSION_CULLING_FBO_IMPL
                 FramebufferViewer m_entityIds_viewer;
             #endif
 
@@ -204,7 +204,7 @@ class GraphicsManager
         void generate_tileObjects();
         void free_tileObjects();
 
-        #if OCCLUSION_CULLING
+        #if GSET_OCCLUSION_CULLING
             void generate_occlusionCullingObjects();
             void free_occlusionCullingObjects();
         #endif
@@ -248,7 +248,7 @@ class GraphicsManager
         void drawScene_without_filters();
 
 
-        #if EDGE_DETECTION_FILTER
+        #if GSET_EDGE_DETECTION_FILTER
             void generate_edgeDetectionFilterObjects();
             void free_edgeDetectionFilterObjects();
 
@@ -258,7 +258,7 @@ class GraphicsManager
             void drawScene_with_edgeDetectionFilter();
         #endif
         
-        #if OVERDRAW_FILTER
+        #if GSET_OVERDRAW_MODE
             void generate_overdrawObjects();
             void free_overdrawObjects();
             

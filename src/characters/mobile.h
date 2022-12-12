@@ -17,7 +17,7 @@ enum class MobileStyle
 {
     None,
     Builder,
-    FatRich,
+    TestCharacter,
     Fireman,
 };
 

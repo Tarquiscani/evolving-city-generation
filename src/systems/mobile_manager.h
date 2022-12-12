@@ -47,12 +47,12 @@ class MobileManager
         DoorEventQueues & m_door_events;
 
         
-        #if FREE_ASSETS
-            static inline MobileSubimageSet const fatRich_subimageSet{ {0.f, 432.f, 0.f, 432.f}, default_texture_dynamics };
+        #if GSET_ALTERNATIVE_ASSETS
+            static inline MobileSubimageSet const test_character_subimage_set{ {0.f, 432.f, 0.f, 432.f}, default_texture_dynamics };
             static inline MobileSubimageSet const builder_subimageSet{ {0.f, 432.f, 0.f, 432.f}, default_texture_dynamics };
             static inline MobileSubimageSet const fireman_subimageSet{ {0.f, 432.f, 0.f, 432.f}, default_texture_dynamics };
         #else
-            static inline MobileSubimageSet const fatRich_subimageSet{ { 896.f, 640.f, 1792.f, 1280.f }, default_texture_dynamics };
+            static inline MobileSubimageSet const test_character_subimage_set{ { 896.f, 640.f, 1792.f, 1280.f }, default_texture_dynamics };
             static inline MobileSubimageSet const builder_subimageSet{ { 896.f,   0.f, 1792.f,    0.f }, default_texture_dynamics };
             static inline MobileSubimageSet const fireman_subimageSet{ { 896.f, 992.f, 1792.f, 1984.f }, default_texture_dynamics };
         #endif
