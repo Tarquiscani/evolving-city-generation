@@ -135,7 +135,7 @@ void PlayerMovementVisualDebug::focus_movement(const IntRect & orig_tilesSquare,
     #if VISUALDEBUG_DEBUGLOG
         VDlog << Logger::nltb << "Focus Movement";
 
-        #if VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+        #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
             int original_top = std::min(orig_tilesSquare.top, dest_tilesSquare.top),
                 original_left = std::min(orig_tilesSquare.left, dest_tilesSquare.left),
                 original_length = std::max(orig_tilesSquare.bottom(), dest_tilesSquare.bottom()) - top + 1,
@@ -151,7 +151,7 @@ void PlayerMovementVisualDebug::focus_movement(const IntRect & orig_tilesSquare,
     VisualDebug::change_frame(IntParallelepiped(top, left, 0, length, width, map_height()));
 
 
-    #if VISUALDEBUG_DEBUGLOG & VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+    #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
         VDlog << Logger::remt;
     #endif
 }

@@ -8,14 +8,14 @@
 
     #include "test_logger.h"
 
-    #if PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
+    #if TESTLOG_PLAYERMOVEMENT_TRAIL_SYSTEM_VS_BRUTE
     namespace tgm
     {
 
         inline static TestLogger PMtest("player_movement", "PMtest.txt");
 
     } // namespace tgm
-    #endif //PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
+    #endif //TESTLOG_PLAYERMOVEMENT_TRAIL_SYSTEM_VS_BRUTE
 
 
 #endif //TESTLOG

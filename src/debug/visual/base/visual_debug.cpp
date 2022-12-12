@@ -307,7 +307,7 @@ void VisualDebug::set_frame(IntParallelepiped const& p)
     if (p.length < 1 || p.width < 1 || p.height < 1)
         throw std::runtime_error("Frames with zero or negative dimensions are not allowed.");
     
-    #if VISUALDEBUG_DEBUGLOG && VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+    #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
         VDlog << Logger::nltb << "Set Frame"
               << Logger::addt;
     #endif
@@ -325,13 +325,13 @@ void VisualDebug::set_frame(IntParallelepiped const& p)
         //		find a more portable solution.
         m_window.set_size(Vector2i{ window_width(), window_height() });
 
-        #if VISUALDEBUG_DEBUGLOG && VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+        #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
             VDlog << Logger::nltb << "Window new size: " << Vector2i{ window_width(), window_height()};
         #endif
     }
 
 
-    #if VISUALDEBUG_DEBUGLOG && VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+    #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
         auto old_cursorPos = m_cursor_pos;
     #endif
 
@@ -350,7 +350,7 @@ void VisualDebug::set_frame(IntParallelepiped const& p)
     else if (m_cursor_pos.z > m_frame.up())
         m_cursor_pos.z = m_frame.up();
 
-    #if VISUALDEBUG_DEBUGLOG && VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+    #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
         VDlog << Logger::nltb << "frame: " << m_frame
               << Logger::nltb << "tile_dim: " << m_ppt
               << Logger::nltb << "old_cursorPos: " << old_cursorPos
@@ -372,7 +372,7 @@ auto VisualDebug::compute_bestTileDimension() -> int
     auto const tileMaxDim_in_screenHeight = rectified_screenHeight / m_frame.length;
 
 
-    #if VISUALDEBUG_DEBUGLOG && VISUALDEBUG_DEBUGLOG_FRAMEINFOS
+    #if DEBUGLOG_VISUALDEBUG_FRAMEINFOS
         VDlog << Logger::nltb << "rectified_screenWidth: " << rectified_screenWidth
               << Logger::nltb << "rectified_screenHeight: " << rectified_screenHeight
               << Logger::nltb << "frame_width: " << m_frame.width

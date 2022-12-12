@@ -117,7 +117,7 @@ void MobileManager::move()
                 //std::vector<CompleteId> const doors_to_open;
 
 
-                #if PLAYERMOVEMENT_TRAILSYSTEMVSBRUTE_TESTLOG
+                #if TESTLOG_PLAYERMOVEMENT_TRAIL_SYSTEM_VS_BRUTE
                     
                     auto const brute_adjustedDestSquare = TrailSystem::debug_brute_computeNearestPosition(orig_square, z_floor,
                                                                                                           move_drc, velocity, m_tiles);
