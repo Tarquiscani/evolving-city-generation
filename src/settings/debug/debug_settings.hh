@@ -2,7 +2,6 @@
 #define GM_DEBUG_SETTINGS_HH
 
 
-#include <cassert>
 
 
 #define ENABLE_IMGUI true
@@ -66,21 +65,5 @@ namespace tgm
 
 #endif //VISUALDEBUG
     
-
-#define check(expr) \
-{ \
-    assert(expr); \
-}
-
-#if DYNAMIC_ASSERTS
-    #define exec_check(expr) \
-    { \
-        expr; \
-    }
-#elif
-    #define exec_check(expr) do {} while(0)
-#endif
-
-
 
 #endif //GM_DEBUG_SETTINGS_HH

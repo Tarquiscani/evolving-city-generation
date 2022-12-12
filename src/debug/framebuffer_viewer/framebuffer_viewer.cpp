@@ -5,6 +5,8 @@
 
 #include "settings/graphics_settings.hh"
 
+#include "debug/asserts.hh"
+
 
 namespace tgm
 {

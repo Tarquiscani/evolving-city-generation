@@ -1,8 +1,7 @@
 #include "glfw_wrapper.hh"
 
 
-#include "settings/debug/debug_settings.hh"
-
+#include "debug/asserts.hh"
 #include "debug/logger/log_streams.hh"
 
 
