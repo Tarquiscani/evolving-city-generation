@@ -31,7 +31,13 @@
 //  Note: When no postprocessing filter is active and the scene is drawn on the default FBO, the GPU driver may force an arbitrary MSAA value and override every GLFW hint.
 //  Default: true. Turning it off improves the performance.
 ////
-#define GSET_ALPHA_TO_COVERAGE true
+#if CMAKE_LOW_QUALITY
+    #define GSET_ALPHA_TO_COVERAGE false
+#elif CMAKE_MEDIUM_QUALITY
+    #define GSET_ALPHA_TO_COVERAGE false
+#else //CMAKE_HIGH_QUALITY
+    #define GSET_ALPHA_TO_COVERAGE true
+#endif
 
 
 ////

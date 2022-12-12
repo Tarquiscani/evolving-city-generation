@@ -13,13 +13,16 @@ namespace tgm
 
 auto GraphicsSettings::init_game_video_mode() -> GameVideoMode
 {
+#if CMAKE_FULLSCREEN
+    return GameVideoMode{ true };
+#else // CMAKE_WINDOWED
     return GameVideoMode{ false, 500, 500 };
+#endif
     //return GameVideoMode{ true, 800, 600 };
     //return GameVideoMode{ true, 1600, 1200 };
     //return GameVideoMode{ true, 1366, 768 };
     //return GameVideoMode{ true, 1920, 1080 };
     //return GameVideoMode{ true, 3840, 2160 };
-    //return GameVideoMode{ true };
 }
 
 

@@ -75,7 +75,7 @@ With Powershell:
 
 4. Generate the native build system:
 
-        cmake ..\
+        rm CMakeCache.txt; cmake -D MULTIPLE_CONFIGURATIONS=ON ..
 
 5. Build:
 
@@ -83,7 +83,7 @@ With Powershell:
 
 6. Run the demo:
 
-        cd .\Debug; .\evolving-city-generation.exe
+        cd .\Debug; .\demo_fullscreen_high_quality.exe
 
 ### Linux
 
@@ -103,9 +103,13 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
         sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100
         sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100
 
-4.      git clone --recurse-submodules https://github.com/Tarquiscani/evolving-city-generation.git 
+4. Clone the repository and its submodules:
 
-5.      cd evolving-city-generation
+        git clone --recurse-submodules https://github.com/Tarquiscani/evolving-city-generation.git 
+
+5. Open the project folder:
+
+        cd evolving-city-generation
 
 6. Create a new folder:
 
@@ -113,7 +117,7 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
 
 7. Generate the native build system:
 
-        cmake ../
+        rm CMakeCache.txt; cmake -D MULTIPLE_CONFIGURATIONS=ON ..
 
 8. Build:
 
@@ -121,4 +125,4 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
 
 9. Run the demo:
 
-        ./evolving_city_generation
+        ./demo_fullscreen_high_quality

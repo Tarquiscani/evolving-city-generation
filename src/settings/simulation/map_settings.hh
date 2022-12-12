@@ -35,12 +35,18 @@ struct MapSettings
     //  Note: For an implementation reason the product of test_length * test_width * test_height must be a multiple of 
     //        GraphicsSettings::chunkSize_inTile.
     ////
-    //int const test_length = 150;
-    //int const test_width = 150;
-    //int const test_height = 1;
+#if CMAKE_LOW_QUALITY
+    int const test_length = 150;
+    int const test_width = 150;
+#elif CMAKE_MEDIUM_QUALITY
+    int const test_length = 450;
+    int const test_width = 500;
+#else // CMAKE_HIGH_QUALITY
     int const test_length = 1000;
     int const test_width = 1500;
+#endif
     int const test_height = 1;
+
 
     ////
     //  The engine was originally conceived to handle multistorey buildings, but the feature has been postponed.
