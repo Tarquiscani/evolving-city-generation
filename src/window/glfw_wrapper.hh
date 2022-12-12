@@ -21,6 +21,7 @@ namespace tgm
 {
 
 
+
 struct VideoMode
 {
     public:

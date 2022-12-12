@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "system/vector3.hh"
+#include "window/game_video_mode.hh"
 #include "window/glfw_wrapper.hh"
 
 #include "debug/logger/log_streams.hh"
@@ -136,25 +137,6 @@ namespace tgm
 
 
 
-////
-//	Actual VideoMode in which the game run. 
-////
-class GameVideoMode : public VideoMode
-{
-    public:
-        ////
-        //	@fullscreen: Indicate whether the application have to be run in fullscreen mode or in window mode.
-        //	@width, @height: Ignored in window mode. In fullscreen mode represent the chosen resolution.
-        ////
-        GameVideoMode(bool const fullscreen, int const width = 0, int const height = 0);
-
-        bool fullscreen() const noexcept { return m_fullscreen; }
-
-    private:
-        bool m_fullscreen = false;
-};
-
-
 enum class TextureDefinition
 {
     LowDefinition,
@@ -173,6 +155,8 @@ class GraphicsSettings
 
         static unsigned constexpr depthBuffer_bits = 24u;
         static int constexpr samples = 4;
+
+
 
 
         ////
@@ -246,7 +230,6 @@ class GraphicsSettings
         static inline auto roofVertex_wySliding_ratio() noexcept -> float { return wySliding_ratio() * 3.f / 4.f; }
         
 
-        
 
 
         ////
@@ -309,7 +292,6 @@ class GraphicsSettings
 
 
 
-        
         ////
         //	OTHERS
         ////
@@ -319,8 +301,8 @@ class GraphicsSettings
         static inline Vector3f TEST_playerSpritePosition{ 0.f, 0.f, 0.f };
         static inline Vector3f TEST_cameraTargetPosition{ 0.f, 0.f, 0.f };
 
+
     private:
-        
 
         #if GSET_ALTERNATIVE_ASSETS
             static constexpr auto m_lowDefinition_tpt = 216.f;
@@ -333,7 +315,6 @@ class GraphicsSettings
         #endif
 
 
-        
         static inline bool is_lowDef_resolution()  { return game_video_mode.width() > 700  && game_video_mode.width() <= 1400; }
         static inline bool is_fullHD_resolution()  { return game_video_mode.width() > 1400 && game_video_mode.width() <= 1920; }
         static inline bool is_ultraHD_resolution() { return game_video_mode.width() > 1920 && game_video_mode.width() <= 3840; }
@@ -370,7 +351,6 @@ class GraphicsSettings
                     break;
             }
         }
-
         // Dimension of a tile (in texels)
         static inline float const tpt = select_texelsPerTile();
 
@@ -399,11 +379,9 @@ class GraphicsSettings
                     break;
             }
         }
-
         static inline float const m_pixels_per_textureUnit = init_pixelsPerTextureUnit();
 
 
-        
         static inline auto init_edgeThicknessFactor() -> float
         {
             switch (m_tex_definition)
@@ -425,7 +403,6 @@ class GraphicsSettings
                     break;
             }
         }
-
         static inline float const m_edgeThickness_factor = init_edgeThicknessFactor();
 };
 
