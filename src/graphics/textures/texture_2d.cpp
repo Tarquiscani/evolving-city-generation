@@ -45,7 +45,7 @@ Texture2D::Texture2D(char const* lowDef_path, char const* highDef_path, char con
     m_data = stbi_load(path, &m_width, &m_height, &nrChannels, 0);
 
     if (m_data)
-        std::cout << "Texture loaded:   name: " << path << "   width: " << m_width << "    height: " << m_height << "   channels: " << nrChannels << std::endl;
+        g_log << "Texture loaded:   name: " << path << "   width: " << m_width << "    height: " << m_height << "   channels: " << nrChannels << std::endl;
     else
         throw std::runtime_error("Failed to load texture");
 }

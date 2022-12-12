@@ -32,10 +32,10 @@ namespace HipRoofAlgorithm
             {
                 if ((roofableZone_maxX - roofableZone_minX) < 0 || (roofableZone_maxY - roofableZone_minY) < 0)
                 {
-                    std::cout << "roofableZone_minX: " << roofableZone_minX 
-                              << "\nroofableZone_maxX: " << roofableZone_maxX 
-                              << "\nroofableZone_minY: " << roofableZone_minY 
-                              << "\nroofableZone_maxY: " << roofableZone_maxY << std::endl;
+                    g_log <<   "roofableZone_minX: " << roofableZone_minX 
+                          << "\nroofableZone_maxX: " << roofableZone_maxX 
+                          << "\nroofableZone_minY: " << roofableZone_minY 
+                          << "\nroofableZone_maxY: " << roofableZone_maxY << std::endl;
 
                     throw std::runtime_error("Matrices with negative dimensions are not allowed. The smallest roofable areas is 1x1 (1 map tile).");
                 }

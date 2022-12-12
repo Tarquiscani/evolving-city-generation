@@ -49,7 +49,7 @@ GraphicsManager::GraphicsManager(Vector2i const defaultFbo_size, Vector2i const 
     m_camera(camera)
 {
     assert_nonNullptrs(dynamic_vertices);
-    std::cout << "Default FBO resolution: " << defaultFbo_size.x << "x" << defaultFbo_size.y << std::endl;
+    g_log << "Default FBO resolution: " << defaultFbo_size.x << "x" << defaultFbo_size.y << std::endl;
 }
 
 GraphicsManager::~GraphicsManager()
@@ -534,7 +534,7 @@ void GraphicsManager::generate_tileObjects()
         //TODO: PERFORMANCE: Maybe when the resolution of the screen is really high (ultra hd), I could create an FBO smaller than screen dimensions. 
         //					 I could set a max cap to improve performance.
         auto const entityIdsFBO_ppt = GSet::game_video_mode.height() / (m_tile_vertices.map_length() + floorSlipping_inTiles);
-        std::cout << "entityIdsFBO_ppt: " << entityIdsFBO_ppt << std::endl;
+        g_log << "entityIdsFBO_ppt: " << entityIdsFBO_ppt << std::endl;
 
         m_entityIdsFBO_width  = static_cast<GLsizei>(m_tile_vertices.map_width() * entityIdsFBO_ppt);
         m_entityIdsFBO_height = static_cast<GLsizei>((m_tile_vertices.map_length() + floorSlipping_inTiles) * entityIdsFBO_ppt);
@@ -621,8 +621,8 @@ void GraphicsManager::generate_tileObjects()
             auto BEG = reinterpret_cast<const unsigned char*>(&m_tile_vertices.get_ptr()[99]);
             auto END = reinterpret_cast<const unsigned char*>(&m_tile_vertices.get_ptr()[100]);
             auto TEST_STRIDE = END - BEG;
-            std::cout << "TILESETVERTEXDATA sizeof: " << sizeof(TilesetVertexData) << std::endl;
-            std::cout << "TILEVERTICES stride: " << TEST_STRIDE << std::endl;
+            g_log << "TILESETVERTEXDATA sizeof: " << sizeof(TilesetVertexData) << std::endl;
+            g_log << "TILEVERTICES stride: " << TEST_STRIDE << std::endl;
             glBufferData(GL_SHADER_STORAGE_BUFFER, evaluatedEntitiesSSBO_maxSize, nullptr, GL_DYNAMIC_DRAW);
             glClearBufferData(GL_SHADER_STORAGE_BUFFER, GL_R32UI, GL_RED, GL_UNSIGNED_INT, nullptr); //nullptr ask to clear all values to zero
             glBindBufferBase(GL_SHADER_STORAGE_BUFFER, evaluatedEntitiesSSBO_unit, m_evaluatedEntities_SSBO);
@@ -773,7 +773,7 @@ void GraphicsManager::prepare_windowQuadVAO()
 void GraphicsManager::resize_fbo(Vector2i const new_fbo_size)
 {
     m_defaultFbo_size = new_fbo_size;
-    std::cout << "Default FBO resized to " << m_defaultFbo_size.x << "*" << m_defaultFbo_size.y << std::endl;
+    g_log << "Default FBO resized to " << m_defaultFbo_size.x << "*" << m_defaultFbo_size.y << std::endl;
 
     if (is_defaulFbo_null()) { return; }
 
@@ -977,7 +977,7 @@ void GraphicsManager::draw()
 void GraphicsManager::drawScene_without_filters()
 {
     static auto test_counter = 0;
-    //std::cout << "drawScene_without_filters: #" << test_counter << std::endl;
+    //g_log << "drawScene_without_filters: #" << test_counter << std::endl;
     ++test_counter;
 
     // Bind the default framebuffer (it can be either the real-screen framebuffer or the internal-screen framebuffer).
@@ -1420,7 +1420,7 @@ auto GraphicsManager::compute_projectionMatrix(WorldParallelepiped const& map_bo
         /*static Clock clock;
         if (clock.getElapsedTime().asSeconds() > 1.f)
         {
-            std::cout << "far plane:" << far_plane << std::endl;
+            g_log << "far plane:" << far_plane << std::endl;
             clock.restart();
         }*/
         float window_ratio = m_defaultFbo_size.x * 1.f / m_defaultFbo_size.y * 1.f;
@@ -1468,17 +1468,17 @@ auto GraphicsManager::glfwWindowPixel_to_mapTile(Vector2f const glfw_cursorPos) 
 auto GraphicsManager::glfwWindowPixel_to_mapUnits(Vector2f const glfw_cursorPos) const -> Vector3f
 {
     //static auto test_counter = 0;
-    //std::cout << "glfwWindowPixel_to_mapUnits: #" << test_counter << std::endl;
+    //g_log << "glfwWindowPixel_to_mapUnits: #" << test_counter << std::endl;
     //++test_counter;
 
 
-    //std::cout << "\n\nGLFW screen reference system: " << glfw_cursorPos << std::endl;
+    //g_log << "\n\nGLFW screen reference system: " << glfw_cursorPos << std::endl;
 
 
     // Conversion of mouse coordinates from "GLFW screen reference system" to "OpengGL framebuffer reference system"
     auto openGl_fboPos = GraphicsManagerCore::glfwScreenRS_to_openGlFramebufferRS(glfw_cursorPos, m_window_size, m_defaultFbo_size);
 
-    //std::cout << "OpenGL framebuffer reference system: " << openGl_fboPos << std::endl;
+    //g_log << "OpenGL framebuffer reference system: " << openGl_fboPos << std::endl;
     
 
 
@@ -1502,7 +1502,7 @@ auto GraphicsManager::glfwWindowPixel_to_mapUnits(Vector2f const glfw_cursorPos)
         glBindFramebuffer(GL_FRAMEBUFFER, default_FBO);
     #endif
 
-    //std::cout << "Pixel z_depth: " << z_depth << std::endl;
+    //g_log << "Pixel z_depth: " << z_depth << std::endl;
 
 
     
@@ -1531,7 +1531,7 @@ auto GraphicsManager::glfwWindowPixel_to_mapUnits(Vector2f const glfw_cursorPos)
 
 
     
-    //std::cout << "World coordinates (in pixels): " << world		<< '\n'
+    //g_log << "World coordinates (in pixels): " << world		<< '\n'
               //<< "Map coordinates (in units):    " << map_units << '\n' << std::endl;
 
 
@@ -1559,7 +1559,7 @@ void GraphicsManager::draw_genericVAO(GLuint VAO_id, FreeTriangleVertices const&
 
 void GraphicsManager::free_objects()
 {
-    std::cout << "FREE OBJECTS" << std::endl;
+    g_log << "FREE OBJECTS" << std::endl;
 
     #if SHOW_VISIBLE_ENTITIES_FBO
         m_entityIds_viewer.close();
@@ -1691,20 +1691,20 @@ void GraphicsManager::debug_printUnsignedIntBuffer(GLint const beg_x, GLint cons
     glReadPixels(beg_x, beg_y, width, height, GL_RED_INTEGER, GL_UNSIGNED_INT, pixels.data());
     
 
-    std::cout << "Unsigned int buffer:" << std::endl;
+    g_log << "Unsigned int buffer:" << std::endl;
     for (int y = 0; y < height; ++y)
     {
         auto const cast_y = static_cast<decltype(pixels)::size_type>(y);
 
         for (int x = 0; x < width; ++x)
         {
-            std::cout << std::setw(8) << pixels[cast_y * width + x] << "   ";
+            g_log << std::setw(8) << pixels[cast_y * width + x] << "   ";
         }
 
-        std::cout << "\n\n";
+        g_log << "\n\n";
     }
 
-    std::cout << std::endl;
+    g_log << std::endl;
 }
 
 
@@ -1714,14 +1714,14 @@ void GraphicsManager::debug_printSSBO(GLuint const SSBO, GLintptr const offset, 
     auto ptr = reinterpret_cast<GLuint *>(glMapBufferRange(GL_SHADER_STORAGE_BUFFER, offset, length, GL_MAP_READ_BIT));
 
 
-    std::cout << "Reading an SSBO:\n";
+    g_log << "Reading an SSBO:\n";
     for (unsigned i = 0; i < length; ++i )
     {
-        std::cout << "Entity #" << i << ": " << ptr[i]/*(ptr[i] == 1u ? "visible" : "not visible")*/ << "\n";
+        g_log << "Entity #" << i << ": " << ptr[i]/*(ptr[i] == 1u ? "visible" : "not visible")*/ << "\n";
     }
 
 
-    std::cout << "\n\n\n" << std::endl;
+    g_log << "\n\n\n" << std::endl;
 
 
     glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
@@ -1751,7 +1751,7 @@ void GraphicsManager::debug_printTilesetVertexDataBuffer(GLuint const buffer, GL
 
         auto ptr = static_cast<TilesetVertexData *>(glMapBufferRange(GL_SHADER_STORAGE_BUFFER, first_vert, sizeof(TilesetVertexData) * vert_count, GL_MAP_READ_BIT));
 
-        Logger lgr{ std::cout };
+        Logger lgr{ g_log };
         lgr << "Reading TilesetVertexData buffer:\n";
 
         for (auto i = first_vert; i < last_vert; i += 6 )

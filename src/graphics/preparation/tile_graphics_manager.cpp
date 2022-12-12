@@ -197,13 +197,13 @@ auto TileGraphicsManager::compute_borderType(bool const is_N_border, bool const 
 
 void TileGraphicsManager::computeTileGraphics_error(bool const is_N_border,  bool const is_E_border,   bool const is_S_border,  bool const is_W_border)
 {
-    std::cout << "Unexpected neighbors pattern\n"
-                << std::boolalpha
-                << "\tis_N_border: " << is_N_border
-                << "\tis_E_border: " << is_E_border 
-                << "\tis_S_border: " << is_S_border
-                << "\tis_W_border: " << is_W_border
-                << std::noboolalpha << std::endl;
+    g_log << "Unexpected neighbors pattern\n"
+          << std::boolalpha
+          << "\tis_N_border: " << is_N_border
+          << "\tis_E_border: " << is_E_border 
+          << "\tis_S_border: " << is_S_border
+          << "\tis_W_border: " << is_W_border
+          << std::noboolalpha << std::endl;
 
     throw std::runtime_error("Unexpected neighbors pattern.");
 }

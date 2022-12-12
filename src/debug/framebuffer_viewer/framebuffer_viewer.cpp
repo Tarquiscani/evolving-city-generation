@@ -19,7 +19,7 @@ FramebufferViewer::~FramebufferViewer()
 {
     if (m_open)
     {
-        std::cout << "WARNING: Trying to destroy a not closed FramebufferViewer. You must close the viewer before its destruction." << std::endl;
+        g_log << "WARNING: Trying to destroy a not closed FramebufferViewer. You must close the viewer before its destruction." << std::endl;
     }
 }
 
@@ -30,7 +30,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
     // a resizing in the framebuffer (that becomes 0*0). So there would be anything to see.
     if (GSet::game_video_mode.fullscreen()) 
     { 
-        std::cout << "Cannot open " << title << " FramebufferViewer while in fullscreen mode." << std::endl;
+        g_log << "Cannot open " << title << " FramebufferViewer while in fullscreen mode." << std::endl;
         return; 
     }
 
@@ -51,7 +51,7 @@ void FramebufferViewer::open(std::string const title, GLuint const texture, GLsi
     opt.height = height;
     opt.shared_context = WindowManager::mainWindow_id;
 
-    std::cout << "Framebuffer window: " << m_window << std::endl;
+    g_log << "Framebuffer window: " << m_window << std::endl;
     m_window.open(opt);
 
 

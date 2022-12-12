@@ -56,7 +56,7 @@ TileSubimages::TileSubimages(Vector2i const pos, int const subimages_count)
     }
 
     #if DEBUGLOG
-        Logger lgr(std::cout);
+        Logger lgr(g_log);
         lgr << "Loaded subimages for this TileType: " << m_subimages << std::endl;
     #endif
 }
@@ -194,7 +194,7 @@ BorderSubimages::BorderSubimages(int const n, int const m)
 
             
     #if DEBUGLOG
-        Logger lgr(std::cout);
+        Logger lgr(g_log);
         lgr << "Loaded subimages for this border type: " << m_subimages << std::endl;
     #endif
 }
@@ -463,7 +463,7 @@ void TileVertices::debug_print(int /*sprite_start*/, int /*sprite_end*/) const
 {
     assert_initialization();
 
-    Logger lgr(std::cout);
+    Logger lgr(g_log);
 /*
     auto f = get_ptr();
 
@@ -559,16 +559,16 @@ void TileVertices::cache_random0to9NumberSequence()
 //{
 //    int tiles_count = Map::LENGTH * Map::WIDTH * Map::HEIGHT;
 //
-//    std::cout << "sizeof(char)"<< sizeof(char) << std::endl;
-//    std::cout << "sizeof(Tile)"<< sizeof(Tile) << std::endl;
-//    std::cout << "sizeof(Tile*)" << sizeof(Tile*) << std::endl;
-//    std::cout << "Allocated memory:" << (sizeof(Tile) + sizeof(Tile*)*27 )*tiles_count << std::endl;
+//    g_log << "sizeof(char)"<< sizeof(char) << std::endl;
+//    g_log << "sizeof(Tile)"<< sizeof(Tile) << std::endl;
+//    g_log << "sizeof(Tile*)" << sizeof(Tile*) << std::endl;
+//    g_log << "Allocated memory:" << (sizeof(Tile) + sizeof(Tile*)*27 )*tiles_count << std::endl;
 //
 //    std::allocator<Tile> alloc;
 //    Tile* tiles = alloc.allocate(tiles_count);
 //    for(auto p=tiles; p!=tiles+tiles_count; ++p)
 //        alloc.construct(p, Vector3i(0,0,0), TileType::ground);
-//    std::cout << "Tile neighbor capacity: " << tiles->neighbors.capacity();
+//    g_log << "Tile neighbor capacity: " << tiles->neighbors.capacity();
 //
 //    int pause;
 //    std::cin>>pause;

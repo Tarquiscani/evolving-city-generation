@@ -44,7 +44,7 @@ BuildingManager::~BuildingManager()
             HRMdeb.stop();
         #endif
         } catch (std::exception const& e) {
-            std::cout << "Error stopping VisualDebug: " << e.what();
+            g_log << "Error stopping VisualDebug: " << e.what();
             std::terminate();
         }
     #endif
@@ -239,7 +239,7 @@ void BuildingManager::expand_buildings()
         if (buildingExpansion_queue.empty()) { break; }
         
         static auto deb_exp_counter = 0u;
-        //std::cout << "Expansion #" << deb_exp_counter << std::endl;
+        //g_log << "Expansion #" << deb_exp_counter << std::endl;
         ++deb_exp_counter;
 
         auto const bid = buildingExpansion_queue.front();
@@ -2960,7 +2960,7 @@ void BuildingManager::try_build_door(Vector3i const pos)
         switch (door_position.type)
         {
             case BorderDoorType::None:
-                std::cout << "\nCan't build a door here." << std::endl;
+                g_log << "\nCan't build a door here." << std::endl;
                 break;
 
             case BorderDoorType::Internal:
@@ -2968,7 +2968,7 @@ void BuildingManager::try_build_door(Vector3i const pos)
                 break;
 
             case BorderDoorType::BuildingsLinker:
-                std::cout << "\nCan't build a door connecting two different buildings." << std::endl;
+                g_log << "\nCan't build a door connecting two different buildings." << std::endl;
                 break;
 
             case BorderDoorType::External:

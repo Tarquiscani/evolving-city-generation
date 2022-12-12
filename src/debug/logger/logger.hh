@@ -105,7 +105,7 @@ template <typename T,
 >
 auto operator<<(Logger& logger, const T& message) -> Logger&
 {
-    //std::cout << " (non-array overload) ";
+    //g_log << " (non-array overload) ";
 
     logger.print_byRef(message);
 
@@ -118,7 +118,7 @@ auto operator<<(Logger& logger, const T& message) -> Logger&
 template<std::size_t S >
 auto operator<<(Logger& logger, char const (&raw_array)[S]) -> Logger&
 {
-    //std::cout << " (array overload) ";
+    //g_log << " (array overload) ";
 
     const char* pm = raw_array; //decay
 
@@ -146,7 +146,7 @@ auto operator<<(Logger& logger, T(&raw_array)[S]) -> Logger&
 inline
 auto operator<<(Logger& logger, Logger::ostreamManipulator ostream_manip) -> Logger&
 {
-    //std::cout << " (ostreamManipulator overload) ";
+    //g_log << " (ostreamManipulator overload) ";
 
     logger.apply_ostreamManipulator(ostream_manip);
     return logger;
@@ -158,7 +158,7 @@ auto operator<<(Logger& logger, Logger::ostreamManipulator ostream_manip) -> Log
 inline
 auto operator<<(Logger& logger, std::function<Logger::LoggerManipulator> logger_manip) -> Logger&
 {
-    //std::cout << " (LoggerManipulator overload) ";
+    //g_log << " (LoggerManipulator overload) ";
 
     logger.apply_LoggerManipulator(logger_manip);
 

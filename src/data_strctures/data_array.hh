@@ -323,10 +323,10 @@ class DataArray
                 assert_idValidity(id);
             #endif
 
-            //std::cout << std::hex << "destroy: argument id: 0x" << std::setw(16) << std::setfill('0') << id << std::endl;
-            //std::cout << std::hex << "destroy: slot(id):    0x" << std::setw(16) << std::setfill('0') << slot(id) << std::endl;
+            //g_log << std::hex << "destroy: argument id: 0x" << std::setw(16) << std::setfill('0') << id << std::endl;
+            //g_log << std::hex << "destroy: slot(id):    0x" << std::setw(16) << std::setfill('0') << slot(id) << std::endl;
             auto& el = m_vec[slot(id)];
-            //std::cout << std::hex << "destroy: el.m_id        0x" << std::setw(16) << std::setfill('0') << el.id << std::endl;
+            //g_log << std::hex << "destroy: el.m_id        0x" << std::setw(16) << std::setfill('0') << el.id << std::endl;
 
             if (el.m_id != id) // Compare free status, version and slot
             {
@@ -422,11 +422,11 @@ class DataArray
 
         static auto setFree_and_increaseVersion(DataArrayId id) -> DataArrayId
         {
-            //std::cout << std::hex << "initial id: 0x" << std::setw(16) << std::setfill('0') << id << std::endl;
+            //g_log << std::hex << "initial id: 0x" << std::setw(16) << std::setfill('0') << id << std::endl;
 
             DataArrayId vn = version(id); //conversion from size_type to DataArrayId
 
-            //std::cout << "version   : 0x" << std::setw(16) << std::setfill('0') << vn << std::endl;
+            //g_log << "version   : 0x" << std::setw(16) << std::setfill('0') << vn << std::endl;
             
             #if DYNAMIC_ASSERTS
                 if (vn == UINT64_C(0xFFFFFFFF))
@@ -438,10 +438,10 @@ class DataArray
             
             ++vn;
 
-            //std::cout << "++version : 0x" << std::setw(16) << std::setfill('0') << vn << std::endl;
+            //g_log << "++version : 0x" << std::setw(16) << std::setfill('0') << vn << std::endl;
 
             //DataArrayId new_id = id = (vn << 32) | (id & UINT64_C(0x00000000FFFFFFFF));
-            //std::cout << "new_id    : 0x" << std::setw(16) << std::setfill('0')  << new_id << std::dec << std::endl;
+            //g_log << "new_id    : 0x" << std::setw(16) << std::setfill('0')  << new_id << std::dec << std::endl;
 
             return id = UINT64_C(0x8000000000000000) | (vn << 31) | (id & UINT64_C(0x000000007FFFFFFF));
         }

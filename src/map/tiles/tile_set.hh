@@ -67,7 +67,7 @@ class TileSet
                 free();
             }
             catch (std::exception const& e) {
-                std::cout << "ERROR. Exception thrown when deallocating TileSet: " << e.what() << '\n';
+                g_log << "ERROR. Exception thrown when deallocating TileSet: " << e.what() << '\n';
             }
         }
 

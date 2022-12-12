@@ -83,7 +83,7 @@ void GLFW::print_monitor_info()
         for (auto j = 0; j < modes_num; ++j)
         {
             auto mode = modes[j];
-            logger << Logger::nltb << "Mode #" << j << ": "; print_mode(logger, mode) << std::endl;
+            logger << Logger::nltb << "Mode #" << j << ": "; print_mode(logger, mode);
         }
 
         logger << Logger::remt;
@@ -109,7 +109,7 @@ auto GLFW::print_monitor(Logger & logger, GLFWmonitor * monitor) -> Logger &
 
 auto GLFW::print_mode(Logger & logger, GLFWvidmode const& mode) -> Logger &
 {
-    logger << mode.width << "x" << mode.height << " --- " << "(" << mode.redBits << ", " << mode.blueBits << ", " << mode.greenBits << ") --- refresh rate: " << mode.refreshRate << std::endl;
+    logger << mode.width << "x" << mode.height << " --- " << "(" << mode.redBits << ", " << mode.blueBits << ", " << mode.greenBits << ") --- refresh rate: " << mode.refreshRate;
 
     return logger;
 }

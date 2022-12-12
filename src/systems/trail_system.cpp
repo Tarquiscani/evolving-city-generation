@@ -505,7 +505,7 @@ static void debug_internalCompareMoveAlgorithms(FloatRect const orig_square, int
     auto t2 = clock.getElapsedTime();
 
 
-    Logger lgr{ std::cout };
+    Logger lgr{ g_log };
     lgr << Logger::addt 
             << Logger::nltb << "test " << test_id++ << ": "
             << Logger::addt
@@ -636,7 +636,7 @@ namespace TrailSystem
             throw std::runtime_error("Strongly deactivate DEBUGLOG, VISUALDEBUG and TESTLOG macros before perfoming a speed comparison.");
         #endif
 
-        std::cout << "Comparison: trail algorithm VS brute movement algorithm:";
+        g_log << "Comparison: trail algorithm VS brute movement algorithm:";
 
         auto const small_size  = 0.32f * GSet::upt;
         auto const medium_size = 1.60f * GSet::upt;
@@ -663,7 +663,7 @@ namespace TrailSystem
         debug_internalCompareMoveAlgorithms(large_fSquare,  z_floor, drc, fast_v,   tiles);
 
 
-        std::cout << std::endl;
+        g_log << std::endl;
 
         #pragma warning(default: 4702)
     }

@@ -88,7 +88,7 @@ namespace Utilities
         }
         else
         {
-            std::cout << "Error. The the normal distribution generated a random integer that is out of the 'int' allowed range.\n";
+            g_log << "Error. The the normal distribution generated a random integer that is out of the 'int' allowed range.\n";
             return mean;
         }
     }

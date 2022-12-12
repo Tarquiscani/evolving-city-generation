@@ -267,7 +267,7 @@ namespace BuildingAlgorithmTests
         }
 
 
-        std::cout << "Added a building to test the BlockOutline algorithm";
+        g_log << "Added a building to test the BlockOutline algorithm";
 
         auto prefab = PrefabBuilding{ "farm" };
 
@@ -337,7 +337,7 @@ namespace BuildingAlgorithmTests
             throw std::runtime_error("Cannot perform the test if BUILDEXP_VISUALDEBUG or HIPROOFMATRIX_VISUALDEBUG are activated.");
         #endif
 
-        Logger lgr{ std::cout };
+        Logger lgr{ g_log };
         
         auto const building_recipe = BuildingRecipe{ { 200.f, 200.f }, AreaType::cowshed, { 10, 10 }, "farm" };
 

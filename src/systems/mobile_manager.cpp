@@ -169,7 +169,7 @@ void MobileManager::move_player(FloatRect const orig_square, int const orig_zFlo
     {
         if (!m_tiles.get(p))
         {
-            std::cout << "Cannot move player on unexistent tiles." << std::endl;
+            g_log << "Cannot move player on unexistent tiles." << std::endl;
             return;
         }
     }

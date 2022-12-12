@@ -264,9 +264,9 @@ void Window::assert_active() const
     if (m_id != window_manager().activeWindow_id())
     {
         if(window_manager().activeWindow_id())
-            std::cout << "The active window was " << window_manager().activeWindow_id().value() << std::endl;
+            g_log << "The active window was " << window_manager().activeWindow_id().value() << std::endl;
         else
-            std::cout << "There was no window bound." << std::endl;
+            g_log << "There was no window bound." << std::endl;
 
         throw std::runtime_error("Unexpected state. This Window should be the active one.");
     }
@@ -317,14 +317,14 @@ WindowManager::~WindowManager()
 
 auto WindowManager::create_window() -> Window &
 {
-    std::cout << "old m_windows size: " << m_windows.size() << std::endl;
+    g_log << "old m_windows size: " << m_windows.size() << std::endl;
     m_windows.emplace_back();
     m_windows.back().m_id = m_windows.size() - 1;
 
-    std::cout << "All windows: " << std::endl;
+    g_log << "All windows: " << std::endl;
     for (auto & window : m_windows)
     {
-        std::cout << window << std::endl;
+        g_log << window << std::endl;
     }
 
     return m_windows.back();
@@ -332,7 +332,7 @@ auto WindowManager::create_window() -> Window &
 
 auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) -> Window &
 {
-    std::cout << "Opening window -- wid: " << wid << " -- Title: " << opt.title << std::endl;
+    g_log << "Opening window -- wid: " << wid << " -- Title: " << opt.title << std::endl;
 
     exec_check( assert_wid(wid); assert_closed(wid); );
 
@@ -358,9 +358,9 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
 
     set_contextCreationHints();
     
-    std::cout << "Creating a new window - WxH: " << opt.width << "x" << opt.height 
-              << " - RGB depth: " << "(" << GSet::game_video_mode.red_bits() << ", " << GSet::game_video_mode.green_bits() << ", " << GSet::game_video_mode.blue_bits() << ") - "
-              << "refresh_rate: " << GSet::game_video_mode.refresh_rate() << " - vsync: " << std::boolalpha << should_enable_vsync << std::endl;
+    g_log << "Creating a new window - WxH: " << opt.width << "x" << opt.height 
+          << " - RGB depth: " << "(" << GSet::game_video_mode.red_bits() << ", " << GSet::game_video_mode.green_bits() << ", " << GSet::game_video_mode.blue_bits() << ") - "
+          << "refresh_rate: " << GSet::game_video_mode.refresh_rate() << " - vsync: " << std::boolalpha << should_enable_vsync << std::endl;
     
     glfwWindowHint(GLFW_RESIZABLE, opt.resizable ? GLFW_TRUE : GLFW_FALSE);
     glfwWindowHint(GLFW_FLOATING, GLFW_FALSE);
@@ -492,7 +492,7 @@ auto WindowManager::activate_window(WindowId const wid) -> Window &
         m_activeWindow_id = wid;
     }
 
-    //std::cout << "Activated window " << wid << std::endl;
+    //g_log << "Activated window " << wid << std::endl;
 
     return m_windows[m_activeWindow_id.value()];
 }
@@ -568,7 +568,7 @@ void WindowManager::set_callbacks(WindowId const wid,
 
     if (cursor_pos) //ImGui doesn't use this callback
     {
-        std::cout << "Window " << w.m_handler << " has installed cursorPos_callback" << std::endl;
+        g_log << "Window " << w.m_handler << " has installed cursorPos_callback" << std::endl;
         glfwSetCursorPosCallback(w.m_handler, internal_cursorPosCallback);
     }
     else

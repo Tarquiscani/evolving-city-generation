@@ -24,28 +24,28 @@ namespace GraphicsManagerCore
 
 static void print_openGLVersion_infos()
 {
-    Logger lgr{ g_log };
+    auto lgr = Logger{ g_log };
 
-    GLint context_major = 0;
-    GLint context_minor = 0;
+    auto context_major = GLint{ 0 };
+    auto context_minor = GLint{ 0 };
 
     glGetIntegerv(GL_MAJOR_VERSION, &context_major);
     glGetIntegerv(GL_MINOR_VERSION, &context_minor);
 
-    lgr << "OpenGL current context version: " << context_major << "." << context_minor;
+    lgr << "OpenGL version used for the current context: " << context_major << "." << context_minor;
 
 
     lgr << Logger::nltb << "Supported GLSL versions:"
         << Logger::addt;
 
-    GLint suportedGlsl_count = 0;
-    glGetIntegerv(GL_NUM_SHADING_LANGUAGE_VERSIONS, &suportedGlsl_count);
+    auto supported_glsl_version_num = GLint{ 0 };
+    glGetIntegerv(GL_NUM_SHADING_LANGUAGE_VERSIONS, &supported_glsl_version_num);
 
-    for (int i = 0; i < suportedGlsl_count; ++i)
+    for (auto i = 0; i < supported_glsl_version_num; ++i)
     {
-        std::string string_version{ reinterpret_cast<char const*>(glGetStringi(GL_SHADING_LANGUAGE_VERSION, i)) };
+        auto string_version = std::string{ reinterpret_cast<char const*>(glGetStringi(GL_SHADING_LANGUAGE_VERSION, i)) };
 
-        lgr << Logger::nltb << string_version << std::endl;
+        lgr << Logger::nltb << string_version;
     }
 }
 
@@ -156,7 +156,7 @@ static void debugMessage_callback(GLenum source, GLenum type, GLuint id, GLenum 
         << Logger::nltb << "Severity: " << severity_str
         << Logger::nltb << "Message:  "	<< message << '\n' << std::endl;
 
-    std::cout << oss.str();
+    g_log << oss.str();
 
     if (type == GL_DEBUG_TYPE_ERROR)
     {
@@ -166,7 +166,7 @@ static void debugMessage_callback(GLenum source, GLenum type, GLuint id, GLenum 
 
 void init(std::string const context_name)
 {
-    //std::cout << "\nInitializing '" << context_name << "' context.\n" << std::endl;
+    //g_log << "\nInitializing '" << context_name << "' context.\n" << std::endl;
 
     // Load all OpenGL function pointers
     if (!gladLoadGL())
@@ -185,7 +185,7 @@ void init(std::string const context_name)
 
 void print_contextInfos(std::string const context_name)
 {
-    std::cout << "\nInformations about '" << context_name << "' context:\n" << std::endl;
+    g_log << "\nInformations about '" << context_name << "' context:\n" << std::endl;
 
 
     print_openGLVersion_infos();
@@ -195,56 +195,56 @@ void print_contextInfos(std::string const context_name)
 
     GLint max_texturesSize = 0;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texturesSize);
-    std::cout << "Max texture size: " << max_texturesSize << std::endl;
+    g_log << "Max texture size: " << max_texturesSize << std::endl;
 
     GLint maxTextures_in_fragmentShader = 0;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextures_in_fragmentShader);
-    std::cout << "Max number of textures that can be accessed in fragment shader: " << maxTextures_in_fragmentShader << std::endl;
+    g_log << "Max number of textures that can be accessed in fragment shader: " << maxTextures_in_fragmentShader << std::endl;
 
     GLint max_boundableTextures = 0;
     glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &max_boundableTextures);
-    std::cout << "Max number of textures that can be bound: " << max_boundableTextures << std::endl;
+    g_log << "Max number of textures that can be bound: " << max_boundableTextures << std::endl;
 
     GLint max_arrayTexture_layers = 0;
     glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &max_arrayTexture_layers);
-    std::cout << "Max layers in a texture array: " << max_arrayTexture_layers << std::endl;
+    g_log << "Max layers in a texture array: " << max_arrayTexture_layers << std::endl;
         
 
     //--- Uniforms limits
 
     GLint max_uniform_block_size = 0;
     glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &max_uniform_block_size);
-    std::cout << "Max uniform block size: " << max_uniform_block_size << std::endl;
+    g_log << "Max uniform block size: " << max_uniform_block_size << std::endl;
         
 
     //--- Atomic counter limits
         
     GLint max_combined_atomicCounters = 0;
     glGetIntegerv(GL_MAX_COMBINED_ATOMIC_COUNTERS, &max_combined_atomicCounters);
-    std::cout << "Max combined atomic counters: " << max_combined_atomicCounters << std::endl;
+    g_log << "Max combined atomic counters: " << max_combined_atomicCounters << std::endl;
 
     GLint max_fragment_atomicCounters = 0;
     glGetIntegerv(GL_MAX_FRAGMENT_ATOMIC_COUNTERS, &max_fragment_atomicCounters);
-    std::cout << "\tMax fragment atomic counters: " << max_fragment_atomicCounters << std::endl;
+    g_log << "\tMax fragment atomic counters: " << max_fragment_atomicCounters << std::endl;
 
         
     //--- SSBO limits
 
     GLint max_SSBO_bindings = 0;
     glGetIntegerv(GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS, &max_SSBO_bindings);
-    std::cout << "Max SSBO bindings: " << max_SSBO_bindings << std::endl;
+    g_log << "Max SSBO bindings: " << max_SSBO_bindings << std::endl;
 
     GLint max_combined_SSBO_count = 0;
     glGetIntegerv(GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS, &max_combined_SSBO_count);
-    std::cout << "Max combined SSBO blocks: " << max_combined_SSBO_count << std::endl;
+    g_log << "Max combined SSBO blocks: " << max_combined_SSBO_count << std::endl;
 
     GLint max_fragment_SSBO_count = 0;
     glGetIntegerv(GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS, &max_fragment_SSBO_count);
-    std::cout << "\tMax fragment SSBO blocks: " << max_fragment_SSBO_count << std::endl;
+    g_log << "\tMax fragment SSBO blocks: " << max_fragment_SSBO_count << std::endl;
 
     GLint max_SSBO_size = 0;
     glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &max_SSBO_size);
-    std::cout << "Max SSBO size: " << max_SSBO_size << std::endl;
+    g_log << "Max SSBO size: " << max_SSBO_size << std::endl;
 }
 
 auto glfwScreenRS_to_openGlFramebufferRS(Vector2f const glfw_cursorPos, Vector2i const screen_size, Vector2i const framebuffer_size) -> Vector2f
@@ -312,7 +312,7 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
         texels.insert(texels.end(), buffer_size, 0u);
 
 
-        std::cout << "Checking " << channels << "-channel texture:" << std::endl;
+        g_log << "Checking " << channels << "-channel texture:" << std::endl;
             
         glPixelStorei(GL_PACK_ALIGNMENT, 1); // Removes the padding at the end of a texture row, so that the data read from glGetTexImage() are tightly packed.
 
@@ -335,10 +335,10 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
                     {
                         auto const cast_y = static_cast<decltype(texels)::size_type>(y);
 
-                        std::cout << static_cast<unsigned int>(texels[(cast_y * tex_width + x)]) << "    ";
+                        g_log << static_cast<unsigned int>(texels[(cast_y * tex_width + x)]) << "    ";
                     }
 
-                    std::cout << "\n\n";
+                    g_log << "\n\n";
                 }
 
                 break;
@@ -352,12 +352,12 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
                     {
                         auto const cast_y = static_cast<decltype(texels)::size_type>(y);
 
-                        std::cout << "(" << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels])     << ", "
-                                            << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 1]) << ", "
-                                            << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 2]) << ")   ";
+                        g_log << "(" << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels])     << ", "
+                                     << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 1]) << ", "
+                                     << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 2]) << ")   ";
                     }
 
-                    std::cout << "\n\n";
+                    g_log << "\n\n";
                 }
 
                 break;
@@ -371,13 +371,13 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
                     {
                         auto const cast_y = static_cast<decltype(texels)::size_type>(y);
 
-                        std::cout << "(" << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels])     << ", "
-                                            << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 1]) << ", "
-                                            << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 2]) << ", "
-                                            << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 3]) << ")   ";
+                        g_log << "(" << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels])     << ", "
+                                     << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 1]) << ", "
+                                     << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 2]) << ", "
+                                     << static_cast<unsigned int>(texels[(cast_y * tex_width + x) * channels + 3]) << ")   ";
                     }
 
-                    std::cout << "\n\n";
+                    g_log << "\n\n";
                 }
 
                 break;
@@ -399,7 +399,7 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
         depthsAndStencils.insert(depthsAndStencils.end(), buffer_size, 0u);
 
 
-        std::cout << "Checking depth-stencil texture:" << std::endl;
+        g_log << "Checking depth-stencil texture:" << std::endl;
 
         glPixelStorei(GL_PACK_ALIGNMENT, 1); // Removes the padding at the end of a texture row, so that the data read from glGetTexImage() are tightly packed.
 
@@ -420,10 +420,10 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
                 auto const depthAndStencil = static_cast<unsigned int>(depthsAndStencils[(cast_y * tex_width + x)]);
 
                 // Split depthAndStencil in the depth component and in the stencil index.
-                std::cout << ((depthAndStencil & 0xFFFFFF00) >> 8) << " - " << (depthAndStencil & 0x000000FF) << "    "; 
+                g_log << ((depthAndStencil & 0xFFFFFF00) >> 8) << " - " << (depthAndStencil & 0x000000FF) << "    "; 
             }
 
-            std::cout << "\n\n";
+            g_log << "\n\n";
         }
     }
     else
@@ -433,7 +433,7 @@ void debug_printTexture(GLuint const texture_id, unsigned const tex_width, unsig
 
         
 
-    std::cout << std::endl;
+    g_log << std::endl;
 }
     
 
@@ -445,7 +445,7 @@ void debug_printDrawArraysIndirectCommandBuffer(GLuint const cmd_id)
         glGetBufferSubData(GL_DRAW_INDIRECT_BUFFER, 0, sizeof(DrawArraysIndirectCommand), (void*)&command);
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 
-    std::cout << "DrawArraysIndirectCommand {\n"
+    g_log << "DrawArraysIndirectCommand {\n"
               << "\tcount:         " << command.count << '\n'
               << "\tprim_count:    " << command.primCount << '\n'
               << "\tfirst:         " << command.first << '\n'

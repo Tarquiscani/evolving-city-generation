@@ -57,18 +57,18 @@ auto CameraController::apply_input_to_angle(float const delta_time, float const 
 
         auto acceleration = input * acceleration_per_input;
             
-        //std::cout << "velocity:" << velocity << "- input: " << input << " - delta_time: " << delta_time << " - braking_velocity: " << braking_velocity << " - accel_velocity:" << acceleration * delta_time << std::endl;
+        //g_log << "velocity:" << velocity << "- input: " << input << " - delta_time: " << delta_time << " - braking_velocity: " << braking_velocity << " - accel_velocity:" << acceleration * delta_time << std::endl;
 
         velocity += braking_velocity;				// v = v0 + at
         velocity += acceleration * delta_time;
 
         velocity = std::clamp(velocity, -max_velocity, max_velocity);
         
-        //std::cout << "velocity (after clamp):" << velocity << std::endl;
+        //g_log << "velocity (after clamp):" << velocity << std::endl;
 
         new_angle = previous_angle + velocity * delta_time;				// x = x0 + vt
         
-        //std::cout << "previous_angle:" << previous_angle << "- new_angle: " << new_angle << std::endl;
+        //g_log << "previous_angle:" << previous_angle << "- new_angle: " << new_angle << std::endl;
 
         input = 0.f;	// Reset the input
     }

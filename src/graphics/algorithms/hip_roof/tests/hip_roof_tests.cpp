@@ -23,7 +23,7 @@ namespace HipRoofAlgorithm
     //	##.
     static void Junction_NE_SW(PrefabBuilding & p)
     {
-        std::cout << "Junction_NE_SW" << std::endl;
+        g_log << "Junction_NE_SW" << std::endl;
 
         auto const orig = Vector3i{ 30, 30, sim_settings.map.ground_floor };
 
@@ -41,7 +41,7 @@ namespace HipRoofAlgorithm
     //	.##
     static void Junction_SE_NW(PrefabBuilding & p)
     {
-        std::cout << "Junction_SE_NW" << std::endl;
+        g_log << "Junction_SE_NW" << std::endl;
 
         auto const orig = Vector3i{ 30, 30, sim_settings.map.ground_floor };
 
@@ -59,7 +59,7 @@ namespace HipRoofAlgorithm
     //	##.		###		##.		###
     static void TangencyNE(PrefabBuilding & p)
     {
-        std::cout << "TangencyNE" << std::endl;
+        g_log << "TangencyNE" << std::endl;
 
 
 
@@ -121,7 +121,7 @@ namespace HipRoofAlgorithm
     //	..#		#.#		..#		#.#
     static void TangencySE(PrefabBuilding & p)
     {
-        std::cout << "TangencySE" << std::endl;
+        g_log << "TangencySE" << std::endl;
         
         // CASE I
         p.append_area(AreaType::farmyard, Vector3i(10, 20, 0), { 11, 31 }); //linking areas
@@ -166,7 +166,7 @@ namespace HipRoofAlgorithm
     //	#..		#.#		#..		#.#
     static void TangencySW(PrefabBuilding & p)
     {
-        std::cout << "TangencySW" << std::endl;
+        g_log << "TangencySW" << std::endl;
         
 
         // CASE I
@@ -228,7 +228,7 @@ namespace HipRoofAlgorithm
     //	.##		.##		###		###
     static void TangencyNW(PrefabBuilding & p)
     {
-        std::cout << "TangencyNW" << std::endl;
+        g_log << "TangencyNW" << std::endl;
         
         // CASE I
         {
@@ -275,7 +275,7 @@ namespace HipRoofAlgorithm
     //	.##		###
     static void Foot_N_W(PrefabBuilding & p)
     {
-        std::cout << "Foot_N_W" << std::endl;
+        g_log << "Foot_N_W" << std::endl;
 
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 10, 20, 0), { 11,  71 });
@@ -301,7 +301,7 @@ namespace HipRoofAlgorithm
     //	##.		###
     static void Foot_N_E(PrefabBuilding & p)
     {
-        std::cout << "Foot_N_E" << std::endl;
+        g_log << "Foot_N_E" << std::endl;
 
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 10, 20, 0), { 11,  71 });
@@ -327,7 +327,7 @@ namespace HipRoofAlgorithm
     //	##.		##.
     static void Foot_E_N(PrefabBuilding & p)
     {
-        std::cout << "Foot_E_N" << std::endl;
+        g_log << "Foot_E_N" << std::endl;
 
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 10, 20, 0), { 11,  71 });
@@ -353,7 +353,7 @@ namespace HipRoofAlgorithm
     //	..#		#.#
     static void Foot_E_S(PrefabBuilding & p)
     {
-        std::cout << "Foot_E_S" << std::endl;
+        g_log << "Foot_E_S" << std::endl;
 
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 50, 20, 0), { 11,  71 });
@@ -379,7 +379,7 @@ namespace HipRoofAlgorithm
     //	.##		.##
     static void Foot_S_E(PrefabBuilding & p)
     {
-        std::cout << "Foot_S_E" << std::endl;
+        g_log << "Foot_S_E" << std::endl;
         
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 50, 20, 0), { 11,  71 });
@@ -405,7 +405,7 @@ namespace HipRoofAlgorithm
     //	##.		##.
     static void Foot_S_W(PrefabBuilding & p)
     {
-        std::cout << "Foot_S_W" << std::endl;
+        g_log << "Foot_S_W" << std::endl;
         
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 50, 20, 0), { 11,  71 });
@@ -431,7 +431,7 @@ namespace HipRoofAlgorithm
     //	#..		#.#
     static void Foot_W_S(PrefabBuilding & p)
     {
-        std::cout << "Foot_W_S" << std::endl;
+        g_log << "Foot_W_S" << std::endl;
         
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 50, 20, 0), { 11,  71 });
@@ -457,7 +457,7 @@ namespace HipRoofAlgorithm
     //	.##		.##
     static void Foot_W_N(PrefabBuilding & p)
     {
-        std::cout << "Foot_W_N" << std::endl;
+        g_log << "Foot_W_N" << std::endl;
 
         //linking areas
         p.append_area(AreaType::farmyard, Vector3i( 10, 20, 0), { 11,  71 });
@@ -517,7 +517,7 @@ namespace HipRoofAlgorithm
         }
 
 
-        std::cout << "Added a building to test RoofPerimeterTileType::";
+        g_log << "Added a building to test RoofPerimeterTileType::";
 
         
         auto prefab = PrefabBuilding{ "farm" };
@@ -678,7 +678,7 @@ namespace HipRoofAlgorithm
         }
 
 
-        std::cout << "test_everyRoofPerimeterMicrotileTypeCase completed.\n" << roofPerimeterMicrotileType_stats << std::endl;
+        g_log << "test_everyRoofPerimeterMicrotileTypeCase completed.\n" << roofPerimeterMicrotileType_stats << std::endl;
         
         #pragma warning(default: 4702)
     }
@@ -688,7 +688,7 @@ namespace HipRoofAlgorithm
 
     static void triangleRoof_north(PrefabBuilding & p)
     {
-        std::cout << "Triangle roof - North" << std::endl;
+        g_log << "Triangle roof - North" << std::endl;
         
 
         Vector3i orig{ 20, 30, sim_settings.map.ground_floor };
@@ -699,7 +699,7 @@ namespace HipRoofAlgorithm
     
     static void triangleRoof_east(PrefabBuilding & p)
     {
-        std::cout << "Triangle roof - East" << std::endl;
+        g_log << "Triangle roof - East" << std::endl;
         
 
         Vector3i orig{ 30, 30, sim_settings.map.ground_floor };
@@ -710,7 +710,7 @@ namespace HipRoofAlgorithm
     
     static void triangleRoof_south(PrefabBuilding & p)
     {
-        std::cout << "Triangle roof - South" << std::endl;
+        g_log << "Triangle roof - South" << std::endl;
         
 
         Vector3i orig{ 30, 30, sim_settings.map.ground_floor };
@@ -721,7 +721,7 @@ namespace HipRoofAlgorithm
     
     static void triangleRoof_west(PrefabBuilding & p)
     {
-        std::cout << "Triangle roof - West" << std::endl;
+        g_log << "Triangle roof - West" << std::endl;
         
 
         Vector3i orig{ 30, 20, sim_settings.map.ground_floor };
@@ -732,7 +732,7 @@ namespace HipRoofAlgorithm
 
     static void triangleRoofs_together(PrefabBuilding & p)
     {
-        std::cout << "Triangle roofs - all together" << std::endl;
+        g_log << "Triangle roofs - all together" << std::endl;
         
 
         p.append_area(AreaType::farmyard, Vector3i(  20,  30, sim_settings.map.ground_floor), { 11, 13 });
@@ -766,7 +766,7 @@ namespace HipRoofAlgorithm
         }
 
 
-        std::cout << "Added a building in order to test: ";
+        g_log << "Added a building in order to test: ";
         
         auto prefab = PrefabBuilding{ "farm" };
         prefab.append_area(AreaType::test, { 30, 30, sim_settings.map.ground_floor }, { 11, 11 });
@@ -873,7 +873,7 @@ namespace HipRoofAlgorithm
         static auto const startingArea_width = area_templates.at(AreaType::test).min_dims().y;
 
 
-        Logger lgr{ std::cout };
+        Logger lgr{ g_log };
 
         // A building can't be built too near to the end of map.
         auto const road_margin = sim_settings.map.road_dim + 1; //"+1" because of how city algorithm works

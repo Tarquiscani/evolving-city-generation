@@ -118,7 +118,7 @@ void GameMap::update()
 #pragma warning(disable: 4702)
 void GameMap::debug_compareMoveAlgorithms() const
 {
-    std::cout << "\n\n\n\nTrail algorithm comparison on the current map from the current position." << std::endl;
+    g_log << "\n\n\n\nTrail algorithm comparison on the current map from the current position." << std::endl;
 
     auto starting_pos = player_manager.debug_getPlayerPosition_inUnits();
     auto move_drc = m_player_body.get_moveDirection();

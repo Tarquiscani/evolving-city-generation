@@ -70,7 +70,7 @@ void BuildingExpansionVisualDebug::init_originalState()
     //test_change.record_buildingRemoval(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingAddition(36, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingRemoval(36, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 
     ////must fail
     //test_change.record_buildingRemoval(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
@@ -79,11 +79,11 @@ void BuildingExpansionVisualDebug::init_originalState()
     ////must remove the newly added building
     //test_change.record_buildingAddition(54, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingRemoval(54, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 
     ////must remove the building
     //test_change.record_buildingRemoval(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 
 
     ////UPDATE TESTS
@@ -91,7 +91,7 @@ void BuildingExpansionVisualDebug::init_originalState()
     //test_change.record_buildingRemoval(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingAddition(36, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingUpdate(36, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field), Building({ 2,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 
     ////must fail
     //test_change.record_buildingRemoval(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field));
@@ -100,11 +100,11 @@ void BuildingExpansionVisualDebug::init_originalState()
     ////must replace the newly added building (1,0,0) with the new one (2,0,0)
     //test_change.record_buildingAddition(54, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field));
     //test_change.record_buildingUpdate(54, Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field), Building({ 2,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 
     ////must remove the old building (0,0,0) and add the new one (1,0,0)
     //test_change.record_buildingUpdate(36, Building({ 0,0,0 }, MapSettings::test_farm_expId, AreaType::field), Building({ 1,0,0 }, MapSettings::test_farm_expId, AreaType::field));
-    //std::cout << test_change << std::endl;
+    //g_log << test_change << std::endl;
 }
 
 void BuildingExpansionVisualDebug::custom_stop()
@@ -308,7 +308,7 @@ namespace BuildingExpansionVisualDebugTests
         ++test_id;
         if (test_id > 8) { test_id = 1; }
 
-        std::cout << "\nBuildingExpansionVisualDebug test #" << test_id << ": " << std::endl;
+        g_log << "\nBuildingExpansionVisualDebug test #" << test_id << ": " << std::endl;
 
         BEVD.begin_chapter("TEST - actual tests");
 
@@ -318,132 +318,132 @@ namespace BuildingExpansionVisualDebugTests
                 break;
 
             case 1:
-                std::cout << "ADDITION TEST. Must fail (because a building with the same BuildingId has already been added) -> ";
+                g_log << "ADDITION TEST. Must fail (because a building with the same BuildingId has already been added) -> ";
                 try 
                 {
                     BEVD.add_building(fake_bid1, new_building);
-                    std::cout << "ERROR (the code didn't throw any exception).";
+                    g_log << "ERROR (the code didn't throw any exception).";
                 }
                 catch (std::exception const& e) 
                 {
-                    std::cout << "OK (" << e.what() << ")";
+                    g_log << "OK (" << e.what() << ")";
                 }
                 break;
 
             case 2:
-                std::cout << "REMOVAL TEST. Must allow the removal of old_buildind, allow the the addition of new_building and allow the removal of new_building -> ";
+                g_log << "REMOVAL TEST. Must allow the removal of old_buildind, allow the the addition of new_building and allow the removal of new_building -> ";
                 try 
                 {
                     BEVD.remove_building(fake_bid1);
                     BEVD.add_building(fake_bid1, new_building);
                     BEVD.remove_building(fake_bid1);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
 
             case 3:
-                std::cout << "REMOVAL TEST. Must fail (because cannot remove an already removed building) -> ";
+                g_log << "REMOVAL TEST. Must fail (because cannot remove an already removed building) -> ";
                 try 
                 {
                     BEVD.remove_building(fake_bid1);
                     BEVD.remove_building(fake_bid1);
-                    std::cout << "ERROR (the code didn't throw any exception).";
+                    g_log << "ERROR (the code didn't throw any exception).";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "OK (" << e.what() << ")";
+                    g_log << "OK (" << e.what() << ")";
                 }
                 break;
 
             case 4:
-                std::cout << "REMOVAL TEST. Must allow the removal of the newly added building -> ";
+                g_log << "REMOVAL TEST. Must allow the removal of the newly added building -> ";
                 try 
                 {
                     BEVD.add_building(fake_bid2, new_building);
                     BEVD.remove_building(fake_bid2);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
 
             case 5:
-                std::cout << "REMOVAL TEST. Must allow the removal of the old building -> ";
+                g_log << "REMOVAL TEST. Must allow the removal of the old building -> ";
                 try 
                 {
                     BEVD.remove_building(fake_bid1);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
 
             case 6:
-                std::cout << "UPDATING TEST. Must allow the replacement of new_building with updated_newBuilding -> ";
+                g_log << "UPDATING TEST. Must allow the replacement of new_building with updated_newBuilding -> ";
                 try 
                 {
                     BEVD.remove_building(fake_bid1);
                     BEVD.add_building(fake_bid1, new_building);
                     BEVD.update_building(fake_bid1, updated_newBuilding);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
 
             case 7:
-                std::cout << "UPDATING TEST. Must fail (because there is no building to update) -> ";
+                g_log << "UPDATING TEST. Must fail (because there is no building to update) -> ";
                 try
                 {
                     BEVD.remove_building(fake_bid1);
                     BEVD.update_building(fake_bid1, new_building);
-                    std::cout << "ERROR (the code didn't throw any exception).";
+                    g_log << "ERROR (the code didn't throw any exception).";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "OK (" << e.what() << ")";
+                    g_log << "OK (" << e.what() << ")";
                 }
                 break;
 
             case 8:
-                std::cout << "UPDATING TEST. Must allow the replacement of new_building with updated_newBuilding -> ";
+                g_log << "UPDATING TEST. Must allow the replacement of new_building with updated_newBuilding -> ";
                 try
                 {
                     BEVD.add_building(fake_bid2, new_building);
                     BEVD.update_building(fake_bid2, updated_newBuilding);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
 
             case 9:
-                std::cout << "UPDATING TEST. Must allow the replacement of old_building with new_building -> ";
+                g_log << "UPDATING TEST. Must allow the replacement of old_building with new_building -> ";
                 try
                 {
                     BEVD.update_building(fake_bid1, new_building);
-                    std::cout << "OK.";
+                    g_log << "OK.";
                 } 
                 catch (std::exception const& e) 
                 {
-                    std::cout << "ERROR (the code did throw an exception: " << e.what() << ")";
+                    g_log << "ERROR (the code did throw an exception: " << e.what() << ")";
                 }
                 break;
         }
 
-        std::cout << "\n" << std::endl;
+        g_log << "\n" << std::endl;
 
                 
         BEVD.end_chapter();

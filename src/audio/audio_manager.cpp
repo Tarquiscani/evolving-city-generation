@@ -87,7 +87,7 @@ void AudioManager::reproduce_sound(char const* filename)
 {
     if (ma_engine_play_sound(&m_engine, filename, NULL) != MA_SUCCESS)
     {
-        std::cout << "Failed to reproduce a sound - File address: " << filename << std::endl;
+        g_log << "Failed to reproduce a sound - File address: " << filename << std::endl;
     }
 }
 

@@ -2,6 +2,7 @@
 
 
 #include "debug/logger/debug_printers.hh"
+#include "debug/logger/log_streams.hh"
 
 
 namespace tgm
@@ -46,14 +47,14 @@ void Shader::load_from_multipleFiles(std::vector<std::string> const& vshader_pat
     for (auto const& path : vshader_paths)
     {
         vshader_codeChunks.emplace_back(load_codeChunk(path));
-        //std::cout << vshader_codeChunks.back() << "\n";
+        //g_log << vshader_codeChunks.back() << "\n";
     }
 
     std::vector<std::string> fshader_codeChunks;
     for (auto const& path : fshader_paths)
     {
         fshader_codeChunks.emplace_back(load_codeChunk(path));
-        //std::cout << fshader_codeChunks.back() << "\n";
+        //g_log << fshader_codeChunks.back() << "\n";
     }
 
     //--- Convert C++ strings to C strings
@@ -144,11 +145,11 @@ void Shader::check_compileErrors(GLuint const shader_id, ShaderType const type) 
     {
         glGetShaderInfoLog(shader_id, 1024, NULL, infoLog);
 
-        std::cout << type << " shader compilation error"
-                    << "\n------------------------------------------------------\n"
-                    << infoLog
-                    << "\n------------------------------------------------------\n"
-                    << std::endl;
+        g_log << type << " shader compilation error"
+              << "\n------------------------------------------------------\n"
+              << infoLog
+              << "\n------------------------------------------------------\n"
+              << std::endl;
 
         throw std::runtime_error("Shader compilation error");
     }
@@ -164,11 +165,11 @@ void Shader::check_linkingErrors(GLuint const program_id) const
     {
         glGetProgramInfoLog(program_id, 1024, NULL, infoLog);
 
-        std::cout << "Shader linking error" 
-                    << "\n------------------------------------------------------\n"
-                    << infoLog
-                    << "\n------------------------------------------------------\n" 
-                    << std::endl;
+        g_log << "Shader linking error" 
+              << "\n------------------------------------------------------\n"
+              << infoLog
+              << "\n------------------------------------------------------\n" 
+              << std::endl;
 
         throw std::runtime_error("Shader linking error");
     }

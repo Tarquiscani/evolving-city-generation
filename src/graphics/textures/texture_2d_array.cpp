@@ -47,7 +47,7 @@ Texture2DArray::Texture2DArray(char const* lowDef_path, char const* highDef_path
 
     if (raw_data)
     {
-        std::cout << "Texture atlas loaded and converted to a Texture2DArray:   name: " << path << "   width: " << m_atlas_width << "    height: " << m_atlas_height << "   channels: " << channels << std::endl;
+        g_log << "Texture atlas loaded and converted to a Texture2DArray:   name: " << path << "   width: " << m_atlas_width << "    height: " << m_atlas_height << "   channels: " << channels << std::endl;
     }
     else
     {

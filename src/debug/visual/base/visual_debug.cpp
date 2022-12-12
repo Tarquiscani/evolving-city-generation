@@ -37,7 +37,7 @@ auto operator<<(Logger & lgr, VisualDebugChange const& vdc) -> Logger &
 VisualDebug::VisualDebug():	
     m_window{ window_manager().create_window() }
 { 
-    std::cout << "Debug window after construction: " << m_window << std::endl;
+    g_log << "Debug window after construction: " << m_window << std::endl;
 
 }
 
@@ -315,7 +315,7 @@ void VisualDebug::set_frame(IntParallelepiped const& p)
     m_frame = p;
     m_ppt = compute_bestTileDimension();
 
-    //std::cout << "Debug Window before resizing: " << m_window << std::endl;
+    //g_log << "Debug Window before resizing: " << m_window << std::endl;
 
     // Adjust fbo dimension according to the new frame.
     if (m_window.is_open() && (m_window.fbo_size() != Vector2i{ window_width(), window_height() }))
@@ -965,7 +965,7 @@ void VisualDebug::save(std::string message)
         }
     }
 
-    //std::cout << filename << std::endl;
+    //g_log << filename << std::endl;
     std::ofstream file(filename);
     if (!file)
         throw std::runtime_error("Can't create a .screen file.");
@@ -1019,7 +1019,7 @@ void VisualDebug::pressedKey_callback(Window & window, int const key)
                 ++visualDebug_runtime_maxRecordableDepth;
                 if (visualDebug_runtime_maxRecordableDepth > visualDebug_maxStepDepth) { visualDebug_runtime_maxRecordableDepth = 0; }
 
-                std::cout << "VisualDebug max recordable depth: " << visualDebug_runtime_maxRecordableDepth << std::endl;
+                g_log << "VisualDebug max recordable depth: " << visualDebug_runtime_maxRecordableDepth << std::endl;
 
                 break;
             }

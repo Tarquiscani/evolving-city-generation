@@ -30,7 +30,7 @@ namespace MainWindow
         {
             map.debug_expand_random_building();
 
-            std::cout << "Building expanded." << std::endl;
+            g_log << "Building expanded." << std::endl;
         }
         else
         {
@@ -47,7 +47,7 @@ namespace MainWindow
                 created_buildings.push_back(building_id.value());
             }
 
-            std::cout << "Building built in a city." << std::endl;
+            g_log << "Building built in a city." << std::endl;
         }
     }
 
@@ -126,7 +126,7 @@ namespace MainWindow
                         visualDebug_runtime_maxRecordableDepth = 0;
 
                     auto oss = std::ostringstream{}; oss << "VisualDebug Depth Level: " << visualDebug_runtime_maxRecordableDepth;
-                    std::cout << oss.str() << std::endl;
+                    g_log << oss.str() << std::endl;
                     g_on_screen_messages.push_new_message(oss.str());
 
                     if (visualDebug_runtime_maxRecordableDepth == 3)
@@ -145,7 +145,7 @@ namespace MainWindow
                     visualDebug_runtime_openWindowForBuildingExpansion = (visualDebug_runtime_openWindowForBuildingExpansion ? false : true);
 
                     auto oss = std::ostringstream{}; oss << "BuildingExpansionVisualDebug window: " << (visualDebug_runtime_openWindowForBuildingExpansion ? "activated" : "hidden");
-                    std::cout << oss.str() << std::endl;
+                    g_log << oss.str() << std::endl;
                     g_on_screen_messages.push_new_message(oss.str());
                 #endif
 
@@ -158,7 +158,7 @@ namespace MainWindow
                     visualDebug_runtime_openWindowForPlayerMovement = (visualDebug_runtime_openWindowForPlayerMovement ? false : true);
 
                     auto oss = std::ostringstream{}; oss << "PlayerMovementVisualDebug window: " << (visualDebug_runtime_openWindowForPlayerMovement ? "activated" : "hidden");
-                    std::cout << oss.str() << std::endl;
+                    g_log << oss.str() << std::endl;
                     g_on_screen_messages.push_new_message(oss.str());
                 #endif
 
@@ -171,7 +171,7 @@ namespace MainWindow
                     visualDebug_runtime_openWindowForHipRoofMatrix = (visualDebug_runtime_openWindowForHipRoofMatrix ? false : true);
 
                     auto oss = std::ostringstream{}; oss << "HipRoofMatrixVisualDebug window: " << (visualDebug_runtime_openWindowForHipRoofMatrix ? "activated" : "hidden");
-                    std::cout << oss.str() << std::endl;
+                    g_log << oss.str() << std::endl;
                     g_on_screen_messages.push_new_message(oss.str());
 
                     if (visualDebug_runtime_openWindowForHipRoofMatrix)
@@ -187,7 +187,7 @@ namespace MainWindow
             {
                 #if VISUALDEBUG
                     auto oss = std::ostringstream{}; oss << "highlightings_count: " << debug_highlightings_count + debug_unhighlightings_count;
-                    std::cout << oss.str() << std::endl;
+                    g_log << oss.str() << std::endl;
                     g_on_screen_messages.push_new_message(oss.str());
                 #endif
 
@@ -211,12 +211,12 @@ namespace MainWindow
             //	//HipRoofAlgorithm::test_polygons_specialCases(map, roof_vertices);
             //	//HipRoofAlgorithm::automatically_test_building_expansion(map);
 
-            //	//std::cout << HipRoofAlgorithm::roofPerimeterMicrotileType_stats;
+            //	//g_log << HipRoofAlgorithm::roofPerimeterMicrotileType_stats;
             //	//HipRoofAlgorithm::test_everyRoofPerimeterMicrotileTypeCase();
 
 
             //	////Trail algorithm tests
-            //	//std::cout << "Trail algorithm comparison on an empty map." << std::endl;
+            //	//g_log << "Trail algorithm comparison on an empty map." << std::endl;
             //	//TrailSystem::debug_compareMoveAlgorithms();
 
             //	//map.debug_compareMoveAlgorithms();
@@ -270,7 +270,7 @@ namespace MainWindow
                 if (t && t->is_innerArea())
                 {
                     auto const bid = t->get_innerAreaInfo().bid();
-                    if (std::find(created_buildings.cbegin(), created_buildings.cend(), bid) == created_buildings.cend()) { std::cout << "Cannot remove an automatically built building" << std::endl; }
+                    if (std::find(created_buildings.cbegin(), created_buildings.cend(), bid) == created_buildings.cend()) { g_log << "Cannot remove an automatically built building" << std::endl; }
                     map.debug_remove_building(bid);
                     created_buildings.erase(std::find(created_buildings.begin(), created_buildings.end(), bid));
                     
@@ -308,7 +308,7 @@ namespace MainWindow
             //{
             //	#if VISUALDEBUG
             //		visualDebug_runtime_openWindow = (visualDebug_runtime_openWindow ? false : true);
-            //		Logger lgr{ std::cout };
+            //		Logger lgr{ g_log };
             //		lgr << "VisualDebug: " << (visualDebug_runtime_openWindow ? "activated" : "deactivated");
             //		lgr << Logger::addt;
 
@@ -451,7 +451,7 @@ namespace MainWindow
                 {
                     auto const tile_pos = graphics_manager.glfwWindowPixel_to_mapTile(mouse_pos);
 
-                    std::cout << "Mid-clicked tile: " << tile_pos << std::endl;
+                    g_log << "Mid-clicked tile: " << tile_pos << std::endl;
 
                     auto const t = map.debug_getTile({ tile_pos.x, tile_pos.y, tile_pos.z });
                     if (t) { gui_mgr.tile_gui.set_tile(t); }	//TODO: NOW: Forse meglio impostare la posizione e poi accedere alla mappa direttamente dal gui_mgr (per rendere esplicita la dipendenza)

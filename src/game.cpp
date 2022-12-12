@@ -125,7 +125,7 @@ void Game::tick_major_events()
 
         //DataArray<double, true> da(40);
         //ifstream >> da;
-        //auto lgr = Logger{ std::cout };
+        //auto lgr = Logger{ g_log };
         //lgr << da;
 
         load_queue.pop();

@@ -417,7 +417,7 @@ namespace HipRoofAlgorithm
                 << (N ? "N " : "") << (NE ? "NE " : "") << (E ? "E " : "") << (SE ? "SE " : "") 
                 << (S ? "S " : "") << (SW ? "SW " : "") << (W ? "W " : "") << (NW ? "NW" : "");
 
-            std::cout << oss.str() << std::endl;
+            g_log << oss.str() << std::endl;
             throw std::runtime_error(oss.str());
         }
     }
@@ -845,7 +845,7 @@ namespace HipRoofAlgorithm
         { 
             std::ostringstream oss;
             oss << "BUG! v1_type: " << pos_type << e.what();
-            std::cout << oss.str() << std::endl;
+            g_log << oss.str() << std::endl;
             throw std::runtime_error(oss.str()); 
         }
     }
@@ -1325,7 +1325,7 @@ namespace HipRoofAlgorithm
         }
     };
 
-    Logger lgr{ std::cout };
+    Logger lgr{ g_log };
 
     ////
     //	Check whether the neighbor indicated by @nghb_uvecCcwId belongs to the perimeter of the current polygon.
@@ -1456,7 +1456,7 @@ namespace HipRoofAlgorithm
         -> Vector2i
     {
         /*if(visualDebug_runtime_maxRecordableDepth == 4)
-            std::cout << "incoming_unitVector: " << incoming_unitVector << " -- current_is_edge: " << std::boolalpha << current_is_edge << std::noboolalpha << " -- current_pos: " << current_pos << std::endl;
+            g_log << "incoming_unitVector: " << incoming_unitVector << " -- current_is_edge: " << std::boolalpha << current_is_edge << std::noboolalpha << " -- current_pos: " << current_pos << std::endl;
 */
         #if HIPROOFMATRIX_VISUALDEBUG_COMPUTE_POLYGONS
             HRMdeb.new_step("current_pos", 4);
