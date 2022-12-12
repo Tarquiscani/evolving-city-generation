@@ -11,9 +11,9 @@
 #include "utilities.hh"
 
 #include "debug/visual/building_expansion/building_expansion_visual_debug.hh"
-#include "settings/debug/buildingexpansion_visualdebug.hh"
-#include "settings/debug/playermovement_visualdebug.hh"
-#include "settings/debug/hiproofmatrix_visualdebug_settings.hh"
+#include "settings/debug/visual_debug_building_expansion_settings.hh"
+#include "settings/debug/visual_debug_hip_roof_matrix_settings.hh"
+#include "settings/debug/visual_debug_player_movement_settings.hh"
 
 
 namespace tgm

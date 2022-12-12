@@ -2,7 +2,7 @@
 #define GM_HIP_ROOF_MATRIX_STREAM_HH
 
 
-#include "settings/debug/hiproofmatrix_visualdebug_settings.hh"
+#include "settings/debug/visual_debug_hip_roof_matrix_settings.hh"
 #if HIPROOFMATRIX_VISUALDEBUG
 
 

@@ -2,8 +2,9 @@
 
 #include "settings/simulation/simulation_settings.hh"
 
-#include "settings/debug/buildingexpansion_visualdebug.hh"
-#include "settings/debug/hiproofmatrix_visualdebug_settings.hh"
+#include "settings/debug/visual_debug_player_movement_settings.hh"
+#include "settings/debug/visual_debug_hip_roof_matrix_settings.hh"
+
 #include "debug/visual/building_expansion_stream.hh"
 
 namespace tgm

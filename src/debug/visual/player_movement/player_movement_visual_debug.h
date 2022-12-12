@@ -2,7 +2,7 @@
 #define GM_PLAYER_MOVEMENT_VISUAL_DEBUG_H
 
 
-#include "settings/debug/playermovement_visualdebug.hh"
+#include "settings/debug/visual_debug_player_movement_settings.hh"
 #if PLAYERMOVEMENT_VISUALDEBUG
 
 

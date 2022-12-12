@@ -2,7 +2,7 @@
 #define GM_BUILDING_EXPANSION_STREAM_HH
 
 
-#include "settings/debug/buildingexpansion_visualdebug.hh"
+#include "settings/debug/visual_debug_building_expansion_settings.hh"
 #if BUILDEXP_VISUALDEBUG
 
 
