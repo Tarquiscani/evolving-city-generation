@@ -131,7 +131,7 @@ namespace HipRoofAlgorithm
             roofable_microtiles.insert(micro_pos + Vector2i(  0, -1));
             roofable_microtiles.insert(micro_pos + Vector2i( -1, -1));
             
-            #if HIPROOFALGORITHM_ROOF_EAVES
+            #if MAPSET_HIPROOFALGORITHM_ROOF_EAVES
                 // Fill also the sorrounding microtiles that are two microtiles away from the center of the tile.
                 roofable_microtiles.insert( micro_pos + Vector2i( -2,  0) );
                 roofable_microtiles.insert( micro_pos + Vector2i( -2,  1) );
@@ -697,7 +697,7 @@ namespace HipRoofAlgorithm
 
         auto current_type = compute_roofPerimeterMicrotileType(current_pos, roofable_poss);
 
-        #if TESTS_HIPROOFALGORITHM_ROOFPERIMETERMICROTILETYPESTATISTICS
+        #if MAPSET_HIPROOFALGORITHM_ROOF_PERIMETER_MICROTILE_TYPE_STATISTICS
             insert_in_roofPerimeterMicrotileTypeStatistics(current_pos, roofable_poss);
         #endif
 
@@ -706,7 +706,7 @@ namespace HipRoofAlgorithm
             current_pos += side_versor;
             current_type = compute_roofPerimeterMicrotileType(current_pos, roofable_poss);
 
-            #if TESTS_HIPROOFALGORITHM_ROOFPERIMETERMICROTILETYPESTATISTICS
+            #if MAPSET_HIPROOFALGORITHM_ROOF_PERIMETER_MICROTILE_TYPE_STATISTICS
                 insert_in_roofPerimeterMicrotileTypeStatistics(current_pos, roofable_poss);
             #endif
         }
@@ -738,7 +738,7 @@ namespace HipRoofAlgorithm
         // Check if the microtile is suitable to be the first vertex of a border
         auto pos_type = compute_roofPerimeterMicrotileType(pos, roofable_poss);
 
-        #if TESTS_HIPROOFALGORITHM_ROOFPERIMETERMICROTILETYPESTATISTICS
+        #if MAPSET_HIPROOFALGORITHM_ROOF_PERIMETER_MICROTILE_TYPE_STATISTICS
             insert_in_roofPerimeterMicrotileTypeStatistics(pos, roofable_poss);
         #endif
 

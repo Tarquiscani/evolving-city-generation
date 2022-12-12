@@ -3,7 +3,10 @@
 
 
 
-#define DETECT_COLLISIONS true
+////
+//  It enables collision detection and prevent the characters to walk through walls or through other characters.
+////
+#define GMPLSET_DETECT_COLLISIONS true
 
 
 

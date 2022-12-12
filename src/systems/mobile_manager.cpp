@@ -111,7 +111,7 @@ void MobileManager::move()
             auto const orig_square = m_player_body.feet_square();
             auto const velocity = m_player_body.velocity();
 
-            #if DETECT_COLLISIONS
+            #if GMPLSET_DETECT_COLLISIONS
                 auto const [adjusted_destSquare, doors_to_open] = TrailSystem::compute_nearestPosition(orig_square, z_floor, move_drc, velocity, m_tiles);
                 //auto const adjusted_destSquare = TrailSystem::debug_brute_computeNearestPosition(orig_square, z_floor, move_drc, m_player_body.rounded_velocity(), m_tiles);
                 //std::vector<CompleteId> const doors_to_open;

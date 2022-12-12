@@ -634,7 +634,7 @@ namespace HipRoofAlgorithm
     #pragma warning(disable: 4702)
     void test_everyRoofPerimeterMicrotileTypeCase()
     {
-        #if !TESTS_HIPROOFALGORITHM_ROOFPERIMETERMICROTILETYPESTATISTICS
+        #if !MAPSET_HIPROOFALGORITHM_ROOF_PERIMETER_MICROTILE_TYPE_STATISTICS
             throw std::runtime_error("Cannot perform the test if RoofPerimeterMicrotileType statistics isn't active.");
         #endif
 
