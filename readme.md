@@ -126,3 +126,8 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
 9. Run the demo:
 
         ./demo_fullscreen_high_quality
+
+
+## Style Guide
+
+[Here](doc/style_guide.md) you can find more information about the coding style of the project.
