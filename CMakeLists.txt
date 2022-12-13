@@ -62,21 +62,21 @@ if (MULTIPLE_CONFIGURATIONS)
     set(A_BINARY demo_windowed_low_quality)
     set(BINARIES ${WINDOWED_BINARIES} ${FULLSCREEN_BINARIES})
     
-    foreach(TARGET ${FULLSCREEN_BINARIES})
+    foreach (TARGET ${FULLSCREEN_BINARIES})
         target_compile_definitions(${TARGET} PRIVATE CMAKE_FULLSCREEN=TRUE)  
-    endforeach(TARGET)
+    endforeach (TARGET)
 
-    foreach(TARGET ${LOW_QUALITY_BINARIES})
+    foreach (TARGET ${LOW_QUALITY_BINARIES})
         target_compile_definitions(${TARGET} PRIVATE CMAKE_LOW_QUALITY=TRUE)  
-    endforeach(TARGET)
+    endforeach (TARGET)
 
-    foreach(TARGET ${MEDIUM_QUALITY_BINARIES})
+    foreach (TARGET ${MEDIUM_QUALITY_BINARIES})
         target_compile_definitions(${TARGET} PRIVATE CMAKE_MEDIUM_QUALITY=TRUE)  
-    endforeach(TARGET)
+    endforeach (TARGET)
 
-    foreach(TARGET ${HIGH_QUALITY_BINARIES})
+    foreach (TARGET ${HIGH_QUALITY_BINARIES})
         target_compile_definitions(${TARGET} PRIVATE CMAKE_HIGH_QUALITY=TRUE)  
-    endforeach(TARGET)
+    endforeach (TARGET)
 
 else ()
     add_executable(evolving_city_generation ${SOURCES})
@@ -106,9 +106,9 @@ endif()
 set(GLFW_USE_HYBRID_HPG ON CACHE BOOL "Force use of high-performance GPU on hybrid systems" FORCE)
 add_subdirectory(third_party/glfw)
 
-foreach(TARGET ${BINARIES})
+foreach (TARGET ${BINARIES})
     target_link_libraries(${TARGET} glfw ${GLFW_LIBRARIES})
-endforeach(TARGET)
+endforeach (TARGET)
 
 
 
@@ -116,19 +116,27 @@ endforeach(TARGET)
 #   Copy resources in the executable folder.
 ####
 
-foreach(TARGET ${BINARIES})
+foreach (TARGET ${BINARIES})
     # Copy the "media" directory into the binary folder after building
     add_custom_command(TARGET ${TARGET} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${PROJECT_SOURCE_DIR}/media"
             "$<TARGET_FILE_DIR:${TARGET}>/media")
         
-    # Copy the "shaders"" directory into the binary folder after building
+    # Copy the "shaders" directory into the binary folder after building
     add_custom_command(TARGET ${TARGET} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${PROJECT_SOURCE_DIR}/shaders"
             "$<TARGET_FILE_DIR:${TARGET}>/shaders")
-endforeach(TARGET)
+
+    if (MULTIPLE_CONFIGURATIONS)
+        # Copy the "README.txt" directory into the binary folder after building
+        add_custom_command(TARGET ${TARGET} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+                "${PROJECT_SOURCE_DIR}/media/README.txt"
+                "$<TARGET_FILE_DIR:${TARGET}>/")
+    endif ()
+endforeach (TARGET)
 
        
         
@@ -137,13 +145,13 @@ endforeach(TARGET)
 ####
 
 if (MSVC)
-    foreach(TARGET ${BINARIES})
+    foreach (TARGET ${BINARIES})
         # warning level 4 and all warnings as errors
         #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
         target_compile_options(${TARGET} PRIVATE /W4 )
         # Tell MSVC to use main instead of WinMain and hide the console.
-        #set_target_properties(evolving_city_generation PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
-    endforeach(TARGET)
+        set_target_properties(${TARGET} PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+    endforeach (TARGET)
 
 else()
     #target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)

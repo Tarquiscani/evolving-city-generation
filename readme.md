@@ -77,9 +77,9 @@ With Powershell:
 
         rm CMakeCache.txt; cmake -D MULTIPLE_CONFIGURATIONS=ON ..
 
-5. Build:
+5. Build with Release configuration:
 
-        cmake --build .
+        cmake --build . --config RelWithDebInfo
 
 6. Run the demo:
 
@@ -115,9 +115,9 @@ Keep in mind that the following has been tested just on Ubuntu 20.04 LTS (native
 
         mkdir linux_build && cd linux_build
 
-7. Generate the native build system:
+7. Generate the native build system with the release configuration:
 
-        rm CMakeCache.txt; cmake -D MULTIPLE_CONFIGURATIONS=ON ..
+        rm CMakeCache.txt; cmake -D MULTIPLE_CONFIGURATIONS=ON CMAKE_BUILD_TYPE=RelWithDebInfo ..
 
 8. Build:
 
