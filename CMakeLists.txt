@@ -63,19 +63,19 @@ if (MULTIPLE_CONFIGURATIONS)
     set(BINARIES ${WINDOWED_BINARIES} ${FULLSCREEN_BINARIES})
     
     foreach (TARGET ${FULLSCREEN_BINARIES})
-        target_compile_definitions(${TARGET} PRIVATE CMAKE_FULLSCREEN=TRUE)  
+        target_compile_definitions(${TARGET} PRIVATE CMAKE_FULLSCREEN=true)  
     endforeach (TARGET)
 
     foreach (TARGET ${LOW_QUALITY_BINARIES})
-        target_compile_definitions(${TARGET} PRIVATE CMAKE_LOW_QUALITY=TRUE)  
+        target_compile_definitions(${TARGET} PRIVATE CMAKE_LOW_QUALITY=true)  
     endforeach (TARGET)
 
     foreach (TARGET ${MEDIUM_QUALITY_BINARIES})
-        target_compile_definitions(${TARGET} PRIVATE CMAKE_MEDIUM_QUALITY=TRUE)  
+        target_compile_definitions(${TARGET} PRIVATE CMAKE_MEDIUM_QUALITY=true)  
     endforeach (TARGET)
 
     foreach (TARGET ${HIGH_QUALITY_BINARIES})
-        target_compile_definitions(${TARGET} PRIVATE CMAKE_HIGH_QUALITY=TRUE)  
+        target_compile_definitions(${TARGET} PRIVATE CMAKE_HIGH_QUALITY=true)  
     endforeach (TARGET)
 
 else ()
@@ -84,7 +84,7 @@ else ()
     set(A_BINARY evolving_city_generation)
     set(BINARIES evolving_city_generation)
     
-    target_compile_definitions(evolving_city_generation PRIVATE CMAKE_HIGH_QUALITY=TRUE)  
+    target_compile_definitions(evolving_city_generation PRIVATE CMAKE_HIGH_QUALITY=true)  
 endif ()
 
    
@@ -92,6 +92,8 @@ endif ()
 ####
 #   Link third-party libraries.
 ####
+
+set(OpenGL_GL_PREFERENCE GLVND)
 
 find_package(OpenGL REQUIRED)
 
@@ -103,11 +105,19 @@ else (OPENGL_FOUND)
     message("opengl not found")
 endif()
 
-set(GLFW_USE_HYBRID_HPG ON CACHE BOOL "Force use of high-performance GPU on hybrid systems" FORCE)
+# Setting all options of the GLFW subdirectory CMakeLists
+set(GLFW_USE_HYBRID_HPG ON  CACHE BOOL "Force use of high-performance GPU on hybrid systems" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Build the GLFW example programs" FORCE)
+set(GLFW_BUILD_TESTS    OFF CACHE BOOL "Build the GLFW test programs" FORCE)
+set(GLFW_BUILD_DOCS     OFF CACHE BOOL "Build the GLFW documentation" FORCE)
+set(GLFW_INSTALL        OFF CACHE BOOL "Generate installation target" FORCE)
+set(GLFW_VULKAN_STATIC  OFF CACHE BOOL "Assume the Vulkan loader is linked with the application" FORCE)
+
 add_subdirectory(third_party/glfw)
 
 foreach (TARGET ${BINARIES})
     target_link_libraries(${TARGET} glfw ${GLFW_LIBRARIES})
+    set_property(TARGET ${TARGET} PROPERTY POSITION_INDEPENDENT_CODE OFF)
 endforeach (TARGET)
 
 
@@ -154,8 +164,11 @@ if (MSVC)
     endforeach (TARGET)
 
 else()
-    #target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
-    # lots of warnings and all warnings as errors
-    #[[target_compile_options(evolving_city_generation PRIVATE -Wall -Wextra -pedantic -Werror)]]
+    foreach (TARGET ${BINARIES})
+        #target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
+        # lots of warnings and all warnings as errors
+        #[[target_compile_options(evolving_city_generation PRIVATE -Wall -Wextra -pedantic -Werror -no-pie)]]
+        target_link_options(${TARGET} PRIVATE -no-pie)
+    endforeach (TARGET)
 endif()
 
