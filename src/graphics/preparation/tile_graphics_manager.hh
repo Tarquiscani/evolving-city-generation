@@ -7,7 +7,8 @@
 #include "graphics/tile_vertices.hh"
 #include "mediators/tile_graphics_mediator.hh"
 #include "map/gamemap.h"
-#include "utilities/asserts.hh"
+
+#include "debug/asserts.hh"
 
 
 namespace tgm

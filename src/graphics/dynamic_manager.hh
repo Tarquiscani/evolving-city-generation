@@ -4,7 +4,8 @@
 
 #include "graphics/camera.hh"
 #include "graphics/dynamic_vertices.hh"
-#include "utilities/asserts.hh"
+
+#include "debug/asserts.hh"
 
 
 namespace tgm

@@ -388,7 +388,7 @@ auto WindowManager::open_window(WindowId const wid, WindowOptions const& opt) ->
     window.m_max_fps = opt.max_fps;
     glfwSwapInterval(should_enable_vsync ? 1 : 0); // Enables VSync
     
-
+    
     // Clear held keys of all other windows (otherwise they would never receive the released_key event)
     for (auto& w : m_windows)
     {

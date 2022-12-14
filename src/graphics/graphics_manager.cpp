@@ -4,7 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "graphics_manager_core.hh"
-#include "utilities/asserts.hh"
+
+#include "debug/asserts.hh"
 
 
 namespace tgm
