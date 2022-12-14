@@ -182,7 +182,7 @@ class GraphicsSettings
         ////
         //	Factor used to compute the edge thickness.
         ////
-        static inline auto edgeThickness_factor() noexcept -> float { return m_edgeThickness_factor; }
+        static auto edge_thickness(float const current_zoom_level) -> int;
 
 
 
@@ -386,30 +386,6 @@ class GraphicsSettings
             }
         }
         static inline float const m_pixels_per_textureUnit = init_pixelsPerTextureUnit();
-
-
-        static inline auto init_edgeThicknessFactor() -> float
-        {
-            switch (m_tex_definition)
-            {
-                case TextureDefinition::LowDefinition:
-                    return 0.f; 
-                    break;
-
-                case TextureDefinition::HighDefinition:
-                    return 1.f;
-                    break;
-
-                case TextureDefinition::UltraHighDefinition:
-                    return 4.f;
-                    break;
-
-                default:
-                    throw std::runtime_error("Unexpected texture definition.");
-                    break;
-            }
-        }
-        static inline float const m_edgeThickness_factor = init_edgeThicknessFactor();
 };
 
 using GSet = GraphicsSettings;

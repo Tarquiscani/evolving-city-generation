@@ -462,9 +462,9 @@ void GraphicsManager::generate_tileObjects()
         
         glBindFramebuffer(GL_FRAMEBUFFER, 0); //unbind
 
-
-
         
+
+
         #if GSET_SHOW_EDGE_DETECTION_FBOS_IMPL
             m_textured_viewer.open("Textured scene", m_edfScene_texturedColorTex, m_defaultFbo_size.x, m_defaultFbo_size.y, "");
             m_edgeableIds_viewer.open("EdgeableIds scene", m_edfScene_edgeableIdsTex, m_defaultFbo_size.x, m_defaultFbo_size.y, "edgeable_ids");
@@ -1100,7 +1100,13 @@ void GraphicsManager::drawScene_without_filters()
             m_edgeThickener_shader.bind();
 
         
-            auto edge_thickness = static_cast<int>(std::max<float>(0.f, (m_camera.zoom_level() + GSet::edgeThickness_factor()) / m_camera.zoom_level())); //TODO: Find a better function to compute the edge thickness
+            auto const edge_thickness = GSet::edge_thickness(m_camera.zoom_level()); //TODO: Find a better function to compute the edge thickness
+            //static auto old_edge_thickness = 0;
+            //if (edge_thickness != old_edge_thickness)
+            //{
+            //    g_log << "New edge thickness: " << edge_thickness << " -- zoom_level: " << m_camera.zoom_level() << std::endl;
+            //    old_edge_thickness = edge_thickness;
+            //}
             m_edgeThickener_shader.set_int("u_edge_thickness", edge_thickness);
         
             // Draw the color attachment on the screen
@@ -1110,8 +1116,6 @@ void GraphicsManager::drawScene_without_filters()
 
 
 
-        //TODO: Add another intermediate step to apply an antialias to the m_edfThickenedEdges_colorTex
-        //		beacause at low screen resolutions the edges appear pixelated.
 
 
         

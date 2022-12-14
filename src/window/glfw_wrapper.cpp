@@ -89,6 +89,7 @@ void GLFW::print_monitor_info()
     }
         
     logger << Logger::remt;
+    logger << std::endl;
 }
 
 auto GLFW::print_monitor(Logger & logger, GLFWmonitor * monitor) -> Logger &

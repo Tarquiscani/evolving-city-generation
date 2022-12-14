@@ -50,7 +50,6 @@ auto GraphicsSettings::init_texDefinition() -> TextureDefinition
         throw std::runtime_error("Unexpected screen resolution.");
 }
 
-
 static auto compute_imgui_scale(float const ppi_adjustment) -> float
 {
     if (ppi_adjustment <= 3.1f)	// In case the resolution is 1080p the best scale is 1.f
@@ -70,6 +69,44 @@ auto GraphicsSettings::imgui_scale() -> float
     static float* is_p = new float(compute_imgui_scale(ppi_adjustment())); //a scale value smaller than 1.f produces an ugly output
 
     return *is_p;
+}
+
+auto GraphicsSettings::edge_thickness(float const current_zoom_level) -> int 
+{ 
+    auto thickness = 0.f;
+
+    switch (m_tex_definition)
+    {
+        case TextureDefinition::LowDefinition:
+            // It's a function that fits the following values:
+            // 0.1 -> 6
+            // 0.5 -> 4
+            // 1   -> 2
+            // 3   -> 1
+            thickness = 2.400139f * std::pow(current_zoom_level, -0.4104228f);
+            break;
+
+        case TextureDefinition::HighDefinition:
+            // It's a piecewise-defined function that fits the following values:
+            // 0.1 -> 12
+            // 0.5 -> 8
+            // 1   -> 2
+            // 4   -> 1
+            thickness = current_zoom_level <= 1 ?
+                            -11.14754f  * current_zoom_level + 13.27869f :
+                            -0.1666667f * current_zoom_level + 2.166667f;
+            break;
+
+        case TextureDefinition::UltraHighDefinition:
+            thickness = (current_zoom_level + 6.f) / current_zoom_level;
+            break;
+
+        default:
+            throw std::runtime_error("Unexpected texture definition.");
+            break;
+    }
+
+    return std::roundf(std::clamp(thickness, 1.f, 12.f));
 }
 
 

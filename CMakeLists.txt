@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project (evolving_city_generation)
+project(evolving_city_generation)
 
 
 # CMake print any generated command
@@ -103,7 +103,7 @@ if (OPENGL_FOUND)
     message("link libraries: ${OPENGL_gl_LIBRARY}")
 else (OPENGL_FOUND)
     message("opengl not found")
-endif()
+endif ()
 
 # Setting all options of the GLFW subdirectory CMakeLists
 set(GLFW_USE_HYBRID_HPG ON  CACHE BOOL "Force use of high-performance GPU on hybrid systems" FORCE)
@@ -160,15 +160,18 @@ if (MSVC)
         #target_compile_options(evolving_city_generation PRIVATE /W4 /WX)
         target_compile_options(${TARGET} PRIVATE /W4 )
         # Tell MSVC to use main instead of WinMain and hide the console.
-        set_target_properties(${TARGET} PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
+        if (MULTIPLE_CONFIGURATIONS)
+            set_target_properties(${TARGET} PROPERTIES LINK_FLAGS "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+        endif ()
     endforeach (TARGET)
 
-else()
+else ()
     foreach (TARGET ${BINARIES})
         #target_link_libraries(evolving_city_generation glfw3 -lGL -lGLU -lm -lX11 -lXxf86vm -lXrandr -lpthread -lXi -ldl -lXinerama -lXcursor)
         # lots of warnings and all warnings as errors
         #[[target_compile_options(evolving_city_generation PRIVATE -Wall -Wextra -pedantic -Werror -no-pie)]]
         target_link_options(${TARGET} PRIVATE -no-pie)
     endforeach (TARGET)
-endif()
+endif ()
 
