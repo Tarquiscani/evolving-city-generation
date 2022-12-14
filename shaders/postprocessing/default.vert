@@ -6,7 +6,7 @@ out vec2 vs_tex_coords;
 
 void main()
 {
-	gl_Position = vec4(VAO_pos.x, VAO_pos.y, 0.0, 1.0);
+    gl_Position = vec4(VAO_pos.x, VAO_pos.y, 0.0, 1.0);
 
-	vs_tex_coords = VAO_tex_coords;
+    vs_tex_coords = VAO_tex_coords;
 }

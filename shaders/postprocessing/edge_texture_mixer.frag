@@ -12,7 +12,7 @@ layout (binding = 16) uniform sampler2D u_edfEdges_colorTex;
 void main()
 {
     float edge_strength = texture(u_edfEdges_colorTex, vs_tex_coords).r;
-	vec3 texture = texture(u_edfScene_texturedColorTex, vs_tex_coords).rgb;
+    vec3 texture = texture(u_edfScene_texturedColorTex, vs_tex_coords).rgb;
 
-	fs_frag_color = vec4(texture * edge_strength, 1);
+    fs_frag_color = vec4(texture * edge_strength, 1);
 } 

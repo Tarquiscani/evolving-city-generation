@@ -8,5 +8,5 @@ in vec4 vs_color;
 
 void main()
 {
-	fs_frag_color = vs_color;
+    fs_frag_color = vs_color;
 }

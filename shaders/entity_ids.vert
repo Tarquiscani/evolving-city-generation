@@ -17,11 +17,11 @@ uniform mat4 u_projection;
 
 void main()
 {
-	vs_world_pos = VAO_world_pos;
+    vs_world_pos = VAO_world_pos;
 
     gl_Position = u_projection * u_view * vec4(VAO_world_pos, 1.0);
 
-	vs_tex_coords = VAO_tex_coords;
-	vs_layer = VAO_layer;
-	vs_entity_id = VAO_entity_id;
+    vs_tex_coords = VAO_tex_coords;
+    vs_layer = VAO_layer;
+    vs_entity_id = VAO_entity_id;
 }

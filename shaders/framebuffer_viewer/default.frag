@@ -8,5 +8,5 @@ layout (binding = 0) uniform sampler2D u_texture;
 
 void main()
 {
-	fs_frag_color = texture(u_texture, vs_tex_coords);
+    fs_frag_color = texture(u_texture, vs_tex_coords);
 }
