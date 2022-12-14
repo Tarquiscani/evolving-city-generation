@@ -320,6 +320,8 @@ void GraphicsManager::generate_tileObjects()
     void GraphicsManager::generate_edgeDetectionFilterObjects()
     {
         #if GSET_ALPHA_TO_COVERAGE
+            g_log << "Alpha-to-coverage is enabled" << std::endl;
+
             //--- Generate multisampled edge-detection scene FBO
             glGenFramebuffers(1, &m_edfScene_msFBO);
             glBindFramebuffer(GL_FRAMEBUFFER, m_edfScene_msFBO);
@@ -348,7 +350,7 @@ void GraphicsManager::generate_tileObjects()
                 if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { throw std::runtime_error("The multi-sampled edfScene FBO isn't complete."); }
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        #endif
+        #endif // GSET_ALPHA_TO_COVERAGE
 
 
 

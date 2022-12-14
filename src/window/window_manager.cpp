@@ -455,6 +455,7 @@ void WindowManager::set_contextCreationHints()
     //		 2) This hint just affects the default FBO. And when postprocessing is enabled the default FBO multisampling
     //			doesn't affect the actual scene rendering.
     #if GSET_ALPHA_TO_COVERAGE && !GSET_POSTPROCESSING
+        g_log << "Default framebuffer MSAA enabled" << std::endl;
         glfwWindowHint(GLFW_SAMPLES, GSet::samples);
     #endif
 
