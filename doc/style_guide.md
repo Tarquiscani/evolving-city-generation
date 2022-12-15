@@ -2,19 +2,19 @@ Style Guide
 =====
 
 ### Naming convention 
-* Class and struct -> CamelCase:
+* Class and struct -> *CamelCase*:
 
         class MyClass;
 
-* Functions and methods -> snake_case. This changed during the development, I initially used a messy mixture of snake case and camel case. Then I switched to snake_case only.
+* Functions and methods -> *snake_case*. This changed during the development, I initially used a messy mixture of snake case and camel case. Then I switched to snake_case only.
 
         auto my_func(int const a) -> int;
 
-* Local variables -> snake_case. This changed during the development, I initially used a messy mixture of snake case and camel case. Then I switched to snake_case only.
+* Local variables -> *snake_case*. This changed during the development, I initially used a messy mixture of snake case and camel case. Then I switched to snake_case only.
 
         auto my_var = 3;
 
-* Enums -> CamelCase:
+* Enums -> *CamelCase*:
 
         enum class MyState
         {
@@ -22,7 +22,7 @@ Style Guide
             Busy,
         };
 
-* Global variables -> snake_case, but prepend g_:
+* Global variables -> *snake_case*, but prepend *g_*:
 
         auto constexpr g_my_global_var = 1;
 
@@ -41,7 +41,7 @@ I follow Scott Meyer's proposed practice ["almost always auto"](https://herbsutt
     auto my_instance = MyClass{ 52 };
 
 ### Functions
-I always use the trailing return, but I specify return type explicitly. This allow to have all function names aligned on the left:
+I always use the trailing return, but I specify return type explicitly. This allows to have all function names aligned to the left:
 
     auto my_func(int const a) -> int;
     auto my_func2(int const a) -> MyAbnormallyLargeNamespaceName::MyAbnormallyLargeClassName;
@@ -83,6 +83,6 @@ I agree with the [general opinion](https://softwareengineering.stackexchange.com
         my_func();
     }
 
-Or:
+or:
 
     if (condition) { my_func(); }

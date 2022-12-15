@@ -250,8 +250,8 @@ auto MobileManager::pick_subimageSet(MobileStyle const style) -> MobileSubimageS
         case MobileStyle::TestCharacter:
             return test_character_subimage_set;
             break;
-        case MobileStyle::Fireman:
-            return fireman_subimageSet;
+        case MobileStyle::Warrior:
+            return warrior_subimageSet;
             break;
         default:
             throw std::runtime_error("Trying to pick the texture of a mobile that has an unexpected style.");

@@ -22,7 +22,7 @@ GameMap::GameMap(unsigned const seed, DynamicManager & dynamic_manager, Camera &
                  TileGraphicsMediator & tg_mediator, RoofGraphicsMediator & rg_mediator, AudioManager & audio_manager, GuiEventQueues & gui_events) :
     m_tiles(sim_settings.map.test_length, sim_settings.map.test_width, sim_settings.map.test_height, m_door_events),
     m_random_generator(seed),
-    m_player_body{ 0.64f, {sim_settings.map.test_length / 2.f, sim_settings.map.test_width / 2.f}, sim_settings.map.ground_floor, MobileStyle::TestCharacter },
+    m_player_body{ 0.64f, {sim_settings.map.test_length / 2.f, sim_settings.map.test_width / 2.f}, sim_settings.map.ground_floor, MobileStyle::Warrior },
     player_manager{ m_input_events, m_player_body },
     mobile_manager{m_mobile_events, m_player_body, m_npc_bodies, camera, dynamic_manager, m_tiles, m_buildings, m_door_events },
     door_manager{ m_door_events, m_doors, m_tiles, dynamic_manager, audio_manager },

@@ -18,7 +18,7 @@ enum class MobileStyle
     None,
     Builder,
     TestCharacter,
-    Fireman,
+    Warrior,
 };
 
 class MobileBody
