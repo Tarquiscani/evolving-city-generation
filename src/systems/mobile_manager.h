@@ -53,8 +53,8 @@ class MobileManager
             static inline MobileSubimageSet const warrior_subimageSet{ {0.f, 432.f, 0.f, 432.f}, default_texture_dynamics };
         #else
             static inline MobileSubimageSet const test_character_subimage_set{ { 896.f, 640.f, 1792.f, 1280.f }, default_texture_dynamics };
-            static inline MobileSubimageSet const builder_subimageSet{ { 896.f,   0.f, 1792.f,    0.f }, default_texture_dynamics };
-            static inline MobileSubimageSet const warrior_subimageSet{ { 0.f, 0.f, 0.f, 0.f, 1792.f, 1346.f, 64.f, 82.f }, default_texture_dynamics };
+            static inline MobileSubimageSet const builder_subimageSet{ { 896.f, 0.f, 1792.f, 0.f }, default_texture_dynamics };
+            static inline MobileSubimageSet const warrior_subimageSet{ { 896.f, 673.f, 32.f, 41.f, 1792.f, 1346.f, 64.f, 82.f }, default_texture_dynamics };
         #endif
 
 
