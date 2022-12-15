@@ -68,6 +68,11 @@ void GraphicsManager::init()
     GraphicsManagerCore::print_contextInfos("Main window");
 
 
+    // GLFW call glViewport by default, but sometimes the dimensions of the window are changed by the windows manager and glViewport is
+    // set at the wrong size.
+    glViewport(0, 0, m_defaultFbo_size.x, m_defaultFbo_size.y);
+
+
     //--- Load all the shaders
     m_tile_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
                                              { "main_shader.frag", "discard_utilities.frag" }, 
