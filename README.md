@@ -18,7 +18,7 @@ This was an abandoned project developed between 2018 and 2019 with the main goal
 * [Roof generation algorithm](doc/roof_generation_algorithm/roof_generation_algorithm.md).
 
 ## Download
-The binaries are available on Itch.io.
+The binaries are available on [Itch.io](https://tarquiscani.itch.io/evolving-city-generation).
 
 ## Dependencies
 * OpenGL 4.3 implementation
@@ -36,7 +36,7 @@ The binaries are available on Itch.io.
 * Linux (Clang/GCC)
 
 ## Engine Features
-* Pixel perfect (for Zoom = 1).
+* Pixel perfect on all screens (for Zoom = 1).
 * Support for multiple versions of the same texture, depending on the screen resolution (low-definition, HD, 4K).
 * Support for custom tile dimensions.
 * Automatic conversion of texture atlases in array textures (to avoid sprite bleeding at low mipmap levels).
