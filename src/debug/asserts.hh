@@ -1,7 +1,7 @@
 #ifndef GM_DEBUG_ASSERTS_HH
 #define GM_DEBUG_ASSERTS_HH
 
-
+#undef NDEBUG
 #include <cassert>
 #include <stdexcept>
 #include <type_traits>
