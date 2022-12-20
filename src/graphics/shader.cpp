@@ -1,6 +1,7 @@
 #include "shader.hh"
 
 
+#include "debug/asserts.hh"
 #include "debug/logger/debug_printers.hh"
 #include "debug/logger/log_streams.hh"
 
@@ -77,20 +78,20 @@ void Shader::load_from_multipleFiles(std::vector<std::string> const& vshader_pat
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, static_cast<GLsizei>(vshader_cstrings.size()), vshader_cstrings.data(), NULL);
     glCompileShader(vertex);
-    check_compileErrors(vertex, ShaderType::Vertex);
+    check_compile_errors(vertex, ShaderType::Vertex, vshader_paths);
 
     //Create and compile fragment shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, static_cast<GLsizei>(fshader_cstrings.size()), fshader_cstrings.data(), NULL);
     glCompileShader(fragment);
-    check_compileErrors(fragment, ShaderType::Fragment);
+    check_compile_errors(fragment, ShaderType::Fragment, fshader_paths);
 
     //Create and link shader program
     m_id = glCreateProgram();
     glAttachShader(m_id, vertex);
     glAttachShader(m_id, fragment);
     glLinkProgram(m_id);
-    check_linkingErrors(m_id);
+    check_linking_errors(m_id, vshader_paths, fshader_paths);
     static std::string shader_label = vshader_paths[0];
     glObjectLabel(GL_PROGRAM, m_id, static_cast<GLsizei>(shader_label.size()), shader_label.data());
 
@@ -135,7 +136,7 @@ auto Shader::load_codeChunk(std::string const& path) const -> std::string
 }
 
 
-void Shader::check_compileErrors(GLuint const shader_id, ShaderType const type) const
+void Shader::check_compile_errors(GLuint const shader_id, ShaderType const type, std::vector<std::string> const& paths) const
 {
     GLint success;
     char infoLog[1024];
@@ -145,17 +146,21 @@ void Shader::check_compileErrors(GLuint const shader_id, ShaderType const type) 
     {
         glGetShaderInfoLog(shader_id, 1024, NULL, infoLog);
 
-        g_log << type << " shader compilation error"
-              << "\n------------------------------------------------------\n"
+        g_log << type << " shader compilation error while compiling:";
+        for (auto const& p : paths)
+        {
+            g_log << "\n\t" << p;
+        }
+        g_log << "\n------------------------------------------------------\n"
               << infoLog
               << "\n------------------------------------------------------\n"
               << std::endl;
 
-        throw std::runtime_error("Shader compilation error");
+        check_no_entry();
     }
 }
 
-void Shader::check_linkingErrors(GLuint const program_id) const
+void Shader::check_linking_errors(GLuint const program_id, std::vector<std::string> const& vshader_paths, std::vector<std::string> const& fshader_paths) const
 {
     GLint success;
     char infoLog[1024];
@@ -165,13 +170,21 @@ void Shader::check_linkingErrors(GLuint const program_id) const
     {
         glGetProgramInfoLog(program_id, 1024, NULL, infoLog);
 
-        g_log << "Shader linking error" 
-              << "\n------------------------------------------------------\n"
+        g_log << "Shader linking error while linking:";
+        for (auto const& p : vshader_paths)
+        {
+            g_log << "\n\t" << p;
+        }
+        for (auto const& p : fshader_paths)
+        {
+            g_log << "\n\t" << p;
+        }
+        g_log << "\n------------------------------------------------------\n"
               << infoLog
               << "\n------------------------------------------------------\n" 
               << std::endl;
-
-        throw std::runtime_error("Shader linking error");
+        
+        check_no_entry();
     }
 }
 

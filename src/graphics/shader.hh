@@ -123,8 +123,8 @@ class Shader
         }
 
         auto load_codeChunk(std::string const& path) const -> std::string;
-        void check_compileErrors(GLuint const shader_id, ShaderType const type) const;
-        void check_linkingErrors(GLuint const program_id) const;
+        void check_compile_errors(GLuint const shader_id, ShaderType const type, std::vector<std::string> const& paths) const;
+        void check_linking_errors(GLuint const program_id, std::vector<std::string> const& vshader_paths, std::vector<std::string> const& fshader_paths) const;
 
 
         template <typename T>
