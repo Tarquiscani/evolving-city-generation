@@ -64,9 +64,7 @@ TileSubimages::TileSubimages(Vector2i const pos, int const subimages_count)
 }
 
 BorderBackgroundSubimages::BorderBackgroundSubimages(Vector2i const offset)
-{
-    check(n > 0); check(m > 0);
-    
+{    
     // Relative position of the other border background subimages with respect to the starting one (GIMP texture unit reference system).
     auto const relative_positions = std::map<BorderBackgroundType, Vector2i>{
                 { BorderBackgroundType::NoSides,                {  0, 0} },
@@ -80,6 +78,65 @@ BorderBackgroundSubimages::BorderBackgroundSubimages(Vector2i const offset)
                 { BorderBackgroundType::SideCutBottomRight,     {  8, 0} },
                 { BorderBackgroundType::SideCutBottomLeft,      {  9, 0} },
                 { BorderBackgroundType::SideCutBottomFull,      { 10, 0} }
+            };
+
+    add_subimages(offset, relative_positions);
+            
+    #if DEBUGLOG
+        auto lgr = Logger{ g_log };
+        lgr << "Loaded subimages for this background style: " << m_subimages << std::endl;
+    #endif
+}
+
+BorderSectionSubimages::BorderSectionSubimages(Vector2i const offset)
+{
+    // Relative position of the other border background subimages with respect to the starting one (GIMP texture unit reference system).
+    auto const relative_positions = std::map<BorderSectionType, Vector2i>{
+                { BorderSectionType::NoSection,                                 {  0,  0 } },
+                { BorderSectionType::NoSectionShadowLeft,                       {  0,  1 } },
+                { BorderSectionType::NoSectionShadowRight,                      {  0,  2 } },
+                { BorderSectionType::NoSectionShadowFront,                      {  0,  3 } },
+                { BorderSectionType::NoSectionShadowLeftShadowRight,            {  0,  4 } },
+                { BorderSectionType::NoSectionShadowLeftShadowFront,            {  0,  5 } },
+                { BorderSectionType::NoSectionShadowRightShadowFront,           {  0,  6 } },
+                { BorderSectionType::NoSectionShadowLeftShadowRightShadowFront, {  0,  7 } },
+
+                { BorderSectionType::SectionBehind,                             {  1,  0 } },
+                { BorderSectionType::SectionBehindShadowFront,                  {  1,  1 } },
+                { BorderSectionType::SectionBehindShadowBehind,                 {  1,  2 } },
+                { BorderSectionType::SectionBehindShadowFrontShadowBehind,      {  1,  3 } },
+
+                { BorderSectionType::SectionFront,                              {  2,  0 } },
+                { BorderSectionType::SectionFrontShadowLeft,                    {  2,  1 } },
+                { BorderSectionType::SectionFrontShadowRight,                   {  2,  2 } },
+                { BorderSectionType::SectionFrontShadowLeftShadowRight,         {  2,  3 } },
+
+                { BorderSectionType::SectionBehindFront,                        {  3,  0 } },
+                { BorderSectionType::SectionBehindFrontShadowBehind,            {  3,  1 } },
+
+                { BorderSectionType::SectionBehindLeft,                         {  4,  0 } },
+                { BorderSectionType::SectionBehindLeftShadowFront,              {  4,  1 } },
+
+                { BorderSectionType::SectionBehindRight,                        {  5,  0 } },
+                { BorderSectionType::SectionBehindRightShadowFront,             {  5,  1 } },
+
+                { BorderSectionType::SectionFrontBehindLeft,                    {  6,  0 } },
+                { BorderSectionType::SectionFrontLeft,                          {  6,  1 } },
+
+                { BorderSectionType::SectionFrontBehindRight,                   {  7,  0 } },
+                { BorderSectionType::SectionFrontRight,                         {  7,  1 } },
+
+                { BorderSectionType::SectionBehindRightLeft,                    {  8,  0 } },
+                { BorderSectionType::SectionBehindRightLeftShadowFront,         {  8,  1 } },
+                { BorderSectionType::SectionRightLeft,                          {  8,  2 } },
+                { BorderSectionType::SectionRightLeftShadowFront,               {  8,  3 } },
+                { BorderSectionType::SectionRight,                              {  8,  4 } },
+                { BorderSectionType::SectionRightShadowFront,                   {  8,  5 } },
+                { BorderSectionType::SectionLeft,                               {  8,  6 } },
+                { BorderSectionType::SectionLeftShadowFront,                    {  8,  7 } },
+                
+                { BorderSectionType::SectionFrontBehindRightLeft,               {  9,  0 } },
+                { BorderSectionType::SectionFrontRightLeft,                     {  9,  1 } },
             };
 
     add_subimages(offset, relative_positions);
@@ -149,20 +206,20 @@ void TileVertices::init_polygons()
 
                 // Top-left triangle
                 //top-left vertex
-                m_vertices.push_back({ {wleft,  wtop,    wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wleft,  wtop,    wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
                 //top-right vertex
-                m_vertices.push_back({ {wright, wtop,    wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wright, wtop,    wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
                 //bottom-left vertex
-                m_vertices.push_back({ {wleft,  wbottom, wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wleft,  wbottom, wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
 
 
                 // Bottom-right triangle
                 //top-right vertex
-                m_vertices.push_back({ {wright, wtop,    wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wright, wtop,    wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
                 //bottom-right vertex
-                m_vertices.push_back({ {wright, wbottom, wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wright, wbottom, wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
                 //bottom-left vertex
-                m_vertices.push_back({ {wleft,  wbottom, wz}, {0.f, 0.f}, 0u, entity_id });
+                m_vertices.push_back({ {wleft,  wbottom, wz}, {0.f, 0.f}, {0.f, 0.f}, {0.f, 0.f}, 0u, 0u, 0u, entity_id });
             }
         }
     }
@@ -175,29 +232,34 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
 
     if (is_border)
     {
-        if (border_type.background == BorderBackgroundType::None || border_type.section == BorderSectionType::None /*|| border_type.corner_shadow == BorderCornerShadowType::None*/
-            || border_style == BorderStyle::none)
-        {
-            throw std::runtime_error("border_type or border_style are not properly set.");
-        }
+        // Check that border_type and border_style are properly set
+        check(border_type.background != BorderBackgroundType::None && border_type.section != BorderSectionType::None
+              /*&& border_type.corner_shadow != BorderCornerShadowType::None*/ && border_style != BorderStyle::none);
 
-        auto style_it = border_background_subimages.find(border_style);
-        if (style_it == border_background_subimages.cend())
-        {
-            throw std::runtime_error("No sprites found for this BorderStyle.");
-        }
+        auto background_subimages_it = border_background_subimages.find(border_style);
+        check(background_subimages_it != border_background_subimages.cend())           // No sprites found for this BorderStyle.
+
+        auto section_subimages_it = border_section_subimages.find(border_style);
+        check(section_subimages_it != border_section_subimages.cend())           // No sprites found for this BorderStyle.
                 
         #if GSET_TILESET_TEXARRAY
-            auto tex_layer = style_it->second.get_layer(border_type.background);
+            auto const background_layer = background_subimages_it->second.get_layer(border_type.background);
+            auto const section_layer = section_subimages_it->second.get_layer(border_type.section);
 
-            #if FREE_ASSETS
-                    tex_layer = 1; //transparent tile				
+            #if GSET_ALTERNATIVE_ASSETS
+                    background_layer = 1; //transparent tile			
+                    section_layer = 1;
             #endif
 
-            set_tileTexture(x, y, z, 0.f, 0.f, 1.f, 1.f, tex_layer);			
+            set_tile_texture(x, y, z, 0.f, 0.f, 1.f, 1.f, 0.f, 0.f, 1.f, 1.f, 0.f, 0.f, 1.f, 1.f, background_layer, section_layer, 0u);			
         #else
-            auto tex_subimage = style_it->second.get_subimage(border_type);
-            set_tileTexture(x, y, z, tex_subimage.left, tex_subimage.bottom, tex_subimage.right, tex_subimage.top, 0u);
+            auto const background_subimage = background_subimages_it->second.get_subimage(border_type.background);
+            auto const section_subimage = section_subimages_it->second.get_subimage(border_type.section);
+            set_tile_texture(x, y, z, 
+                             background_subimage.left, background_subimage.bottom, background_subimage.right, background_subimage.top, 
+                             section_subimage.left, section_subimage.bottom, section_subimage.right, section_subimage.top, 
+                             0.f, 0.f, 0.f, 0.f, 
+                             0u, 0u, 0u);
         #endif
     }
     else
@@ -215,28 +277,35 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
 
                 
         #if GSET_TILESET_TEXARRAY
-            auto tex_layer = it->second.get_layer(get_random_0to9(x, y));
+            auto background_layer = it->second.get_layer(get_random_0to9(x, y));
             
-            #if FREE_ASSETS
+            #if GSET_ALTERNATIVE_ASSETS
                 if(tile_type == TileType::ground || tile_type == TileType::underground)
-                    tex_layer = 0;
+                {
+                    background_layer = 0;
+                }
                 else
-                    tex_layer = 1; //transparent tile
+                {
+                    background_layer = 1; //transparent tile
+                }
             #endif
 
-            set_tileTexture(x, y, z, 0.f, 0.f, 1.f, 1.f, tex_layer);
+            set_tile_texture(x, y, z, 0.f, 0.f, 1.f, 1.f, 0.f, 0.f, 1.f, 1.f, 0.f, 0.f, 1.f, 1.f, background_layer, 0u, 0u);
         #else
-            auto tex_subimage = it->second.get_subimage(get_random_0to9(x, y));
+            auto background_subimage = it->second.get_subimage(get_random_0to9(x, y));
         
-            #if FREE_ASSETS
-                    tex_subimage = TextureSubimage(216.f, 0.f, 216.f, 216.f, default_texture_dynamics); //transparent tile
+            #if GSET_ALTERNATIVE_ASSETS
+                    background_subimage = TextureSubimage(216.f, 0.f, 216.f, 216.f, default_texture_dynamics); //transparent tile
                 if(tile_type == TileType::ground || tile_type == TileType::underground)
-                    tex_subimage = TextureSubimage(0.f, 0.f, 216.f, 216.f, default_texture_dynamics);
+                    background_subimage = TextureSubimage(0.f, 0.f, 216.f, 216.f, default_texture_dynamics);
                 else
-                    tex_subimage = TextureSubimage(216.f, 0.f, 216.f, 216.f, default_texture_dynamics); //transparent tile
+                    background_subimage = TextureSubimage(216.f, 0.f, 216.f, 216.f, default_texture_dynamics); //transparent tile
             #endif
 
-            set_tileTexture(x, y, z, tex_subimage.left, tex_subimage.bottom, tex_subimage.right, tex_subimage.top, 0u);			
+            set_tile_texture(x, y, z, 
+                             background_subimage.left, background_subimage.bottom, background_subimage.right, background_subimage.top, 
+                             0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
+                             0u, 0u, 0u);			
         #endif
 
 
@@ -254,7 +323,7 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
         //// and, respectively, from the first quarter of the bottom pixel to the third quarter of the top pixel.
         //// QUARTER PIXEL .|...  -------------->  ...|. QUARTER PIXEL
         //// When running in UHD mode, the result is pixel perfect both for "zoom = 1.0" and for "zoom = 2.0".
-        //set_tileTexture(x, y, z, 0.06109619140625f, 0.93902587890625f, 0.07318115234375f, 0.95111083984375f);  
+        //set_tile_texture(x, y, z, 0.06109619140625f, 0.93902587890625f, 0.07318115234375f, 0.95111083984375f);  
         
 
         //// Defined from the half of the left pixel to the half of the right pixel 
@@ -264,7 +333,7 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
         ////	When running in UHD mode, the result is pixel perfect for "zoom = 2.0" but for "zoom = 1.0", 
         ////	in fact in the latter case only the second half of the first pixel is shown and only the first half 
         ////	of the last pixel, then the 48 pixel in between are stretched to fit the 98 pixel left on the screen.
-        //set_tileTexture(x, y, z, 0.0611572265625f, 0.9390869140625f, 0.0731201171875f, 0.9510498046875f); 
+        //set_tile_texture(x, y, z, 0.0611572265625f, 0.9390869140625f, 0.0731201171875f, 0.9510498046875f); 
 
 
         //// Defined from the beginning of the left pixel to the end of the right pixel 
@@ -273,7 +342,7 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
         ////
         ////	The result it's not good for certain level of zoom. In fact may happen that a pixel outside the subimage is
         ////	picked in the place of the boundary pixel of the subimage.
-        //set_tileTexture(x, y, z, 0.06103515625f, 0.93896484375f, 0.0732421875f, 0.951171875f);  
+        //set_tile_texture(x, y, z, 0.06103515625f, 0.93896484375f, 0.0732421875f, 0.951171875f);  
         //      
 
         //--------------------------
@@ -285,8 +354,14 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
     m_changed_chunks.insert(compute_index(x, y, z) / chunk_size);
 }
 
-void TileVertices::set_tileTexture(int const x, int const y, int const z, 
-                                   float const tex_left, float const tex_bottom, float const tex_right, float const tex_top, GLuint const texarray_layer)
+void TileVertices::set_tile_texture(int const x, int const y, int const z, 
+                                    float const background_sprite_coord_left, float const background_sprite_coord_bottom, 
+                                    float const background_sprite_coord_right, float const background_sprite_coord_top, 
+                                    float const section_sprite_coord_left, float const section_sprite_coord_bottom, 
+                                    float const section_sprite_coord_right, float const section_sprite_coord_top, 
+                                    float const corner_shadow_sprite_coord_left, float const corner_shadow_sprite_coord_bottom, 
+                                    float const corner_shadow_sprite_coord_right, float const corner_shadow_sprite_coord_top, 
+                                    GLuint const background_sprite_layer, GLuint const section_sprite_layer, GLuint const corner_shadow_sprite_layer)
 {
     auto index = compute_index(x, y, z);
 
@@ -295,41 +370,66 @@ void TileVertices::set_tileTexture(int const x, int const y, int const z,
 
     auto starting_vertex = &m_vertices[index];
 
+    for (auto i = 0; i < 6; ++i)
+    {
+        auto & v = starting_vertex[i];
+        v.background_sprite_layer = background_sprite_layer;
+        v.section_sprite_layer = section_sprite_layer;
+        v.corner_shadow_sprite_layer = corner_shadow_sprite_layer;
+    }
 
     //Top-left triangle
     //top-left vertex
     auto & v0 = starting_vertex[0];
-    v0.tex_coords[0] = tex_left;
-    v0.tex_coords[1] = tex_top;
-    v0.layer = texarray_layer;
+    v0.background_sprite_coords[0] = background_sprite_coord_left;
+    v0.background_sprite_coords[1] = background_sprite_coord_top;
+    v0.section_sprite_coords[0] = section_sprite_coord_left;
+    v0.section_sprite_coords[1] = section_sprite_coord_top;
+    v0.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_left;
+    v0.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_top;
     //top-right vertex
     auto & v1 = starting_vertex[1];
-    v1.tex_coords[0] = tex_right;
-    v1.tex_coords[1] = tex_top;
-    v1.layer = texarray_layer;
+    v1.background_sprite_coords[0] = background_sprite_coord_right;
+    v1.background_sprite_coords[1] = background_sprite_coord_top;
+    v1.section_sprite_coords[0] = section_sprite_coord_right;
+    v1.section_sprite_coords[1] = section_sprite_coord_top;
+    v1.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_right;
+    v1.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_top;
     //bottom-left vertex
     auto & v2 = starting_vertex[2];
-    v2.tex_coords[0] = tex_left;
-    v2.tex_coords[1] = tex_bottom;
-    v2.layer = texarray_layer;
+    v2.background_sprite_coords[0] = background_sprite_coord_left;
+    v2.background_sprite_coords[1] = background_sprite_coord_bottom;
+    v2.section_sprite_coords[0] = section_sprite_coord_left;
+    v2.section_sprite_coords[1] = section_sprite_coord_bottom;
+    v2.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_left;
+    v2.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_bottom;
 
             
     // Bottom-right triangle
     //top-right vertex
     auto & v3 = starting_vertex[3];
-    v3.tex_coords[0] = tex_right;
-    v3.tex_coords[1] = tex_top;
-    v3.layer = texarray_layer;
+    v3.background_sprite_coords[0] = background_sprite_coord_right;
+    v3.background_sprite_coords[1] = background_sprite_coord_top;
+    v3.section_sprite_coords[0] = section_sprite_coord_right;
+    v3.section_sprite_coords[1] = section_sprite_coord_top;
+    v3.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_right;
+    v3.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_top;
     //bottom-right vertex
     auto & v4 = starting_vertex[4];
-    v4.tex_coords[0] = tex_right;
-    v4.tex_coords[1] = tex_bottom;
-    v4.layer = texarray_layer;
+    v4.background_sprite_coords[0] = background_sprite_coord_right;
+    v4.background_sprite_coords[1] = background_sprite_coord_bottom;
+    v4.section_sprite_coords[0] = section_sprite_coord_right;
+    v4.section_sprite_coords[1] = section_sprite_coord_bottom;
+    v4.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_right;
+    v4.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_bottom;
     //bottom-left vertex
     auto & v5 = starting_vertex[5];
-    v5.tex_coords[0] = tex_left;
-    v5.tex_coords[1] = tex_bottom;
-    v5.layer = texarray_layer;
+    v5.background_sprite_coords[0] = background_sprite_coord_left;
+    v5.background_sprite_coords[1] = background_sprite_coord_bottom;
+    v5.section_sprite_coords[0] = section_sprite_coord_left;
+    v5.section_sprite_coords[1] = section_sprite_coord_bottom;
+    v5.corner_shadow_sprite_coords[0] = corner_shadow_sprite_coord_left;
+    v5.corner_shadow_sprite_coords[1] = corner_shadow_sprite_coord_bottom;
 }
 
 

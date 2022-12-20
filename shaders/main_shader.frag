@@ -25,8 +25,12 @@ out uint fs_edgeable_id;
 
 #if TILE_SHADER
     in vec3 vs_world_pos;
-    in vec2 vs_tex_coords;
-    flat in uint vs_layer;
+    in vec2 vs_background_sprite_coords;
+    in vec2 vs_section_sprite_coords;
+    in vec2 vs_corner_shadow_coords;
+    flat in uint vs_background_sprite_layer;
+    flat in uint vs_section_sprite_layer;
+    flat in uint vs_corner_shadow_sprite_layer;
 #else
     in vec3 vs_world_pos;
     in vec2 vs_tex_coords;
@@ -68,10 +72,14 @@ void main()
     float ambient_lighting = 0.2;
     float diffuse_lighting = dot( normalize(u_frag_normal), normalize(u_light_position) );
 
-    #if TILE_SHADER && GSET_TILESET_TEXARRAY
-        fs_textured_frag_color = texture(u_texture, vec3(vs_tex_coords, vs_layer));
-
-    #elif EDGEABLE_IDS
+#if TILE_SHADER 
+    #if GSET_TILESET_TEXARRAY
+        fs_textured_frag_color = texture(u_texture, vec3(vs_background_sprite_coords, vs_background_sprite_layer));
+    #else
+        fs_textured_frag_color = texture(u_texture, vs_background_sprite_coords);        
+    #endif
+#else
+    #if EDGEABLE_IDS
         // The roof texture use mipmaps, however the LODs between 0.f and 4.3f are forced to be 0.f. So the mipmap comes into play only when the 
         // distance from the camera is really long. This is because sampling the base texture produces a better visual output compared to the generated mipmap.
 
@@ -88,6 +96,7 @@ void main()
     #else
         fs_textured_frag_color = texture(u_texture, vs_tex_coords);
     #endif
+#endif
         
 
     fs_textured_frag_color.xyz *= min(1, diffuse_lighting + ambient_lighting); //each inclination of the roof has a different shadow. If affects only the RGB channels, and not the alpha one.
@@ -118,7 +127,11 @@ void main()
 
 vec4 show_LOD(vec4 color)
 {
+#if TILE_SHADER
+    float LOD = textureQueryLod(u_texture, vs_background_sprite_coords).y;
+#else
     float LOD = textureQueryLod(u_texture, vs_tex_coords).y;
+#endif
 
     if(LOD > 1.f)
     {

@@ -13,8 +13,8 @@
 out uint fs_entity_id;
 
 in vec3 vs_world_pos;
-in vec2 vs_tex_coords;
-flat in uint vs_layer;
+in vec2 vs_background_sprite_coords;
+flat in uint vs_background_sprite_layer;
 flat in uint vs_entity_id;
 
 #if GSET_TILESET_TEXARRAY
@@ -40,9 +40,9 @@ vec4 discard_if_abovePlayerCircle(vec4 color);
 void main()
 {
     #if GSET_TILESET_TEXARRAY
-        vec4 tex_color = texture(u_texture, vec3(vs_tex_coords, vs_layer));
+        vec4 tex_color = texture(u_texture, vec3(vs_background_sprite_coords, vs_background_sprite_layer));
     #else
-        vec4 tex_color = texture(u_texture, vs_tex_coords);
+        vec4 tex_color = texture(u_texture, vs_background_sprite_coords);
     #endif
 
     // Alpha-test

@@ -36,9 +36,13 @@ struct TilesetVertexData
 {
     float position[3];
 
-    float tex_coords[2];
+    float background_sprite_coords[2];
+    float section_sprite_coords[2];
+    float corner_shadow_sprite_coords[2];
 
-    uint layer;
+    uint background_sprite_layer;
+    uint section_sprite_layer;
+    uint corner_shadow_sprite_layer;
 
     uint entity_ID;
 };

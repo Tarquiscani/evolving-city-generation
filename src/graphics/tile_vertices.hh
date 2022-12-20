@@ -47,8 +47,10 @@ class Subimages
         }
 
     protected:
-        void add_subimages(Vector2i const offset, std::map<T, Vector2i> const relative_positions)
+        void add_subimages(Vector2i const offset, std::map<T, Vector2i> const& relative_positions)
         {
+            check(offset.x >= 0); check(offset.y >= 0);
+
             auto const pptxu = GSet::pptxu();
 
             #if GSET_TILESET_TEXARRAY 
@@ -273,7 +275,7 @@ class TileVertices
         static inline std::map<TileType, TileSubimages> flat_sprites = {
                 //{ TileType::ground,		 { { 5,  4}, 10 }  },
                 { TileType::ground,		 { { 0,  4}, 10 }  },
-                { TileType::underground, { {25,  8}, 10 }  },
+                { TileType::underground, { { 5,  4}, 10 }  },
                 { TileType::sky,		 { {22, 24}, 10 }  },
                 { TileType::wooden,      { { 0,  6}, 10 }  },
                 { TileType::grout,		 { { 5,  6}, 10 }  }
@@ -281,6 +283,10 @@ class TileVertices
 
         static inline auto border_background_subimages = std::map<BorderStyle, BorderBackgroundSubimages>{
                 {BorderStyle::brickWall, Vector2i{ 0, 9 } }
+            };
+
+        static inline auto border_section_subimages = std::map<BorderStyle, BorderSectionSubimages>{
+                {BorderStyle::brickWall, Vector2i{ 0, 10 } }
             };
 
         
@@ -297,8 +303,14 @@ class TileVertices
         ////
         //  @tex_left, @tex_bottom, @tex_right, @tex_top: OpenGL-like coordinates.
         ////
-        void set_tileTexture(int const x, int const y, int const z, 
-                             float const tex_left, float const tex_bottom, float const tex_right, float const tex_top, GLuint const texarray_layer);
+        void set_tile_texture(int const x, int const y, int const z, 
+                              float const background_sprite_coord_left, float const background_sprite_coord_bottom, 
+                              float const background_sprite_coord_right, float const background_sprite_coord_top, 
+                              float const section_sprite_coord_left, float const section_sprite_coord_bottom, 
+                              float const section_sprite_coord_right, float const section_sprite_coord_top, 
+                              float const corner_shadow_sprite_coord_left, float const corner_shadow_sprite_coord_bottom, 
+                              float const corner_shadow_sprite_coord_right, float const corner_shadow_sprite_coord_top, 
+                              GLuint const background_sprite_layer, GLuint const section_sprite_layer, GLuint const corner_shadow_sprite_layer);
 
         auto compute_index(int const x, int const y, int const z) const noexcept -> VertCont::size_type
         {

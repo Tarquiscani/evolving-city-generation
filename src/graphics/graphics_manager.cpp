@@ -75,17 +75,17 @@ void GraphicsManager::init()
 
     //--- Load all the shaders
     m_tile_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
-                                             { "main_shader.frag", "discard_utilities.frag" }, 
-                                             {
-                                                {"SHOW_LOD", "0 //false"},
-                                                {"EDGEABLE_IDS", "0 //false"},
-                                                {"TILE_SHADER", "1 //true"},
-    #if GSET_TILESET_TEXARRAY
-                                                {"GSET_TILESET_TEXARRAY", "1 //true"}
-    #else
-                                                {"GSET_TILESET_TEXARRAY", "0 //false"}
-    #endif
-                                             }												);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
+                                               { "main_shader.frag", "discard_utilities.frag" }, 
+                                               {
+                                                   {"SHOW_LOD", "0 //false"},
+                                                   {"EDGEABLE_IDS", "0 //false"},
+                                                   {"TILE_SHADER", "1 //true"},
+ #if GSET_TILESET_TEXARRAY
+                                                   {"GSET_TILESET_TEXARRAY", "1 //true"}
+ #else
+                                                   {"GSET_TILESET_TEXARRAY", "0 //false"}
+ #endif
+                                               }												);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
 
     m_dynamic_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
                                                 { "main_shader.frag", "discard_utilities.frag" },
@@ -98,33 +98,33 @@ void GraphicsManager::init()
     m_edgeableIds_main_shader.load_from_multipleFiles({ "main_shader.vert" }, 
                                                       { "main_shader.frag", "discard_utilities.frag" },
                                                       {
-                                                            {"SHOW_LOD", "0 //false"},
-                                                            {"EDGEABLE_IDS", "1 //true"},
-                                                            {"TILE_SHADER", "0 //false"},
+                                                          {"SHOW_LOD", "0 //false"},
+                                                          {"EDGEABLE_IDS", "1 //true"},
+                                                          {"TILE_SHADER", "0 //false"},
                                                       }										);			//Don't use boolean literals with GLSL preprocessor directives, they aren't supported.
     
-    #if GSET_OCCLUSION_CULLING
-        m_entityIds_shader.load_from_multipleFiles({ "entity_ids.vert" }, 
-                                                   { "entity_ids.frag","discard_utilities.frag" },
-                                                   {
+#if GSET_OCCLUSION_CULLING
+    m_entityIds_shader.load_from_multipleFiles({ "entity_ids.vert" }, 
+                                               { "entity_ids.frag","discard_utilities.frag" },
+                                               {
     #if GSET_TILESET_TEXARRAY
-                                                        {"GSET_TILESET_TEXARRAY", "1 //true"}
+                                                   {"GSET_TILESET_TEXARRAY", "1 //true"}
     #else
-                                                        {"GSET_TILESET_TEXARRAY", "0 //false"}
+                                                   {"GSET_TILESET_TEXARRAY", "0 //false"}
     #endif
-                                                   });
-        m_visibleBufferBuilder_shader.load("visible_buffer_builder.vert", "visible_buffer_builder.frag");
-    #endif
+                                               });
+    m_visibleBufferBuilder_shader.load("visible_buffer_builder.vert", "visible_buffer_builder.frag");
+#endif
 
-    #if GSET_EDGE_DETECTION_FILTER
-        m_edgeDetector_shader.load("postprocessing/default.vert", "postprocessing/edge_detector.frag");
-        m_edgeThickener_shader.load("postprocessing/default.vert", "postprocessing/erosion.frag");
-        m_edgeTextureMixer_shader.load("postprocessing/default.vert", "postprocessing/edge_texture_mixer.frag");
-    #endif
+#if GSET_EDGE_DETECTION_FILTER
+    m_edgeDetector_shader.load("postprocessing/default.vert", "postprocessing/edge_detector.frag");
+    m_edgeThickener_shader.load("postprocessing/default.vert", "postprocessing/erosion.frag");
+    m_edgeTextureMixer_shader.load("postprocessing/default.vert", "postprocessing/edge_texture_mixer.frag");
+#endif
         
-    #if GSET_OVERDRAW_MODE
-        m_overdraw_screenShader.load("postprocessing/default.vert", "postprocessing/overdraw.frag");
-    #endif
+#if GSET_OVERDRAW_MODE
+    m_overdraw_screenShader.load("postprocessing/default.vert", "postprocessing/overdraw.frag");
+#endif
 
 
     generate_objects();
@@ -305,18 +305,30 @@ void GraphicsManager::generate_tileObjects()
             static char const tile_VBO_label[] = "tile_VBO";
             glObjectLabel(GL_BUFFER, m_tile_VBO, sizeof(tile_VBO_label), tile_VBO_label);
 
-            // world position attribute
+            // World position attribute
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), nullptr);
             glEnableVertexAttribArray(0);
-            // texture coord attribute
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, tex_coords)));
+            // Background sprite coord attribute
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, background_sprite_coords)));
             glEnableVertexAttribArray(1);
-            // layer attribute
-            glVertexAttribIPointer(2, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, layer)));
+            // Section sprite coord attribute
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, section_sprite_coords)));
             glEnableVertexAttribArray(2);
-            // entity_id attribute
-            glVertexAttribIPointer(3, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, entity_id)));
+            // Corner shadow sprite coord attribute
+            glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, corner_shadow_sprite_coords)));
             glEnableVertexAttribArray(3);
+            // Background sprite layer attribute
+            glVertexAttribIPointer(4, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, background_sprite_layer)));
+            glEnableVertexAttribArray(4);
+            // Section sprite layer attribute
+            glVertexAttribIPointer(5, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, section_sprite_layer)));
+            glEnableVertexAttribArray(5);
+            // Corner shadow sprite layer attribute
+            glVertexAttribIPointer(6, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, corner_shadow_sprite_layer)));
+            glEnableVertexAttribArray(6);
+            // entity_id attribute
+            glVertexAttribIPointer(7, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, entity_id)));
+            glEnableVertexAttribArray(7);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0); 
     glBindVertexArray(0); 
@@ -689,15 +701,27 @@ void GraphicsManager::generate_tileObjects()
                 // world position attribute
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), nullptr);
                 glEnableVertexAttribArray(0);
-                // texture coord attribute
-                glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, tex_coords)));
+                // Background sprite coord attribute
+                glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, background_sprite_coords)));
                 glEnableVertexAttribArray(1);
-                // layer attribute
-                glVertexAttribIPointer(2, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, layer)));
+                // Background sprite coord attribute
+                glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, section_sprite_coords)));
                 glEnableVertexAttribArray(2);
-                // entity_id attribute
-                glVertexAttribIPointer(3, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, entity_id)));
+                // Background sprite coord attribute
+                glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, corner_shadow_sprite_coords)));
                 glEnableVertexAttribArray(3);
+                // layer attribute
+                glVertexAttribIPointer(4, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, background_sprite_layer)));
+                glEnableVertexAttribArray(4);
+                // layer attribute
+                glVertexAttribIPointer(5, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, section_sprite_layer)));
+                glEnableVertexAttribArray(5);
+                // layer attribute
+                glVertexAttribIPointer(6, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, corner_shadow_sprite_layer)));
+                glEnableVertexAttribArray(6);
+                // entity_id attribute
+                glVertexAttribIPointer(7, 1, GL_UNSIGNED_INT, sizeof(TilesetVertexData), (void*)(offsetof(TilesetVertexData, entity_id)));
+                glEnableVertexAttribArray(7);
                 
                 glBindBufferBase(GL_SHADER_STORAGE_BUFFER, visibleTileBufferSSBO_unit, m_visibleTile_buffer);
 

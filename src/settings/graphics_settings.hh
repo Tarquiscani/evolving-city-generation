@@ -59,7 +59,7 @@
 
 ////
 //  When enabled it avoids that hidden polygons are drawn each frame, computing their visibility in advance.
-//  It's an experimental feature, not really optimized, and only works with tiles. And it hasn't been maintained or tested for a while.
+//  It's an experimental feature, not really optimized, and only works with tiles.
 //  Default: false. Turning it on decreases the performance a bit.
 ////
 #define GSET_OCCLUSION_CULLING false
