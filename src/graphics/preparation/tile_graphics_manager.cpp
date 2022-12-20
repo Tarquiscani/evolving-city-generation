@@ -247,7 +247,7 @@ auto TileGraphicsManager::compute_border_type(int const neighbor_signature, int 
 
         case 0b11'00'00:
             ret.background = BorderBackgroundType::NoSides;
-            ret.section = BorderSectionType::SectionRightLeft;
+            ret.section = BorderSectionType::SectionRightLeftShadowFront;
             break;
         case 0b11'00'01:
             ret.background = BorderBackgroundType::NoSides;

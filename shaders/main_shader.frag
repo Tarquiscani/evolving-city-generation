@@ -65,6 +65,7 @@ uniform vec2 u_viewport;
 
 vec4 discard_if_abovePlayerArea(vec4 color);
 vec4 discard_if_abovePlayerCircle(vec4 color);
+vec4 blend(vec4 background_color, vec4 section_color, vec4 corner_shadow_color);
 vec4 show_LOD(vec4 color);
 
 void main()
@@ -74,10 +75,16 @@ void main()
 
 #if TILE_SHADER 
     #if GSET_TILESET_TEXARRAY
-        fs_textured_frag_color = texture(u_texture, vec3(vs_background_sprite_coords, vs_background_sprite_layer));
+        vec4 background_color = texture(u_texture, vec3(vs_background_sprite_coords, vs_background_sprite_layer));
+        vec4 section_color = texture(u_texture, vec3(vs_section_sprite_coords, vs_section_sprite_layer));
+        vec4 corner_shadow_color;
     #else
-        fs_textured_frag_color = texture(u_texture, vs_background_sprite_coords);        
+        vec4 background_color = texture(u_texture, vs_background_sprite_coords);
+        vec4 section_color = texture(u_texture, vs_section_sprite_coords);
+        vec4 corner_shadow_color;
     #endif
+
+    fs_textured_frag_color = blend(background_color, section_color, corner_shadow_color);
 #else
     #if EDGEABLE_IDS
         // The roof texture use mipmaps, however the LODs between 0.f and 4.3f are forced to be 0.f. So the mipmap comes into play only when the 
@@ -124,6 +131,19 @@ void main()
     #endif
 }
 
+
+vec4 blend(vec4 background_color, vec4 section_color, vec4 corner_shadow_color)
+{
+    vec4 ret;
+
+    background_color.rgb *= background_color.a;   // Pre-multiply
+    section_color.rgb    *= section_color.a;      // Pre-multiply
+        
+    ret.rgb = section_color.rgb + (background_color.rgb * (1.0 - section_color.a));       
+    ret.a   = section_color.a   + (background_color.a   * (1.0 - section_color.a));
+
+    return ret;
+}
 
 vec4 show_LOD(vec4 color)
 {
