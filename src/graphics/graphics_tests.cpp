@@ -31,13 +31,13 @@ namespace tests
         #endif
 
         /*
-            tile_vertices.set_tileGraphics(4, 4, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(4, 5, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(5, 4, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(5, 5, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(5, 6, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(6, 5, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
-            tile_vertices.set_tileGraphics(6, 6, 30, false, TileType::ground, BorderType::none, BorderStyle::none);
+            tile_vertices.set_tileGraphics(4, 4, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(4, 5, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(5, 4, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(5, 5, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(5, 6, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(6, 5, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
+            tile_vertices.set_tileGraphics(6, 6, 30, false, TileType::ground, BorderType{}, BorderStyle::none);
         */
 
         /*

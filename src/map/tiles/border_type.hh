@@ -9,39 +9,130 @@ namespace tgm
 {
 
 
-
-enum class BorderType
+    
+enum class BorderBackgroundType
 {
-    none,
+    None,
 
-    // No branch
-    solo,
+    // NoSides
+    NoSides,
 
-    // One branch
-    N,
-    E,
-    S,
-    W,
+    // SideCutTopShort
+    SideCutTopShortLeft,
+    SideCutTopShortRight,
+    SideCutTopShortFull,
 
-    // Two branches
-    NS,
-    EW,
-    NE,
-    ES,
-    SW,
-    NW,
+    // SideCutTopLong
+    SideCutTopLongLeft,
+    SideCutTopLongRight,
+    SideCutTopLongFull,
 
-    //three branches
-    NEW,
-    NES,
-    NSW,
-    ESW,
-
-    //four branches
-    NESW,
+    // Sides
+    SideFull,
+    SideCutBottomRight,
+    SideCutBottomLeft,
+    SideCutBottomFull,
 };
 
-auto operator<<(std::ostream & os, BorderType type) -> std::ostream &;
+enum class BorderSectionType
+{
+    None,
+
+    // NoSection
+    NoSection,
+    NoSectionShadowLeft,
+    NoSectionShadowRight,
+    NoSectionShadowFront,
+    NoSectionShadowLeftShadowRight,
+    NoSectionShadowLeftShadowFront,
+    NoSectionShadowRightShadowFront,
+    NoSectionShadowLeftShadowRightShadowFront,
+
+    // SectionBehind
+    SectionBehind,
+    SectionBehindShadowFront,
+    SectionBehindShadowBehind,
+    SectionBehindShadowFrontShadowBehind,
+
+    // SectionFront
+    SectionFront,
+    SectionFrontShadowLeft,
+    SectionFrontShadowRight,
+    SectionFrontShadowLeftShadowRight,
+
+    // SectionBehindFront
+    SectionBehindFront,
+    SectionBehindFrontShadowBehind,
+
+    // SectionBehindLeft
+    SectionBehindLeft,
+    SectionBehindLeftShadowFront,
+
+    // SectionBehindRight
+    SectionBehindRight,
+    SectionBehindRightShadowFront,
+
+    // SectionFrontLeft
+    SectionFrontBehindLeft,
+    SectionFrontLeft,
+
+    // SectionFrontRight
+    SectionFrontBehindRight,
+    SectionFrontRight,
+
+    // SectionRightLeft
+    SectionBehindRightLeft,
+    SectionBehindRightLeftShadowFront,
+    SectionRightLeft,
+    SectionRightLeftShadowFront,
+    SectionRight,
+    SectionRightShadowFront,
+    SectionLeft,
+    SectionLeftShadowFront,
+
+    // SectionFrontRightLeft
+    SectionFrontBehindRightLeft,
+    SectionFrontRightLeft,
+};
+
+enum class BorderCornerShadowType
+{
+    None,
+
+    // 1 shadow
+    CornerLeft,
+    CornerRight,
+    ShortLeft,
+    ShortRight,
+
+    // 2 shadows
+    CornerLeftCornerRight,
+    CornerLeftShortLeft,
+    CornerLeftShortRight,
+    CornerRightShortLeft,
+    CornerRightShortRight,
+    ShortLeftShortRight,
+
+    // 3 shadows
+    CornerLeftCornerRightShortLeft,
+    CornerLeftCornerRightShortRight,
+    CornerLeftShortLeftShortRight,
+    CornerRightShortLeftShortRight,
+
+    // 4 shadows
+    Full,
+};
+
+struct BorderType
+{
+    BorderBackgroundType background = BorderBackgroundType::None;
+    BorderSectionType section = BorderSectionType::None;
+    BorderCornerShadowType corner_shadow = BorderCornerShadowType::None;
+};
+
+auto operator<<(std::ostream & os, BorderBackgroundType const type) -> std::ostream &;
+auto operator<<(std::ostream & os, BorderSectionType const type) -> std::ostream &;
+auto operator<<(std::ostream & os, BorderCornerShadowType const type) -> std::ostream &;
 
 
 

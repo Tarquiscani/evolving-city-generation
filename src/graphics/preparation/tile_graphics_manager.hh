@@ -31,7 +31,7 @@ class TileGraphicsManager
 
         void compute_tileGraphics(TileSet const& tiles, int const x, int const y, int const z, bool const recursive_on_neighbors = true);
 
-        static auto compute_borderType(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border) -> BorderType;
+        static auto compute_border_type(int const neighbor_signature, int const shadow_neighbor_signature) -> BorderType;
         static void computeTileGraphics_error(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border);
 };
 

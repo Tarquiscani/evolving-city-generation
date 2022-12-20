@@ -45,7 +45,7 @@ void TileGraphicsManager::prepare(GameMap const& simulation)
             else
             {
                 auto const& t = tiles.get_existent(pos);
-                m_tile_vertices.set_tileGraphics(pos.x, pos.y, pos.z, false, t.get_type(), BorderType::none, BorderStyle::none);
+                m_tile_vertices.set_tileGraphics(pos.x, pos.y, pos.z, false, t.get_type(), BorderType{}, BorderStyle::none);
             }
         }
 
@@ -61,7 +61,7 @@ void TileGraphicsManager::prepare(GameMap const& simulation)
         auto const& [pos, style] = *debug_tileStyle_change;
         if (simulation.tiles().contains(pos))
         {
-            m_tile_vertices.set_tileGraphics(pos.x, pos.y, pos.z, false, style, BorderType::none, BorderStyle::none); 
+            m_tile_vertices.set_tileGraphics(pos.x, pos.y, pos.z, false, style, BorderType{}, BorderStyle::none);
         }
     }
     m_mediator.debug_tileStyleChange_acquired();
@@ -82,16 +82,19 @@ void TileGraphicsManager::compute_tileGraphics(TileSet const& tiles, int const x
 
     if (!t.is_border() || t.is_door())
     {
-        m_tile_vertices.set_tileGraphics(x, y, z, false, t.get_type(), BorderType::none, BorderStyle::none);
+        m_tile_vertices.set_tileGraphics(x, y, z, false, t.get_type(), BorderType{}, BorderStyle::none);
     }
     else
     {
-        bool const is_N_border = N_tile && N_tile->is_border() && !N_tile->is_door(),
-                   is_E_border = E_tile && E_tile->is_border() && !E_tile->is_door(),
-                   is_S_border = S_tile && S_tile->is_border() && !S_tile->is_door(),
-                   is_W_border = W_tile && W_tile->is_border() && !W_tile->is_door();
+        auto neighbor_signature = 0;
+        auto shadow_neighbor_signature = 0;
+        
+        neighbor_signature |= (S_tile && S_tile->is_border() && !S_tile->is_door()) ? 0b00'01'00 : 0;
+        neighbor_signature |= (N_tile && N_tile->is_border() && !N_tile->is_door()) ? 0b00'10'00 : 0;
+        neighbor_signature |= (E_tile && E_tile->is_border() && !E_tile->is_door()) ? 0b01'00'00 : 0;
+        neighbor_signature |= (W_tile && W_tile->is_border() && !W_tile->is_door()) ? 0b10'00'00 : 0;
 
-        auto const border_type = compute_borderType(is_N_border, is_E_border, is_S_border, is_W_border);
+        auto const border_type = compute_border_type(neighbor_signature, shadow_neighbor_signature);
 
         m_tile_vertices.set_tileGraphics(x, y, z, true, TileType::none, border_type, t.border_style());
     }
@@ -106,93 +109,185 @@ void TileGraphicsManager::compute_tileGraphics(TileSet const& tiles, int const x
 }
 
 
-auto TileGraphicsManager::compute_borderType(bool const is_N_border, bool const is_E_border, bool const is_S_border, bool const is_W_border) -> BorderType
+auto TileGraphicsManager::compute_border_type(int const neighbor_signature, int const shadow_neighbor_signature) -> BorderType
 {
-    // solo
-    if		(!is_N_border && !is_E_border && !is_S_border && !is_W_border)
+    auto ret = BorderType{};
+
+    switch (neighbor_signature)
     {
-        return BorderType::solo;
+        case 0b00'00'00:
+            ret.background = BorderBackgroundType::SideCutTopShortFull;
+            ret.section = BorderSectionType::SectionBehindShadowFrontShadowBehind;
+            break;
+        case 0b00'00'01:
+            ret.background = BorderBackgroundType::SideCutTopLongFull;
+            ret.section = BorderSectionType::SectionBehindShadowBehind;
+            break;
+        case 0b00'00'10:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowLeftShadowRightShadowFront;
+            break;
+        case 0b00'00'11:
+        case 0b00'10'11:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowLeftShadowRight;
+            break;
+        case 0b00'01'00:
+        case 0b00'01'01:
+            ret.background = BorderBackgroundType::SideFull;
+            ret.section = BorderSectionType::SectionBehindFrontShadowBehind;
+            break;
+        case 0b00'01'10:
+        case 0b00'01'11:
+        case 0b00'11'10:
+        case 0b00'11'11:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFrontShadowLeftShadowRight;
+            break;
+        case 0b00'10'00:
+            ret.background = BorderBackgroundType::SideCutTopShortFull;
+            ret.section = BorderSectionType::SectionBehindShadowFront;
+            break;
+        case 0b00'10'01:
+            ret.background = BorderBackgroundType::SideCutTopLongFull;
+            ret.section = BorderSectionType::SectionBehind;
+            break;
+        case 0b00'11'00:
+        case 0b00'11'01:
+            ret.background = BorderBackgroundType::SideFull;
+            ret.section = BorderSectionType::SectionBehindFront;
+            break;
+
+
+        case 0b01'00'00:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionRightShadowFront;
+            break;
+        case 0b01'00'01:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionRight;
+            break;
+        case 0b01'00'10:
+        case 0b01'10'10:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowLeftShadowFront;
+            break;
+        case 0b01'00'11:
+        case 0b01'10'11:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowLeft;
+            break;
+        case 0b01'01'00:
+        case 0b01'01'01:
+            ret.background = BorderBackgroundType::SideCutBottomRight;
+            ret.section = BorderSectionType::SectionFrontRight;
+            break;
+        case 0b01'01'10:
+        case 0b01'01'11:
+        case 0b01'11'10:
+        case 0b01'11'11:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFrontShadowLeft;
+            break;
+        case 0b01'10'00:
+            ret.background = BorderBackgroundType::SideCutTopShortLeft;
+            ret.section = BorderSectionType::SectionBehindRightShadowFront;
+            break;
+        case 0b01'10'01:
+            ret.background = BorderBackgroundType::SideCutTopShortLeft;
+            ret.section = BorderSectionType::SectionBehindRight;
+            break;
+        case 0b01'11'00:
+            ret.background = BorderBackgroundType::SideCutBottomRight;
+            ret.section = BorderSectionType::SectionFrontBehindRight;
+            break;
+
+
+        case 0b10'00'00:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionLeftShadowFront;
+            break;
+        case 0b10'00'01:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionLeft;
+            break;
+        case 0b10'00'10:
+        case 0b10'10'10:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowRightShadowFront;
+            break;
+        case 0b10'00'11:
+        case 0b10'10'11:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowRight;
+            break;
+        case 0b10'01'00:
+        case 0b10'01'01:
+            ret.background = BorderBackgroundType::SideCutBottomLeft;
+            ret.section = BorderSectionType::SectionFrontLeft;
+            break;
+        case 0b10'01'10:
+        case 0b10'01'11:
+        case 0b10'11'10:
+        case 0b10'11'11:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFrontShadowRight;
+            break;
+        case 0b10'10'00:
+        case 0b10'10'01:
+            ret.background = BorderBackgroundType::SideCutTopShortRight;
+            ret.section = BorderSectionType::SectionBehindLeftShadowFront;
+            break;
+        case 0b10'11'00:
+        case 0b10'11'01:
+            ret.background = BorderBackgroundType::SideCutBottomLeft;
+            ret.section = BorderSectionType::SectionFrontBehindLeft;
+            break;
+
+
+        case 0b11'00'00:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionRightLeft;
+            break;
+        case 0b11'00'01:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionFrontRightLeft;
+            break;
+        case 0b11'00'10:
+        case 0b11'10'10:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSectionShadowFront;
+            break;
+        case 0b11'00'11:
+        case 0b11'10'11:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::NoSection;
+            break;
+        case 0b11'01'00:
+        case 0b11'01'01:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFrontRightLeft;
+            break;
+        case 0b11'01'10:
+        case 0b11'01'11:
+        case 0b11'11'10:
+        case 0b11'11'11:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFront;
+            break;
+        case 0b11'10'00:
+        case 0b11'10'01:
+            ret.background = BorderBackgroundType::NoSides;
+            ret.section = BorderSectionType::SectionBehindRightLeftShadowFront;
+            break;
+        case 0b11'11'00:
+        case 0b11'11'01:
+            ret.background = BorderBackgroundType::SideCutBottomFull;
+            ret.section = BorderSectionType::SectionFrontBehindRightLeft;
+            break;
     }
-    // N
-    else if ( is_N_border && !is_E_border && !is_S_border && !is_W_border)
-    {
-        return BorderType::N;
-    }
-    // E
-    else if (!is_N_border &&  is_E_border && !is_S_border && !is_W_border)
-    {
-        return BorderType::E;
-    }
-    // S
-    else if (!is_N_border && !is_E_border &&  is_S_border && !is_W_border)
-    {
-        return BorderType::S;
-    }
-    // W
-    else if (!is_N_border && !is_E_border && !is_S_border &&  is_W_border)
-    {
-        return BorderType::W;
-    }
-    // NS
-    else if (is_N_border && !is_E_border &&  is_S_border && !is_W_border)
-    {
-        return BorderType::NS;
-    }
-    // EW
-    else if (!is_N_border &&  is_E_border && !is_S_border &&  is_W_border)
-    {
-        return BorderType::EW;
-    }
-    // ES
-    else if (!is_N_border &&  is_E_border &&  is_S_border && !is_W_border)
-    {
-        return BorderType::ES;
-    }
-    // SW
-    else if (!is_N_border && !is_E_border &&  is_S_border &&  is_W_border)
-    {
-        return BorderType::SW;
-    }
-    // NW
-    else if ( is_N_border && !is_E_border && !is_S_border &&  is_W_border)
-    {
-        return BorderType::NW;
-    }
-    // NE
-    else if ( is_N_border &&  is_E_border && !is_S_border && !is_W_border)
-    {
-        return BorderType::NE;
-    }
-    // NES
-    else if (is_N_border &&  is_E_border &&  is_S_border && !is_W_border)
-    {
-        return BorderType::NES;
-    }
-    // NEW
-    else if ( is_N_border &&  is_E_border && !is_S_border &&  is_W_border)
-    {
-        return BorderType::NEW;
-    }
-    // NSW
-    else if ( is_N_border && !is_E_border &&  is_S_border &&  is_W_border)
-    {
-        return BorderType::NSW;
-    }
-    // ESW
-    else if (!is_N_border &&  is_E_border &&  is_S_border &&  is_W_border)
-    {
-        return BorderType::ESW;
-    }
-    // NESW
-    else if ( is_N_border &&  is_E_border &&  is_S_border &&  is_W_border)
-    {
-        return BorderType::NESW;
-    }
-    else
-    {
-        computeTileGraphics_error(is_N_border, is_E_border, is_S_border, is_W_border);
-        return BorderType::none;
-    }
+
+    return ret;
 }
 
 void TileGraphicsManager::computeTileGraphics_error(bool const is_N_border,  bool const is_E_border,   bool const is_S_border,  bool const is_W_border)

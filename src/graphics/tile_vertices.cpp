@@ -1,10 +1,11 @@
 #include "tile_vertices.hh"
 
 
-
 #include <random>
 
 #include "map/direction.h"
+
+#include "debug/asserts.hh"
 
 
 namespace tgm
@@ -61,141 +62,30 @@ TileSubimages::TileSubimages(Vector2i const pos, int const subimages_count)
     #endif
 }
 
-
-
-BorderSubimages::BorderSubimages(int const n, int const m)
+BorderBackgroundSubimages::BorderBackgroundSubimages(Vector2i const offset)
 {
-    auto const pptxu = GSet::pptxu();
+    check(n > 0); check(m > 0);
     
-    // Relative position of the other border subimages with respect to the leader one (GIMP texture unit reference system).
-    std::map<BorderType, Vector2i> relative_positions = {
-                { BorderType::solo, { 0, 2} },
-
-                { BorderType::N,    { 0, 2 } },
-                { BorderType::E,    { 1, 1 } },
-                { BorderType::S,    { 0, 1 } },
-                { BorderType::W,    { 1, 2 } },
-
-                { BorderType::NS,   { 0, 0 } },
-                { BorderType::EW,   { 1, 0 } },
-                { BorderType::NE,   { 2, 1 } },
-                { BorderType::ES,   { 2, 0 } },
-                { BorderType::SW,   { 3, 0 } },
-                { BorderType::NW,   { 3, 1 } },
-
-                { BorderType::NES,  { 4, 2 } },
-                { BorderType::NEW,  { 4, 1 } },
-                { BorderType::NSW,  { 5, 2 } },
-                { BorderType::ESW,  { 4, 0 } },
-
-                { BorderType::NESW, { 6, 2 } },
+    // Relative position of the other border background subimages with respect to the starting one (GIMP texture unit reference system).
+    auto const relative_positions = std::map<BorderBackgroundType, Vector2i>{
+                { BorderBackgroundType::NoSides,                {  0, 0} },
+                { BorderBackgroundType::SideCutTopShortLeft,    {  1, 0} },
+                { BorderBackgroundType::SideCutTopShortRight,   {  2, 0} },
+                { BorderBackgroundType::SideCutTopShortFull,    {  3, 0} },
+                { BorderBackgroundType::SideCutTopLongLeft,     {  4, 0} },
+                { BorderBackgroundType::SideCutTopLongRight,    {  5, 0} },
+                { BorderBackgroundType::SideCutTopLongFull,     {  6, 0} },
+                { BorderBackgroundType::SideFull,               {  7, 0} },
+                { BorderBackgroundType::SideCutBottomRight,     {  8, 0} },
+                { BorderBackgroundType::SideCutBottomLeft,      {  9, 0} },
+                { BorderBackgroundType::SideCutBottomFull,      { 10, 0} }
             };
 
-    #if GSET_TILESET_TEXARRAY 
-        auto const atlas_columns = default_texture_tileset.atlas_width() / static_cast<int>(pptxu);
-        
-        for (auto const p : relative_positions)
-        {
-            auto const rel_pos = p.second;
-            m_layers.insert({ p.first, (m + rel_pos.y) * atlas_columns + (n + rel_pos.x) });
-        }
-
-    #else
-        //GIMP coordinates
-        auto const top    = m * pptxu;
-        auto const bottom = (m + 1) * pptxu;
-        auto const left   = n * pptxu;
-        auto const right  = (n + 1) * pptxu;
-
-        /* OLD RELATIVE POSITIONS INCLUDING THE 3D BUILDINGS EXPERIMENT
-        std::map<BorderType, Vector2f> subimage_coords = {
-
-                    // Outdoor borders
-                    //no branch
-                    { BorderType::solo_outE,  {left + pptxu * 2, top + pptxu * 7} },
-                    { BorderType::solo_outW,  {left + pptxu    , top + pptxu * 7} },
-                    //one branch
-                    { BorderType::N_outE,     {left + pptxu	, top + pptxu * 6} },
-                    { BorderType::N_outW,     {left			, top + pptxu * 6} },
-                    { BorderType::S_outE,     {left + pptxu , top + pptxu * 5} },
-                    { BorderType::S_outW,     {left			, top + pptxu * 5} },
-                    //two branches
-                    { BorderType::NS_outE,    {left + pptxu    , top + pptxu * 4} },
-                    { BorderType::NS_outW,    {left            , top + pptxu * 4} },
-                    { BorderType::NE_outNE,   {left + pptxu * 5, top + pptxu * 5} },
-                    { BorderType::NE_outSW,   {left + pptxu * 3, top + pptxu * 5} },
-                    { BorderType::ES_outSE,   {left + pptxu * 5, top + pptxu * 4} },
-                    { BorderType::ES_outNW,   {left + pptxu * 3, top + pptxu * 4} },
-                    { BorderType::SW_outNE,   {left + pptxu * 4, top + pptxu * 4} },
-                    { BorderType::SW_outSW,   {left + pptxu * 6, top + pptxu * 5} },
-                    { BorderType::NW_outSE,   {left + pptxu * 4, top + pptxu * 5} },
-                    { BorderType::NW_outNW,   {left + pptxu * 6, top + pptxu * 5} },
-                    //three branches
-                    { BorderType::NES_outNE,	   {left + pptxu * 7, top + pptxu * 6} },
-                    { BorderType::NES_outNE_outW,  {left + pptxu * 5, top + pptxu * 9} },
-                    { BorderType::NES_outSE,	   {left + pptxu * 7, top + pptxu * 5} },
-                    { BorderType::NES_outSE_outW,  {left + pptxu * 2, top + pptxu * 9} },
-                    { BorderType::NES_outW,		   {left + pptxu * 7, top + pptxu * 4} },
-                    { BorderType::NEW_outNE,	   {left + pptxu * 9, top + pptxu * 5} },
-                    { BorderType::NEW_outNW,	   {left + pptxu * 9, top + pptxu * 7} },
-                    { BorderType::NSW_outE,		   {left + pptxu * 8, top + pptxu * 4} },
-                    { BorderType::NSW_outE_outSW,  {left + pptxu * 4, top + pptxu * 9} },
-                    { BorderType::NSW_outE_outNW,  {left + pptxu * 3, top + pptxu * 9} },
-                    { BorderType::NSW_outSW,	   {left + pptxu * 8, top + pptxu * 5} },
-                    { BorderType::NSW_outNW,	   {left + pptxu * 8, top + pptxu * 6} },
-                    { BorderType::ESW_outSE,	   {left + pptxu * 9, top + pptxu * 4} },
-                    { BorderType::ESW_outSW,	   {left + pptxu * 9, top + pptxu * 6} },
-
-
-                    //four branches
-                    { BorderType::NESW_outNE,		{left + pptxu * 12, top + pptxu * 4} },
-                    { BorderType::NESW_outNE_outSW,	{left + pptxu * 13, top + pptxu * 6} },
-                    { BorderType::NESW_outSE,		{left + pptxu * 12, top + pptxu * 5} },
-                    { BorderType::NESW_outSE_outNW,	{left + pptxu * 12, top + pptxu * 6} },
-                    { BorderType::NESW_outSW,		{left + pptxu * 13, top + pptxu * 5} },
-                    { BorderType::NESW_outNW,		{left + pptxu * 13, top + pptxu * 4} },
-
-
-
-                    // Outdoors multi-floor
-                    { BorderType::solo_outS_multi,		 {left            , top + pptxu * 8} },	
-                    { BorderType::E_outS_multi,			 {left + pptxu * 2, top + pptxu * 5} },
-                    { BorderType::W_outS_multi,			 {left + pptxu * 2, top + pptxu * 6} },
-
-                    { BorderType::EW_outS_multi,		 {left + pptxu * 2, top + pptxu * 4} },
-                    { BorderType::NE_outSW_multi,		 {left + pptxu * 3, top + pptxu * 6} },
-                    { BorderType::NW_outSE_multi,		 {left + pptxu * 4, top + pptxu * 6} },
-                    { BorderType::ES_outSE_multi,		 {left + pptxu * 5, top + pptxu * 6} },
-                    { BorderType::SW_outSW_multi,		 {left + pptxu * 6, top + pptxu * 6} },
-
-                    { BorderType::NES_outSE_multi,		 {left + pptxu * 7, top + pptxu * 7} },
-                    { BorderType::NES_outSE_outW_multi,  {left + pptxu * 2, top + pptxu * 10} },
-                    { BorderType::NEW_outNE_outS_multi,  {left            , top + pptxu * 10} },
-                    { BorderType::NEW_outS_multi,		 {left + pptxu * 9, top + pptxu * 10} },
-                    { BorderType::NEW_outS_outNW_multi,  {left + pptxu * 7, top + pptxu * 10} },
-                    { BorderType::NSW_outE_outSW_multi,  {left + pptxu * 4, top + pptxu * 10} },
-                    { BorderType::NSW_outSW_multi,		 {left + pptxu * 8, top + pptxu * 7} },
-                    { BorderType::ESW_outSE_multi,		 {left + pptxu * 9, top + pptxu * 8} },
-                    { BorderType::ESW_outSW_multi,		 {left + pptxu * 9, top + pptxu * 9} },
-                    
-                    { BorderType::NESW_outNE_outSW_multi, {left + pptxu * 13, top + pptxu * 8} },
-                    { BorderType::NESW_outSE_multi,		  {left + pptxu * 12, top + pptxu * 7} },
-                    { BorderType::NESW_outSE_outNW_multi, {left + pptxu * 12, top + pptxu * 8} },
-                    { BorderType::NESW_outSW_multi,		  {left + pptxu * 13, top + pptxu * 7} },
-                };
-        */
-
-        for (auto const p : relative_positions)
-        {
-            auto const rel_pos = p.second;
-            m_subimages.insert({ p.first , {left + (rel_pos.x * pptxu), top + (rel_pos.y * pptxu), pptxu, pptxu, default_texture_tileset} });
-        }
-    #endif
-
+    add_subimages(offset, relative_positions);
             
     #if DEBUGLOG
-        Logger lgr(g_log);
-        lgr << "Loaded subimages for this border type: " << m_subimages << std::endl;
+        auto lgr = Logger{ g_log };
+        lgr << "Loaded subimages for this background style: " << m_subimages << std::endl;
     #endif
 }
 
@@ -284,19 +174,20 @@ void TileVertices::set_tileGraphics(int const x, int const y, int const z,
 
     if (is_border)
     {
-        if (border_type == BorderType::none || border_style == BorderStyle::none)
+        if (border_type.background == BorderBackgroundType::None || border_type.section == BorderSectionType::None /*|| border_type.corner_shadow == BorderCornerShadowType::None*/
+            || border_style == BorderStyle::none)
         {
             throw std::runtime_error("border_type or border_style are not properly set.");
         }
 
-        auto style_it = border_sprites.find(border_style);
-        if (style_it == border_sprites.cend())
+        auto style_it = border_background_subimages.find(border_style);
+        if (style_it == border_background_subimages.cend())
         {
             throw std::runtime_error("No sprites found for this BorderStyle.");
         }
                 
         #if GSET_TILESET_TEXARRAY
-            auto tex_layer = style_it->second.get_layer(border_type);
+            auto tex_layer = style_it->second.get_layer(border_type.background);
 
             #if FREE_ASSETS
                     tex_layer = 1; //transparent tile				

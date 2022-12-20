@@ -16,6 +16,7 @@
 #include "settings/graphics_settings.hh"
 #include "texture_subimage.hh"
 
+#include "debug/asserts.hh"
 #include "debug/logger/log_streams.hh"
 #include "settings/debug/debug_settings.hh"
 
@@ -25,20 +26,76 @@ namespace tgm
 
 
 
+template <typename T>
+class Subimages
+{
+    public:
+        auto get_subimage(T const type) const -> TextureSubimage const&
+        {
+            auto it = m_subimages.find(type);
+            check(it != m_subimages.cend()); // Check that a subimage associated to that BorderBackgroundType exists
+
+            return it->second;
+        }
+
+        auto get_layer(T const type)
+        {
+            auto it = m_layers.find(type);
+            check(it != m_layers.cend());   // Check that a subimage associated to that BorderBackgroundType exists
+
+            return it->second;
+        }
+
+    protected:
+        void add_subimages(Vector2i const offset, std::map<T, Vector2i> const relative_positions)
+        {
+            auto const pptxu = GSet::pptxu();
+
+            #if GSET_TILESET_TEXARRAY 
+                auto const atlas_columns = default_texture_tileset.atlas_width() / static_cast<int>(pptxu);
+        
+                for (auto const p : relative_positions)
+                {
+                    auto const rel_pos = p.second;
+                    m_layers.insert({ p.first, (offset.y + rel_pos.y) * atlas_columns + (offset.x + rel_pos.x) });
+                }
+
+            #else
+                //GIMP coordinates
+                auto const top    = offset.y * pptxu;
+                auto const bottom = (offset.y + 1) * pptxu;
+                auto const left   = offset.x * pptxu;
+                auto const right  = (offset.x + 1) * pptxu;
+
+                for (auto const p : relative_positions)
+                {
+                    auto const rel_pos = p.second;
+                    m_subimages.insert({ p.first , {left + (rel_pos.x * pptxu), top + (rel_pos.y * pptxu), pptxu, pptxu, default_texture_tileset} });
+                }
+            #endif
+        }
+
+    private:
+        // Coordinates of the sprites on the texture atlas
+        std::map<T, TextureSubimage> m_subimages; // 4 vertices of a quad
+        std::map<T, int> m_layers;                // Used when the atlas is converted in a Texture2DArray
+};
+
+
 class TileSubimages
 {
     public:
 
         ////
-        //	@pos: Position of the atlas of the first subimage associated to this BorderType (GIMP texture unit reference system).
-        //	@subimages_count: Number of subimage versions representing the same tile.
-        //	Note: Works only on subimage sequences arranged on two row of the same length (in the case of odd number of sprites, 
-        //		  then the first row has one more sprite)
+        //  @pos: Position of the atlas of the first subimage associated to this TileStyle (GIMP texture unit reference system).
+        //  @subimages_count: Number of subimage versions representing the same tile.
+        //  Note: Works only on subimage sequences arranged on two row of the same length (in the case of odd number of sprites, 
+        //        then the first row has one more sprite)
         ////
         TileSubimages(Vector2i const pos, int const subimages_count);
 
         ////
-        //	@subimage_version: Indicate which of the subimages associated to this Tile must be picked.
+        //  @subimage_version: Indicate which of the subimages associated to this Tile must be picked.
         ////
         auto get_subimage(int const subimage_version) const -> TextureSubimage const&
         {
@@ -51,7 +108,7 @@ class TileSubimages
         }
         
         ////
-        //	@subimage_version: Indicate which of the subimages associated to this Tile must be picked.
+        //  @subimage_version: Indicate which of the subimages associated to this Tile must be picked.
         ////
         auto get_layer(int const subimage_version) const -> int const&
         {
@@ -72,40 +129,22 @@ class TileSubimages
 };
 
 
-class BorderSubimages
+class BorderBackgroundSubimages : public Subimages<BorderBackgroundType>
 {
     public:
         ////
-        //	@n, @m: Atlas column and row of the first subimage associated to this BorderType (GIMP texture unit reference system).
+        //  @offset: Atlas column and row for the first subimage associated to this BorderBackground (GIMP texture unit reference system).
         ////
-        BorderSubimages(int const n, int const m);
+        BorderBackgroundSubimages(Vector2i const offset);
+};
 
-        auto get_subimage(BorderType const type) const -> TextureSubimage const&
-        {
-            auto it = m_subimages.find(type);
-            if (it == m_subimages.cend())
-            {
-                throw std::runtime_error("No subimage associated to that BorderType.");
-            }
-
-            return it->second;
-        }
-
-        auto get_layer(BorderType const type)
-        {
-            auto it = m_layers.find(type);
-            if (it == m_layers.cend())
-            {
-                throw std::runtime_error("No subimage associated to that BorderType.");
-            }
-
-            return it->second;
-        }
-
-    private:
-        //coordinates on the texture of the sprites associated to the border
-        std::map<BorderType, TextureSubimage> m_subimages; //4 vertices of a quad
-        std::map<BorderType, int> m_layers; //used when the atlas is used with a Texture2DArray
+class BorderSectionSubimages : public Subimages<BorderSectionType>
+{
+    public:
+        ////
+        //  @offset: Atlas column and row for the first subimage associated to this BorderBackground (GIMP texture unit reference system).
+        ////
+        BorderSectionSubimages(Vector2i const offset);
 };
 
 
@@ -127,27 +166,27 @@ class TileVertices
 
         enum class TileVerticesState
         {
-            uninitialized,				// Doesn't contain any data
-            reset,						// New data loaded, but not yet in GPU memory
-            synchronized,				// Almost all data are synchronized between CPU and GPU memory. There could still be some small changes not already updated with GPU
+            uninitialized,              // Doesn't contain any data
+            reset,                      // New data loaded, but not yet in GPU memory
+            synchronized,               // Almost all data are synchronized between CPU and GPU memory. There could still be some small changes not already updated with GPU
         };
 
     public:
         
         bool uninitialized() const { return m_state == TileVerticesState::uninitialized; }
         ////
-        //	Indicate whether the vertices have been reset. In this case their count could be changed as well.
+        //  Indicate whether the vertices have been reset. In this case their count could be changed as well.
         ////
         bool has_been_reset() const { return m_state == TileVerticesState::reset; }
 
 
         ////
-        //	Indicate whether any change happened to the attributes of any vertex.
+        //  Indicate whether any change happened to the attributes of any vertex.
         ////
         bool has_changed() const { assert_synchronized();  return !m_changed_chunks.empty(); }
         
         ////
-        //	@return: A vector in which each element correspond to a modified chunk. Each pair contains the offset of the chunk and a pointer to the chunk.
+        //  @return: A vector in which each element correspond to a modified chunk. Each pair contains the offset of the chunk and a pointer to the chunk.
         ////
         auto get_changes() const -> std::vector<std::pair<GLintptr, TilesetVertexData const*>>;
 
@@ -159,7 +198,7 @@ class TileVertices
         auto map_height() const -> int { assert_initialization(); return m_map_height; }
 
         ////
-        //	Size of the buffer (in bytes).
+        //  Size of the buffer (in bytes).
         ////
         auto buffer_byteSize() const { assert_initialization(); return m_vertices.size() * sizeof(TilesetVertexData); }
         auto vertices_count()  const { assert_initialization(); return static_cast<GLsizei>(m_vertices.size()); }
@@ -169,22 +208,22 @@ class TileVertices
         auto get_ptr() const { assert_initialization(); return m_vertices.data(); }
 
         ////
-        //	Initialize for the first time or reset.
+        //  Initialize for the first time or reset.
         ////
         void reset(int const map_length, int const map_width, int const map_height);
         
         ////
-        //	Make TileVertices aware that all the new vertices have been loaded in the GPU memory.
+        //  Make TileVertices aware that all the new vertices have been loaded in the GPU memory.
         ////
         void reset_acquired() { assert_reset(); m_state = TileVerticesState::synchronized; }
         
         ////
-        //	Make TileVertices aware that the changed vertices have been loaded in the GPU memory.
+        //  Make TileVertices aware that the changed vertices have been loaded in the GPU memory.
         ////
         void changes_acquired() { assert_synchronized(); m_changed_chunks.clear(); }
 
         ////
-        //	@x, @y, @z: Tile coordinates.
+        //  @x, @y, @z: Tile coordinates.
         ////
         void set_tileGraphics(int const x, int const y, int const z,
                               bool const is_border, TileType const tile_type, BorderType const border_type, BorderStyle const border_style);
@@ -240,8 +279,8 @@ class TileVertices
                 { TileType::grout,		 { { 5,  6}, 10 }  }
             };
 
-        static inline std::map<BorderStyle, BorderSubimages> border_sprites = {
-                {BorderStyle::brickWall, { 8, 8} }
+        static inline auto border_background_subimages = std::map<BorderStyle, BorderBackgroundSubimages>{
+                {BorderStyle::brickWall, Vector2i{ 0, 9 } }
             };
 
         
@@ -256,7 +295,7 @@ class TileVertices
         void init_polygons();
 
         ////
-        //	@tex_left, @tex_bottom, @tex_right, @tex_top: OpenGL-like coordinates.
+        //  @tex_left, @tex_bottom, @tex_right, @tex_top: OpenGL-like coordinates.
         ////
         void set_tileTexture(int const x, int const y, int const z, 
                              float const tex_left, float const tex_bottom, float const tex_right, float const tex_top, GLuint const texarray_layer);
@@ -269,7 +308,7 @@ class TileVertices
         }
 
         ////
-        //	Check if position is contained in an arbitrary plane of the map.
+        //  Check if position is contained in an arbitrary plane of the map.
         ////
         bool contains(Vector2i const pos) noexcept
         {
@@ -285,12 +324,12 @@ class TileVertices
         }
 
         ////
-        //	For each tile on the plane return a random number that identify a particular version of the associated sprite.
-        //	Otherwise all the tiles would be equal and the graphic effect would be quite ugly.
+        //  For each tile on the plane return a random number that identify a particular version of the associated sprite.
+        //  Otherwise all the tiles would be equal and the graphic effect would be quite ugly.
         ////
         auto get_random_0to9(int const x, int const y) -> int { return random_0to9_numberSequence[static_cast<RandCont::size_type>(x) * m_map_width + y]; }
         ////
-        //	Make a sequence of random numbers ranging from 0 to 9. The size of the sequence is the same as the number of tiles in one plane of the map.
+        //  Make a sequence of random numbers ranging from 0 to 9. The size of the sequence is the same as the number of tiles in one plane of the map.
         //  This random sequence will be used to obtain an homogenous terrain pattern when drawing the tiles.
         ////
         void cache_random0to9NumberSequence();

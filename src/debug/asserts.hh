@@ -14,6 +14,8 @@
     assert(expr); \
 }
 
+#define check_no_entry() check(false);
+
 #if DYNAMIC_ASSERTS
     // Execute the expression
     #define exec_check(expr) \
