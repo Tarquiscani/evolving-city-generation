@@ -266,7 +266,7 @@ class TileVertices
         int m_map_width = 0;
         int m_map_height = 0;
 
-        RandCont random_0to9_numberSequence;
+        RandCont random_0_to_9_sequence;
 
         
 
@@ -327,12 +327,12 @@ class TileVertices
         //  For each tile on the plane return a random number that identify a particular version of the associated sprite.
         //  Otherwise all the tiles would be equal and the graphic effect would be quite ugly.
         ////
-        auto get_random_0to9(int const x, int const y) -> int { return random_0to9_numberSequence[static_cast<RandCont::size_type>(x) * m_map_width + y]; }
+        auto get_random_0to9(int const x, int const y) -> int { return random_0_to_9_sequence[static_cast<RandCont::size_type>(x) * m_map_width + y]; }
         ////
         //  Make a sequence of random numbers ranging from 0 to 9. The size of the sequence is the same as the number of tiles in one plane of the map.
         //  This random sequence will be used to obtain an homogenous terrain pattern when drawing the tiles.
         ////
-        void cache_random0to9NumberSequence();
+        void cache_random_0_to_9_sequence();
 };
 
 

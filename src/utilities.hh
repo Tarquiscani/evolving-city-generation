@@ -58,7 +58,7 @@ namespace Utilities
     ////
     //	Generate a random integer in the interval [0, max)
     ////
-    auto rand(int const max) -> int;
+    auto rand(int const max/* = std::numeric_limits<int>::max()*/) -> int;
     
     ////
     //	Generate a random integers according to a normal distribution.

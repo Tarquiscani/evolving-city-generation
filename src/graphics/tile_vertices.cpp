@@ -4,6 +4,7 @@
 #include <random>
 
 #include "map/direction.h"
+#include "utilities.hh"
 
 #include "debug/asserts.hh"
 
@@ -109,7 +110,7 @@ void TileVertices::reset(int const map_length, int const map_width, int const ma
     
     init_polygons();
 
-    cache_random0to9NumberSequence();
+    cache_random_0_to_9_sequence();
 
     m_state = TileVerticesState::reset;
 }
@@ -410,9 +411,8 @@ void TileVertices::debug_print(int /*sprite_start*/, int /*sprite_end*/) const
     std::cin >> stop;
 }
 
-void TileVertices::cache_random0to9NumberSequence()
+void TileVertices::cache_random_0_to_9_sequence()
 {
-    std::mt19937 rand(82);
     //TODO: Create a good random sequence of number capable of representing a matrix
     for (auto x = 0; x < m_map_length; ++x)
     {
@@ -431,14 +431,14 @@ void TileVertices::cache_random0to9NumberSequence()
 
             // Skip random numbers until finding a number not used by the neighboors
             do {
-                r_num = rand() % 10;
+                r_num = Util::rand(10);
                         //short-circuit to avoid checking unexistent neighbors
-            } while(	( contains(nghbN)  && r_num == random_0to9_numberSequence[static_cast<RandCont::size_type>(nghbN.x)  * m_map_width + nghbN.y ] ) ||
-                        ( contains(nghbNE) && r_num == random_0to9_numberSequence[static_cast<RandCont::size_type>(nghbNE.x) * m_map_width + nghbNE.y] ) ||
-                        ( contains(nghbW)  && r_num == random_0to9_numberSequence[static_cast<RandCont::size_type>(nghbW.x)  * m_map_width + nghbW.y ] ) ||
-                        ( contains(nghbNW) && r_num == random_0to9_numberSequence[static_cast<RandCont::size_type>(nghbNW.x) * m_map_width + nghbNW.y] )	 );
+            } while(	( contains(nghbN)  && r_num == random_0_to_9_sequence[static_cast<RandCont::size_type>(nghbN.x)  * m_map_width + nghbN.y ] ) ||
+                        ( contains(nghbNE) && r_num == random_0_to_9_sequence[static_cast<RandCont::size_type>(nghbNE.x) * m_map_width + nghbNE.y] ) ||
+                        ( contains(nghbW)  && r_num == random_0_to_9_sequence[static_cast<RandCont::size_type>(nghbW.x)  * m_map_width + nghbW.y ] ) ||
+                        ( contains(nghbNW) && r_num == random_0_to_9_sequence[static_cast<RandCont::size_type>(nghbNW.x) * m_map_width + nghbNW.y] )	 );
 
-            random_0to9_numberSequence.push_back(r_num);
+            random_0_to_9_sequence.push_back(r_num);
         }
     }
 }
